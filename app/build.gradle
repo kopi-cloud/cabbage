@@ -1,0 +1,101 @@
+
+buildscript{
+  repositories{
+    jcenter()
+    maven{
+      url "https://plugins.gradle.org/m2/"
+    }
+  }  
+  dependencies{
+    classpath "com.moowork.gradle:gradle-node-plugin:1.3.1"
+  }
+}
+
+plugins{
+  id 'base'
+}
+
+apply plugin: 'com.moowork.node'
+
+project.version = rootProject.version
+
+ext {
+  tsSrcDir = file("src")
+  // this is the directory it seems to build into by default
+  npmBuildDir = file("build")
+
+  envName = System.getProperty("cabbage_build_env_name", "dev")
+}
+
+/* The node.js and npm dependencies get downloaded to the ".gradle"
+sub-directory of THIS project's "project directory".  Meaning a multi-project
+gradle build with multiple sub-projects that use the gradle-node plugin each
+download their own node.js, npm and dependencies.  This is wasteful of both
+disk space and time (server-builds, for example, may download the same stuff
+many times).  But it keeps each sub-project completely separate and stops
+unintended dependencies between them.
+*/
+node {
+  // force download and local install of specific versions of node.js and npm
+  download = true
+  version = '12.10.0'
+  npmVersion = '6.11.3'
+}
+
+npmInstall {
+  // This is defaulted to "no-save" because most of the time (server builds,
+  // etc.) you're NOT intending to update dependencies.
+  // When you ARE updating deps, then do your updates to package.json and
+  // run npmInstall task with "-Dupdate_npm_deps=true".  Note that it will
+  // re-write the package.json to remove blank lines and other things you
+  // might not want.
+  if( Boolean.getBoolean("update_npm_deps") ){
+    logger.lifecycle "updating package dependencies"
+
+    // This forces the task to run even when package.json hasn't been changed,
+    // so that package-lock.json will still get updated if needed.
+    tasks.npmInstall.outputs.upToDateWhen { false }
+  }
+  else {
+    // Without no-save, the npmInstall task will actually overwrite the
+    // package.json file.
+    // Which has the following undesirable effects:
+    // - remove any blank lines// that have been added for readability
+    // - update transitive dependencies to latest "compatible" versions of those
+    //   libs, which can cause unexpected changes in behaviour
+    // - causes the git workspace to be dirty because of the above transitive
+    //   lib updates, the dep tree is huge, something ALWAYS changes, this
+    //   results in a server-build's git workspace having changes
+    //   in it, which can cause problems on subsequent run.
+    args = ["--no-save"]
+  }
+}
+
+tasks.withType(NpmTask){
+  // propagate the environment of the Gradle process to the NPM process
+  environment = System.getenv()
+}
+
+clean {
+  delete npmBuildDir
+}
+
+task buildClient(type: NpmTask){
+  dependsOn npmInstall
+  mustRunAfter clean
+  group = 'build'
+
+  outputs.upToDateWhen { false }
+
+  args = [
+    'run', 'build',
+  ]
+
+  environment = [
+    REACT_APP_CABBAGE_ENV: project.ext.envName,
+    // browser date parsing is super broken, using millis is just easier
+    REACT_APP_BUILD_DATE_MS: new Date().time,
+  ]
+}
+
+
