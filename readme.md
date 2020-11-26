@@ -1,4 +1,4 @@
-# cabbage
+# Cabbage
 
 Cabbage is my play area for learning about 
 [Supabase](https://github.com/supabase/supabase).
