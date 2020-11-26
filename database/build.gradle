@@ -1,0 +1,61 @@
+
+buildscript {
+  dependencies {
+    classpath "org.postgresql:postgresql:42.2.14"
+  }
+}
+
+plugins {
+  id "org.flywaydb.flyway" version "7.2.1"
+}
+
+ext {
+  envName = System.getenv("CABBAGE_TARGET_ENV")
+  cabbageDbPassword = System.getenv("CABBAGE_DB_PASSWORD")
+
+  cabbageDbConnection = ""
+  if( envName == "CI" ){
+    cabbageDbConnection = "db.zlzbxjbgcvzctujriyce.supabase.co:5432/postgres"
+  }
+  else if ( envName == "TST" ){
+    cabbageDbConnection = "db.voopfoyfpcvtqlqybyjf.supabase.co:5432/postgres"
+  }
+  else if ( envName == "PRD" ){
+    cabbageDbConnection = "db.yohbyxbidghmlxljiajn.supabase.co:5432/postgres"
+  }
+  else if ( envName == "DEV" ){
+    cabbageDbConnection = "192.168.99.100:6200/postgres"
+  }
+}
+
+flyway {
+  url = "jdbc:postgresql://${cabbageDbConnection}"
+  user = 'postgres'
+  password = cabbageDbPassword
+}
+
+task checkFlywayEnv(){
+  group "flyway"
+  description "check the environment is configured for running flyway"
+  doFirst {
+    assert envName : "CABBAGE_TARGET_ENV env var not set"
+    assert cabbageDbPassword : "CABBAGE_DB_PASSWORD env var not set"
+    assert cabbageDbConnection : "DB id not set - unknown target enviornment"
+  }
+  doLast {
+    logger.warn "cabbage target environment is: $envName"
+  }
+}
+
+flywayClean.doFirst{
+  assert envName != "PRD" : "do not run flywayClean in PRD!"
+}
+
+// don't let any of these run if the env isn't configured properly
+flywayInfo.dependsOn checkFlywayEnv
+flywayBaseline.dependsOn checkFlywayEnv
+flywayClean.dependsOn checkFlywayEnv
+flywayMigrate.dependsOn checkFlywayEnv
+flywayRepair.dependsOn checkFlywayEnv
+flywayUndo.dependsOn checkFlywayEnv
+flywayValidate.dependsOn checkFlywayEnv
