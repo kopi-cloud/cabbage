@@ -6,5 +6,5 @@ create table sto_test_person (
 comment on table flyway_schema_history is
 'Flyway schema management. Flyway owns this, don''t touch it.';
 
-comment on table STO_TEST_PERSON_V2 is
+comment on table sto_test_person is
 'Testing out flyway shennanigans';
