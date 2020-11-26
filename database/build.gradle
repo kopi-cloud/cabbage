@@ -15,13 +15,13 @@ ext {
 
   cabbageDbConnection = ""
   if( envName == "CI" ){
-    cabbageDbConnection = "db.zlzbxjbgcvzctujriyce.supabase.co:5432/postgres"
+    cabbageDbConnection = "db.olejxisnyllhncgmxsrj.supabase.co:5432/postgres"
   }
   else if ( envName == "TST" ){
-    cabbageDbConnection = "db.voopfoyfpcvtqlqybyjf.supabase.co:5432/postgres"
+    cabbageDbConnection = "db.vqnciyibtuyccthfjzql.supabase.co:5432/postgres"
   }
   else if ( envName == "PRD" ){
-    cabbageDbConnection = "db.yohbyxbidghmlxljiajn.supabase.co:5432/postgres"
+    cabbageDbConnection = "db.ncajsbkywkopkqoabrpj.supabase.co:5432/postgres"
   }
   else if ( envName == "DEV" ){
     cabbageDbConnection = "192.168.99.100:6200/postgres"
