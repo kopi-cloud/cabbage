@@ -9,6 +9,9 @@ on:
 
   workflow_dispatch:
 
+# This branch doesn't have a app build because that's handled on the
+# Netlify side of things, this just makes sure the schema is up to date.
+
 jobs:
   build:
     runs-on: ubuntu-latest
