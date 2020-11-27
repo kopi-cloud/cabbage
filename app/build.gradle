@@ -21,40 +21,13 @@ many times).  But it keeps each sub-project completely separate and stops
 unintended dependencies between them.
 */
 node {
-  // set to NOT force download node, so that CI build stuff will use
-  // pre-installed if available
+  /* set to NOT force download node, so that CI build stuff will use
+     pre-installed if available */
   download = false
+  /* I don't like sliding versions, this is just the version that happened
+     to be marked LTS on 2020-11-27 */
   version = '14.15.1'
 }
-
-//npmInstall {
-//  // This is defaulted to "no-save" because most of the time (server builds,
-//  // etc.) you're NOT intending to update dependencies.
-//  // When you ARE updating deps, then do your updates to package.json and
-//  // run npmInstall task with "-Dupdate_npm_deps=true".  Note that it will
-//  // re-write the package.json to remove blank lines and other things you
-//  // might not want.
-//  if( Boolean.getBoolean("update_npm_deps") ){
-//    logger.lifecycle "updating package dependencies"
-//
-//    // This forces the task to run even when package.json hasn't been changed,
-//    // so that package-lock.json will still get updated if needed.
-//    tasks.npmInstall.outputs.upToDateWhen { false }
-//  }
-//  else {
-//    // Without no-save, the npmInstall task will actually overwrite the
-//    // package.json file.
-//    // Which has the following undesirable effects:
-//    // - remove any blank lines// that have been added for readability
-//    // - update transitive dependencies to latest "compatible" versions of those
-//    //   libs, which can cause unexpected changes in behaviour
-//    // - causes the git workspace to be dirty because of the above transitive
-//    //   lib updates, the dep tree is huge, something ALWAYS changes, this
-//    //   results in a server-build's git workspace having changes
-//    //   in it, which can cause problems on subsequent run.
-//    args = ["--no-save"]
-//  }
-//}
 
 tasks.withType(NpmTask){
   // propagate the environment of the Gradle process to the NPM process

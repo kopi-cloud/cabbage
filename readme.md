@@ -13,10 +13,6 @@ best, not saying this is the right way to do it.
 
 * [.github](/.github)
 * [/app/](/app) - client app
-  * gradle sub-project (gradle is mostly just for downloading node/npm)
-  * create-react-app project
-  * material-ui as the component library
-  * deployed to netlify
 * [/database/](/database) - database schema management
   * gradle sub-project 
   * uses Flyway, connects to Supabase via `postgres://` protocol
