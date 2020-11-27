@@ -1,8 +1,8 @@
 [build]
 
-base = "app/"
+base = "app"
 
-publish = "build/"
+publish = "/build"
 
 command = "npm run-script build"
 
