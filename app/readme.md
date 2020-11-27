@@ -8,4 +8,4 @@ and use whatever version is specified in build.gradle.
 
   * create-react-app project
   * material-ui as the component library
-  * deployed to netlify
+  * deployed to netlify, see [netlify.toml](/netlify.toml)
