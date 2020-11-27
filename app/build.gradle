@@ -6,7 +6,7 @@ plugins{
 
 ext {
   tsSrcDir = file("src")
-  // this is the directory it seems to build into by default
+  // this is the directory c-r-a seems to build into by default
   npmBuildDir = file("build")
 
   envName = System.getProperty("cabbage_build_env_name", "dev")
@@ -22,7 +22,7 @@ unintended dependencies between them.
 */
 node {
   /* set to NOT force download node, so that CI build stuff will use
-     pre-installed if available */
+     pre-installed if correct version is available */
   download = false
   /* I don't like sliding versions, this is just the version that happened
      to be marked LTS on 2020-11-27 */
@@ -38,9 +38,14 @@ clean {
   delete npmBuildDir
 }
 
+task cleanNodeModules(type: Delete){
+  group "build"
+  delete file("node_modules")
+}
+
 task buildApp(type: NpmTask){
   dependsOn npmInstall
-  mustRunAfter clean
+  mustRunAfter clean, cleanNodeModules
   group = 'build'
 
   // no upToDate checking, if invoked will always run
