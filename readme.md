@@ -3,19 +3,20 @@
 Cabbage is my play area for learning about 
 [Supabase](https://github.com/supabase/supabase).
 
-Doesn't even have an app that uses the DB yet, at the moment it's just code 
-for managing a schema across different SB databases ("projects").
+The app is published on Netlify: 
+[rabbit-cabbage](https://rabbit-cabbage.netlify.app/) 
+(site is published from the `tst` branch).
 
 I'm using Gradle, Flyway, Java etc. just because they're the tools that I know 
 best, not saying this is the right way to do it.
 
 ## Structure 
 
-* [.github](/.github)
+* [.github](/.github) - github action config
 * [/app/](/app) - client app
 * [/database/](/database) - database schema management
   * gradle sub-project 
-  * uses Flyway, connects to Supabase via `postgres://` protocol
+  * uses Flyway, connects to Supabase via `postgres://` protocol (yikes!)
 * [/gradle/](/gradle) - gradle wrapper stuff
   * used for bootstrapping Gradle
   
