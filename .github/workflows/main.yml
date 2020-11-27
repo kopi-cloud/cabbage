@@ -58,6 +58,8 @@ jobs:
 
       - name: build app
         run: ./gradlew :app:buildApp
+        env:
+          REACT_APP_CABBAGE_ENV: CI
 
 
       - name: Show home structure

@@ -10,6 +10,7 @@ import {TextSpan} from "Component/TextSpan";
 import React from "react";
 import {PrimaryButton} from "Component/CabbageButton";
 import Popover from "@material-ui/core/Popover";
+import {Config} from "Config";
 
 export function WelcomeScreen(){
   const [anchorEl, setAnchorEl] = React.useState(null as
@@ -49,7 +50,7 @@ function IntroContainer(){
       over on <NewWindowLink href={cabbageGithubUrl}>Gihub</NewWindowLink>.
       <br/>
       Note that the code you're looking at currently is published from
-      the "tst" branch.
+      the `{Config.environmentName}` branch.
     </Typography>
   </SmallScreenContainer>
 }
