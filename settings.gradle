@@ -1,3 +1,4 @@
 rootProject.name = "cabbage"
 
+include "app"
 include "database"
