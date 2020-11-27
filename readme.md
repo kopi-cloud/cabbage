@@ -17,6 +17,7 @@ best, not saying this is the right way to do it.
 * [/database/](/database) - database schema management
   * gradle sub-project 
   * uses Flyway, connects to Supabase via `postgres://` protocol (yikes!)
+* [/doc/](/doc) - misc documentation, notes, etc.
 * [/gradle/](/gradle) - gradle wrapper stuff
   * used for bootstrapping Gradle
   
