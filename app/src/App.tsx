@@ -18,7 +18,7 @@ export function App(){
       </ErrorDialogProvider>
     </ReactErrorBoundary>
   </MuiThemeProvider>;
-};
+}
 
 export const theme = createMuiTheme({
   overrides: {
