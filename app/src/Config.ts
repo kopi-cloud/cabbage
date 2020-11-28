@@ -13,7 +13,7 @@
  * <p>
  * EnvironmentConfig is things we expect to change between environments,
  * whereas sharedConfig is stuff we usually expect to be the same across
- * environments.
+ * environments or gets interpolated from env variables.
  */
 
 const log = console;
@@ -24,7 +24,6 @@ export interface EnvironmentConfig {
   isProd: boolean,
   environmentName: EnvironmentName,
   supabaseUrl: string,
-  supabaseAnonKey: string,
 }
 
 function initConfig(){
@@ -35,6 +34,13 @@ function initConfig(){
   log.debug("Application config", process.env.REACT_APP_CABBAGE_ENV, newConfig);
   return newConfig;
 }
+
+const sharedConfig = {
+  buildDate: process.env.REACT_APP_BUILD_DATE_MS ||
+    new Date().getTime().toString(),
+  supabaseAnonKey: process.env.REACT_APP_SUPABASE_KEY,
+};
+
 
 function chooseEnvironmentConfig(env: string | undefined){
   env = env?.toLowerCase();
@@ -52,16 +58,10 @@ function chooseEnvironmentConfig(env: string | undefined){
   }
 }
 
-const sharedConfig = {
-  buildDate: process.env.REACT_APP_BUILD_DATE_MS ||
-    new Date().getTime().toString(),
-};
-
 const ciConfig: EnvironmentConfig = {
   isProd: false,
   environmentName: "ci",
   supabaseUrl: "https://sftsjtucvrgpeogudzge.supabase.co",
-  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYwNjM1MjAwOSwiZXhwIjoxOTIxOTI4MDA5fQ.VRllJt4THciauNzvVhfiD3C2NTOgP0iGmkz6wfhFhEk',
 };
 
 const devConfig: EnvironmentConfig = {
@@ -69,21 +69,18 @@ const devConfig: EnvironmentConfig = {
   environmentName: "dev",
   // wouldn't work in a team environment, but whatev's
   supabaseUrl: ciConfig.supabaseUrl,
-  supabaseAnonKey: ciConfig.supabaseAnonKey,
 };
 
 const tstConfig: EnvironmentConfig = {
   isProd: false,
   environmentName: "tst",
   supabaseUrl: "https://vyqfnlxhctlvofaludro.supabase.co",
-  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYwNjM1MjA1NywiZXhwIjoxOTIxOTI4MDU3fQ.2Hy4zE9kT4x4EgJAWjvhW1k3H7UhWbOBHx5ZXFCtaGA',
 };
 
 const prdConfig: EnvironmentConfig = {
   isProd: true,
   environmentName: "prd",
   supabaseUrl: "https://othrpsywoabrbbqpuzjy.supabase.co",
-  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYwNjM1MjI0MCwiZXhwIjoxOTIxOTI4MjQwfQ.cwC2Va9FNLPkcIev6D613VgogDqmzR94uN3OgFjQ-hk',
 };
 
 

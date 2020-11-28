@@ -54,6 +54,7 @@ jobs:
         run: ./gradlew :database:flywayClean :database:flywayMigrate :database:flywayInfo
         env:
           CABBAGE_TARGET_ENV: CI
+          CABBAGE_DB_ID: ${{ secrets.CABBAGE_CI_DB_ID }}
           CABBAGE_DB_PASSWORD: ${{ secrets.CABBAGE_CI_DB_PASSWORD }}
 
       - name: build app

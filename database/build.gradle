@@ -12,18 +12,10 @@ plugins {
 ext {
   envName = System.getenv("CABBAGE_TARGET_ENV")
   cabbageDbPassword = System.getenv("CABBAGE_DB_PASSWORD")
+  cabbageDbId = System.getenv("CABBAGE_DB_ID")
 
-  cabbageDbConnection = ""
-  if( envName == "CI" ){
-    cabbageDbConnection = "db.olejxisnyllhncgmxsrj.supabase.co:5432/postgres"
-  }
-  else if ( envName == "TST" ){
-    cabbageDbConnection = "db.vqnciyibtuyccthfjzql.supabase.co:5432/postgres"
-  }
-  else if ( envName == "PRD" ){
-    cabbageDbConnection = "db.ncajsbkywkopkqoabrpj.supabase.co:5432/postgres"
-  }
-  else if ( envName == "DEV" ){
+  cabbageDbConnection = "db.${cabbageDbId}.supabase.co:5432/postgres"
+  if ( envName == "DEV" ){
     cabbageDbConnection = "192.168.99.100:6200/postgres"
   }
 }
@@ -39,8 +31,9 @@ task checkFlywayEnv(){
   description "check the environment is configured for running flyway"
   doFirst {
     assert envName : "CABBAGE_TARGET_ENV env var not set"
+    assert cabbageDbId : "CABBAGE_DB_ID env var not set"
     assert cabbageDbPassword : "CABBAGE_DB_PASSWORD env var not set"
-    assert cabbageDbConnection : "DB id not set - unknown target enviornment"
+    assert cabbageDbConnection : "DB connection not set"
   }
   doLast {
     logger.warn "cabbage target environment is: $envName"

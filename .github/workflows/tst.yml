@@ -42,5 +42,6 @@ jobs:
         run: ./gradlew flywayClean flywayMigrate flywayInfo
         env:
           CABBAGE_TARGET_ENV: TST
+          CABBAGE_DB_ID: ${{ secrets.CABBAGE_TST_DB_ID }}
           CABBAGE_DB_PASSWORD: ${{ secrets.CABBAGE_TST_DB_PASSWORD }}
 
