@@ -38,7 +38,7 @@ function initConfig(){
 const sharedConfig = {
   buildDate: process.env.REACT_APP_BUILD_DATE_MS ||
     new Date().getTime().toString(),
-  supabaseAnonKey: process.env.REACT_APP_SUPABASE_KEY,
+  supabaseAnonKey: process.env.REACT_APP_SUPABASE_ANON_KEY,
 };
 
 
