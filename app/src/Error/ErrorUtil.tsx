@@ -13,7 +13,7 @@ export function isError<T>(e: T | Error): e is Error{
 }
 
 export function isErrorInfo<T>(e: T | ErrorInfo): e is ErrorInfo{
-  if( e === undefined ){
+  if( e === undefined || e == null ){
     return false;
   }
   return (e as ErrorInfo).message !== undefined &&

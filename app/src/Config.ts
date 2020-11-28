@@ -31,7 +31,11 @@ function initConfig(){
     ...sharedConfig,
     ...chooseEnvironmentConfig(process.env.REACT_APP_CABBAGE_ENV),
   };
-  log.debug("Application config", process.env.REACT_APP_CABBAGE_ENV, newConfig);
+
+  // don't print the key; it's not a secret, but it's ugly
+  const {supabaseAnonKey, ...printConfig} = newConfig;
+  log.debug("Application config",
+    process.env.REACT_APP_CABBAGE_ENV, printConfig);
   return newConfig;
 }
 
