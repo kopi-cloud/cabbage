@@ -38,8 +38,15 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
-      - name: flyway clean-migrate TST
-        run: ./gradlew flywayClean flywayMigrate flywayInfo
+      - name: flywayInfo TST
+        run: ./gradlew flywayInfo
+        env:
+          CABBAGE_TARGET_ENV: TST
+          CABBAGE_DB_ID: ${{ secrets.CABBAGE_TST_DB_ID }}
+          CABBAGE_DB_PASSWORD: ${{ secrets.CABBAGE_TST_DB_PASSWORD }}
+
+      - name: flyway migrate TST
+        run: ./gradlew flywayMigrate flywayInfo
         env:
           CABBAGE_TARGET_ENV: TST
           CABBAGE_DB_ID: ${{ secrets.CABBAGE_TST_DB_ID }}
