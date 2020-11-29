@@ -6,11 +6,13 @@ import {createClient} from "@supabase/supabase-js";
 import { TextSpan } from "Component/TextSpan";
 import {SmallScreenContainer} from "Component/Screen";
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
+import { Session } from '@supabase/gotrue-js/dist/main/lib/types';
 
 const log = console;
 
 export interface SupabaseApi {
   db: SupabaseClient,
+  session: null | Session,
 }
 
 // use() call will return this if you forgot to add a provider
@@ -20,8 +22,10 @@ export const SupabaseApiContext: React.Context<SupabaseApi> =
 export const useSupabase = ()=> useContext(SupabaseApiContext);
 
 export function SupabaseProvider({children}: {children: React.ReactNode}){
-  const [supabaseApi, setSupabaseApi] = React.useState(
-    undefined as undefined|SupabaseApi );
+  const [supabaseClient, setSupabaseClient] = React.useState(undefined as
+    undefined|SupabaseClient );
+  const [subabaseSession, setSupabaseSession] = React.useState(null as
+    null|Session );
   const [isAnonKeyValid, setIsAnonKeyValid] = React.useState(true);
 
   React.useEffect(()=>{
@@ -29,9 +33,13 @@ export function SupabaseProvider({children}: {children: React.ReactNode}){
       setIsAnonKeyValid(false);
       return;
     }
-    const db = createClient(Config.supabaseUrl, Config.supabaseAnonKey)
+    const client = createClient(Config.supabaseUrl, Config.supabaseAnonKey)
+    client.auth.onAuthStateChange((authEvent, session)=>{
+      log.debug("supabase auth state change", {authEvent, session});
+      setSupabaseSession(session);
+    })
     log.debug("subabase client created");
-    setSupabaseApi({db});
+    setSupabaseClient(client);
   }, []);
 
   if( !isAnonKeyValid ){
@@ -40,12 +48,15 @@ export function SupabaseProvider({children}: {children: React.ReactNode}){
     </TextSpan></SmallScreenContainer>
   }
 
-  if( !supabaseApi ){
+  if( !supabaseClient ){
     log.debug("showing spinner while creating supabase client");
     return <SmallScreenSpinner message={"Configuring Supabase API"}/>
   }
 
-  return <SupabaseApiContext.Provider value={supabaseApi}>
+  return <SupabaseApiContext.Provider value={{
+    db: supabaseClient,
+    session: subabaseSession,
+  }}>
     {children}
   </SupabaseApiContext.Provider>
 }

@@ -12,6 +12,11 @@ export const primaryButtonProps : ButtonProps = {
   style:{textTransform: "none"},
 };
 
+export const secondaryButtonProps : ButtonProps = {
+  variant:"outlined", color:"primary",
+  style:{textTransform: "none"},
+};
+
 export const primaryLinearStyle : CSSProperties = {
   /* this "overlays" the progress bar without taking up vertical space,
   so that the content doesn't "jump" when toggling the progress state  */
@@ -33,7 +38,22 @@ export function PrimaryButton({ isLoading, error, ...buttonProps }:
     <div style={{position: "relative",}}>
       <Button {...primaryButtonProps} {...buttonProps}/>
       { isLoading &&
-      <LinearProgress style={{...primaryLinearStyle}}/>
+        <LinearProgress style={{...primaryLinearStyle}}/>
+      }
+    </div>
+    <CompactErrorPanel error={error} border={"h-pad"}/>
+  </>
+}
+
+export function SecondaryButton({ isLoading, error, ...buttonProps }:
+  { isLoading?: boolean, error?: ErrorInfo} & ButtonProps
+){
+  return <>
+    {/*for the absolute positioning of linearProgress*/}
+    <div style={{position: "relative",}}>
+      <Button {...secondaryButtonProps} {...buttonProps}/>
+      { isLoading &&
+        <LinearProgress style={{...primaryLinearStyle}}/>
       }
     </div>
     <CompactErrorPanel error={error} border={"h-pad"}/>

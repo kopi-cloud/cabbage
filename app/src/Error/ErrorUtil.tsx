@@ -9,7 +9,15 @@ export function isError<T>(e: T | Error): e is Error{
   if( e === undefined ){
     return false;
   }
-  return (e as Error).stack !== undefined;
+
+  const error = e as Error;
+  if( !error.name){
+    return false;
+  }
+  if( !error.message ){
+    return false;
+  }
+  return true;
 }
 
 export function isErrorInfo<T>(e: T | ErrorInfo): e is ErrorInfo{

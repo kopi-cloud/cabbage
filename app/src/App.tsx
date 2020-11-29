@@ -6,6 +6,10 @@ import {WelcomeScreen} from "Screen/WelcomeScreen";
 import {ErrorDialogProvider} from "Error/ErrorDialog";
 import {ReactErrorBoundary} from "Error/ReactErrorBoundary";
 import {SupabaseProvider} from "Api/SupabaseProvider";
+import {NavigationProvider} from "Navigation/NavigationProvider";
+import {IndexScreen} from "Screen/IndexScreen";
+import {SignupScreen} from "Screen/SignupScreen";
+import {UserScreen} from "Screen/UserScreen";
 
 export function App(){
   return <MuiThemeProvider theme={theme}>
@@ -13,7 +17,12 @@ export function App(){
     <ReactErrorBoundary>
       <ErrorDialogProvider>
         <SupabaseProvider>
-          <WelcomeScreen/>
+          <NavigationProvider>
+            <IndexScreen/>
+            <WelcomeScreen/>
+            <SignupScreen/>
+            <UserScreen/>
+          </NavigationProvider>
         </SupabaseProvider>
       </ErrorDialogProvider>
     </ReactErrorBoundary>

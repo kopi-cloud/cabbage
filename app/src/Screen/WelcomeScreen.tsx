@@ -6,47 +6,38 @@ import {
   NewWindowLink,
   supabaseUrl
 } from "Component/ExternalLinks";
-import {TextSpan} from "Component/TextSpan";
 import React from "react";
-import {PrimaryButton} from "Component/CabbageButton";
-import Popover from "@material-ui/core/Popover";
 import {Config} from "Config";
 import {useSupabase} from "Api/SupabaseProvider";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
+import {EmailLoginContainer} from "Screen/EmailLoginContainer";
+import {NavTransition} from "Navigation/NavigationProvider";
 
 const log = console;
 
+
+const welcomeUrl = "/welcome";
+
+
+export function getWelcomeScreenLink(): string{
+  return welcomeUrl;
+}
+
+export function isWelcomeScreenPath(path: String): boolean{
+  const normalizedPath = path.toLowerCase();
+  return normalizedPath.startsWith(welcomeUrl);
+}
+
 export function WelcomeScreen(){
-  return <>
+  return <NavTransition isPath={isWelcomeScreenPath} title={"Cabbage"}>
     <IntroContainer/>
+    <EmailLoginContainer/>
     <CabbageCountContainer/>
-    <LoginContainer/>
-  </>
+  </NavTransition>
 }
 
-function LoginContainer(){
-  const [anchorEl, setAnchorEl] = React.useState(null as
-    null | HTMLButtonElement);
-
-  function onClick(event: React.MouseEvent<HTMLButtonElement>){
-    setAnchorEl(event.currentTarget);
-  }
-
-  function onClose(){
-    setAnchorEl(null);
-  }
-
-  const isOpen = Boolean(anchorEl);
-
-  return <SmallScreenContainer center>
-    <PrimaryButton onClick={onClick}>Log in to Cabbage</PrimaryButton>
-    <Popover open={isOpen} anchorEl={anchorEl} onClose={onClose}>
-      <TextSpan>Sorry, not yet implemented.</TextSpan>
-    </Popover>
-  </SmallScreenContainer>
-}
 
 function IntroContainer(){
   return <SmallScreenContainer center>
