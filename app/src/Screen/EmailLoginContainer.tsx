@@ -35,8 +35,8 @@ function EmailLoginForm(){
   const {db} = useSupabase();
   const nav = useNavigation();
   const location = useLocation();
-  const [email, setEmail] = React.useState("wibble@wobble");
-  const [password, setPassword] = React.useState("wobble");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [isLoggingIn, setIsLoggingIn] = React.useState(false);
   const [loginError, setLoginError] = React.useState(undefined as
     undefined | ErrorInfo);
