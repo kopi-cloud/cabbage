@@ -9,3 +9,7 @@ and use whatever version is specified in build.gradle.
   * create-react-app project
   * material-ui as the component library
   * deployed to netlify, see [netlify.toml](/netlify.toml)
+
+[App.tsx](/src/App.tsx) comprises the structure of the app.
+
+

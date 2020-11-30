@@ -1,11 +1,10 @@
 # Cabbage
 
+The `tst` branch is published at: 
+[rabbit-cabbage.netlify.app](https://rabbit-cabbage.netlify.app/).
+
 Cabbage is my play area for learning about 
 [Supabase](https://github.com/supabase/supabase).
-
-The app is published on Netlify: 
-[rabbit-cabbage](https://rabbit-cabbage.netlify.app/) 
-(site is published from the `tst` branch).
 
 I'm using Gradle, Flyway, Java etc. just because they're the tools that I know 
 best, not saying this is the right way to do it.

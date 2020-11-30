@@ -48,7 +48,7 @@ function IntroContainer(){
       via <NewWindowLink href={netlifyUrl}>Netlify</NewWindowLink>.
     </Typography>
     <Typography>You can find the source code for Cabbage over
-      on <NewWindowLink href={cabbageGithubUrl}>Gihub</NewWindowLink>.
+      on <NewWindowLink href={cabbageGithubUrl}>Github</NewWindowLink>.
       <br/>
       This app was published from the `{Config.environmentName}` branch.
     </Typography>

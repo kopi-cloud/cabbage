@@ -10,6 +10,9 @@ export function isIndexPath(path: string){
   return indexUrls.includes(normalizedPath);
 }
 
+/** Index screen redirets to welcome screen if user is not logged in, or home
+ * screen if they are logged in.
+ */
 export function IndexScreen(){
   const location = useLocation();
 
