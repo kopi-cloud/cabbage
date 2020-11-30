@@ -1,7 +1,7 @@
 # Cabbage
 
 The `tst` branch is published at: 
-[rabbit-cabbage.netlify.app](https://rabbit-cabbage.netlify.app/).
+[rabbit-cabbage.netlify.app](https://rabbit-cabbage.netlify.app/)
 
 Cabbage is my play area for learning about 
 [Supabase](https://github.com/supabase/supabase).

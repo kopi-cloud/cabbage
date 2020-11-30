@@ -10,6 +10,6 @@ and use whatever version is specified in build.gradle.
   * material-ui as the component library
   * deployed to netlify, see [netlify.toml](/netlify.toml)
 
-[App.tsx](/src/App.tsx) comprises the structure of the app.
+[App.tsx](src/App.tsx) comprises the structure of the app.
 
 
