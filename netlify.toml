@@ -6,3 +6,9 @@ publish = "/build"
 
 command = "npm run-script build"
 
+# /* / 200
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200
+
