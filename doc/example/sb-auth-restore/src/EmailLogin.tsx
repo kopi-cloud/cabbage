@@ -64,10 +64,17 @@ function CurrentUserWidget({onClick}:{onClick: ()=>void}){
 }
 
 function LogoutForm(){
-  return <button onClick={async e => {
+  const [isLoggingOut, setIsLoggingOut] = React.useState(false);
+  return <button disabled={isLoggingOut} onClick={async e => {
     e.preventDefault();
+    setIsLoggingOut(true);
     // doesn't need to force render because onAuthStateChange() will fire
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut();
+    }
+    finally {
+      setIsLoggingOut(false);
+    }
   }}>
     log out
   </button>
