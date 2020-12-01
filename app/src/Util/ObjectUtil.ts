@@ -2,7 +2,7 @@ import * as React from "react";
 
 const log = console;
 
-export function safeStringify(o: any, indented: undefined|"indented"=undefined){
+export function safeStringify(o: any, indented: undefined|"2-indent"=undefined){
   if( o === undefined ){
     return "[undefined]";
   }
@@ -22,7 +22,7 @@ export function safeStringify(o: any, indented: undefined|"indented"=undefined){
   react node - boom: "TypeError: Converting circular structure to JSON".
   That's why the actual call must be inside a try/catch.
   */
-  if( indented ){
+  if( indented === "2-indent" ){
     try {
       return JSON.stringify(o, null, 2);
     } catch( e ){
