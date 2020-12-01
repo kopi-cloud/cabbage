@@ -17,11 +17,6 @@ export function EmailLogin(){
     ` session=${supabase.auth.session()}` );
 
   React.useEffect(()=>{
-    setTimeout(()=>{
-      log.debug("EmailLogin setTimeout()" +
-        ` session.user.email=${supabase.auth.session()?.user?.email}`);
-    }, 200);
-
     supabase.auth.onAuthStateChange((event, session)=>{
       log.debug("onAuthStateChange()", {event, session});
       setForceRender((value)=>{
@@ -30,6 +25,12 @@ export function EmailLogin(){
       });
     });
 
+    // this is just for debugging, to show that the SB session appears
+    // to be set asyncronously, with no authStateChange fired
+    setTimeout(()=>{
+      log.debug("EmailLogin setTimeout()" +
+        ` session.user.email=${supabase.auth.session()?.user?.email}`);
+    }, 200);
   }, [])
 
 
@@ -56,10 +57,7 @@ function CurrentUserWidget({onClick}:{onClick: ()=>void}){
   return <div>
     <div>current session email: {supabase.auth.session()?.user?.email}</div>
     <br/>
-    <button onClick={e=>{
-      e.preventDefault();
-      onClick();
-    }}>
+    <button onClick={e=>{e.preventDefault();onClick();}}>
       force render
     </button>
   </div>
@@ -90,6 +88,7 @@ function EmailLoginForm(){
     setLoginError(undefined);
 
     try {
+      // doesn't need to force render because onAuthStateChange() will fire
       const result = await supabase.auth.signIn({email, password});
       log.debug("sb login result", result);
 
