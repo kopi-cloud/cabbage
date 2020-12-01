@@ -7,6 +7,17 @@ export const supabase = createClient(
   process.env.REACT_APP_SUPBASE_URL!,
   process.env.REACT_APP_SUPABASE_KEY! );
 
+// just to prove that I didn't miss any events before react renders EmailLogin
+supabase.auth.onAuthStateChange((event, session)=>{
+  log.debug("global onAuthStateChange()", {event, session});
+});
+
+log.debug("createClient() result", {
+  session: supabase.auth?.session(),
+  user: supabase.auth?.user()
+});
+
+
 export function EmailLogin(){
   const [forceRender, setForceRender] = React.useState(0);
 
