@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {useSupabase} from "Api/SupabaseProvider";
 import {safeStringify} from "Util/ObjectUtil";
+import { TextSpan } from "Component/TextSpan";
 
 const log = console;
 
@@ -27,9 +28,11 @@ export function UserScreen(){
       <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
         User details
       </Typography>
-      <Typography paragraph>
-        {safeStringify(user)}
-      </Typography>
+      <TextSpan paragraph>
+          <pre style={{overflowX: 'auto'}}>
+            {safeStringify(user, '2-indent')}
+          </pre>
+      </TextSpan>
     </SmallScreenContainer>
   </NavTransition>
 }
