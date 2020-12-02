@@ -7,17 +7,6 @@ export const supabase = createClient(
   process.env.REACT_APP_SUPBASE_URL!,
   process.env.REACT_APP_SUPABASE_KEY! );
 
-// just to prove that I didn't miss any events before react renders EmailLogin
-supabase.auth.onAuthStateChange((event, session)=>{
-  log.debug("global onAuthStateChange()", {event, session});
-});
-
-log.debug("createClient() result", {
-  session: supabase.auth?.session(),
-  user: supabase.auth?.user()
-});
-
-
 export function EmailLogin(){
   const [forceRender, setForceRender] = React.useState(0);
 
@@ -36,12 +25,28 @@ export function EmailLogin(){
       });
     });
 
-    // this is just for debugging, to show that the SB session appears
-    // to be set asyncronously, with no authStateChange fired
+    /* supabase session restore is async, see:
+     https://github.com/supabase/supabase/discussions/318
+     https://github.com/supabase/gotrue-js/blob/f21a620dc3719b7d34aa1bb3ccb5cdb0b1e8c1d9/src/GoTrueClient.ts#L57
+     https://stackoverflow.com/a/14529748/924597
+     As per linked gotrue code, the timeout() for doing the session restore has
+     already been scheduled when createClient() returns.  As per the linked SO
+     answer, our timeout() call should be guaranteed to run /after/ the gotrue
+     timeout. See /doc/example/sb-auth-restore for an example. */
     setTimeout(()=>{
       log.debug("EmailLogin setTimeout()" +
         ` session.user.email=${supabase.auth.session()?.user?.email}`);
-    }, 200);
+
+      /* manually add "/restoreSessionFix" to browser location and the problem
+       will be gone - refresh the browser and "current sesssion email" will
+       show the expected value. */
+      if( window.location.pathname.indexOf('restoreSessionFix') >= 0 ){
+        setForceRender((value)=>{
+          log.debug("forcing render after session restore timeout");
+          return value+1;
+        });
+      }
+    });
   }, [])
 
 
