@@ -1,5 +1,7 @@
 
-Example project for showing the auth issue I'm having with supabase.
+This directory is a standalone project  - it's not part of the Cabbage app. 
+The project's purpose is to show the auth issue I was having with supabase
+in a simplified context.
 
 Published at: https://rabbit-sb-auth-restore.netlify.app/ 
 
