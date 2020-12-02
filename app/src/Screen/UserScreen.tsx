@@ -19,10 +19,7 @@ export function isUserScreenPath(path: String): boolean{
 }
 
 export function UserScreen(){
-  const {db} = useSupabase();
-  const user = db.auth.user()
-  const session = db.auth.session();
-
+  const {session, user} = useSupabase();
   log.debug("user screen", {user, session});
 
   return <NavTransition isPath={isUserScreenPath} title={"Cabbage - user home"}>
