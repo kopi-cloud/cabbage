@@ -4,7 +4,7 @@ base = "app"
 
 publish = "/build"
 
-command = "npm run-script build"
+command = "REACT_APP_COMMIT_REF=$COMMIT_REF npm run-script build"
 
 # /* / 200
 [[redirects]]
