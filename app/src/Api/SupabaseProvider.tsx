@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useContext} from "react";
+import {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import {SmallScreenSpinner} from "Component/SmallScreenSpinner";
 import {Config} from "Config";
 import {createClient} from "@supabase/supabase-js";
@@ -23,22 +23,18 @@ export interface SupabaseApi {
 
 // use() call will return this if you forgot to add a provider
 export const SupabaseApiContext: React.Context<SupabaseApi> =
-  React.createContext({db: "no SupabaseProvider"} as unknown as SupabaseApi);
+  createContext({db: "no SupabaseProvider"} as unknown as SupabaseApi);
 
 export const useSupabase = ()=> useContext(SupabaseApiContext);
 
-export function SupabaseProvider({children}: {children: React.ReactNode}){
-  const [supabaseClient, setSupabaseClient] = React.useState(undefined as
-    undefined|SupabaseClient );
-  const [subabaseSession, setSupabaseSession] = React.useState(null as
-    null|Session );
-  const [subabaseUser, setSupabaseUser] = React.useState(null as
-    null|User );
-  const [isAnonKeyValid, setIsAnonKeyValid] = React.useState(true);
+export function SupabaseProvider({children}: {children: ReactNode}){
+  const [apiState, setApiState] = useState(undefined as undefined|SupabaseApi);
+  const [isAnonKeyValid, setIsAnonKeyValid] = useState(true);
 
-  /* IMPROVE: implementation is too verbose both in terms of code and logging.
-   The conditionals can probably be collapsed if the logging is removed. */
-  React.useEffect(()=>{
+  /* IMPROVE: too verbose both in terms of code and logging.
+   Most conditionals can probably be collapsed if the logging is removed,
+   especially with the state now squished down into apiState. */
+  useEffect(()=>{
     if( !Config.supabaseAnonKey ){
       log.error("supabaseAnonKey is not set, this is a built problem");
       setIsAnonKeyValid(false);
@@ -46,36 +42,42 @@ export function SupabaseProvider({children}: {children: React.ReactNode}){
     }
 
     function onAuthStateChange(
-      authEvent: AuthChangeEvent | "session-restored",
+      authEvent: AuthChangeEvent,
       session : Session | null
     ){
       log.debug("supabase auth state change", {
         authEvent, session, user: session?.user });
-      setSupabaseSession(session);
-      setSupabaseUser(session?.user ?? null)
+      setApiState((apiState)=>{
+        if( !apiState ) throw new Error("change event with no apiState");
+        return {db: apiState.db, session: session, user: session?.user ?? null}
+      });
     }
 
     const newClient = createClient(Config.supabaseUrl, Config.supabaseAnonKey)
     const subscription = newClient.auth.onAuthStateChange(onAuthStateChange);
-    function unsubscribe(){
+    function cleanup(){
       subscription.data?.unsubscribe();
     }
     log.debug("subabase client created");
 
     if( newClient.auth.session() ){
+      // don't think I've seen this happen
       log.debug("SupabaseClient already has session");
-      setSupabaseClient(newClient);
-      setSupabaseSession(newClient.auth.session());
-      setSupabaseUser(newClient.auth.session()?.user ?? null)
-      return unsubscribe;
+      setApiState({
+        db: newClient,
+        session: newClient.auth.session(),
+        user: newClient.auth?.session()?.user ?? null });
+      return cleanup;
     }
 
     if( !localStorage.getItem(STORAGE_KEY) ){
+      // user never logged in, deleted localstorage, or previously logged out
       log.debug("no supabase token found in localstorage");
-      setSupabaseClient(newClient);
-      setSupabaseSession(newClient.auth.session());
-      setSupabaseUser(newClient.auth.session()?.user ?? null)
-      return unsubscribe;
+      setApiState({
+        db: newClient,
+        session: newClient.auth.session(),
+        user: newClient.auth?.session()?.user ?? null });
+      return cleanup;
     }
 
     /* session restore is async, see:
@@ -90,19 +92,23 @@ export function SupabaseProvider({children}: {children: React.ReactNode}){
     setTimeout(()=>{
       if( newClient.auth.session() ){
         log.debug("supabase session restored");
-        onAuthStateChange("session-restored", newClient.auth.session());
+        setApiState({
+          db: newClient,
+          session: newClient.auth.session(),
+          user: newClient.auth?.session()?.user ?? null });
       }
       else {
-        // shouldn't happen, if you see this - maybe something in SB changed?
+        /* likely because session token exists, but was expired - in which case
+        gotrue deletes the token and does not restore the session. */
         log.debug("no supabase session was restored");
+        setApiState({
+          db: newClient,
+          session: newClient.auth.session(),
+          user: newClient.auth?.session()?.user ?? null });
       }
-      /* important to set client /after/ firing change so that children will
-      not be rendered with no session/user set
-      (user will just continue seeing the "!supabaseClient spinner") */
-      setSupabaseClient(newClient);
     });
 
-    return unsubscribe;
+    return cleanup;
   }, []);
 
   if( !isAnonKeyValid ){
@@ -111,16 +117,12 @@ export function SupabaseProvider({children}: {children: React.ReactNode}){
     </TextSpan></SmallScreenContainer>
   }
 
-  if( !supabaseClient ){
-    log.debug("showing spinner while creating supabase client");
+  if( !apiState ){
+    log.debug("showing spinner while creating supabase apiState");
     return <SmallScreenSpinner message={"Configuring Supabase API"}/>
   }
 
-  return <SupabaseApiContext.Provider value={{
-    db: supabaseClient,
-    session: subabaseSession,
-    user: subabaseUser,
-  }}>
+  return <SupabaseApiContext.Provider value={apiState}>
     {children}
   </SupabaseApiContext.Provider>
 }

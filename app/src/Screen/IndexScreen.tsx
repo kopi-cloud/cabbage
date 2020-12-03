@@ -1,5 +1,5 @@
 import {useLocation} from "Navigation/UseLocation";
-import {getWelcomeScreenLink} from "Screen/WelcomeScreen";
+import {getWelcomeScreenLink} from "Screen/Welcome/WelcomeScreen";
 
 const log = console;
 

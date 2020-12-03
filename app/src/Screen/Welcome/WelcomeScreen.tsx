@@ -12,8 +12,8 @@ import {useSupabase} from "Api/SupabaseProvider";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
-import {EmailLoginContainer} from "Screen/EmailLoginContainer";
 import {NavTransition} from "Navigation/NavigationProvider";
+import {SignInContainer} from "Screen/Welcome/SigninContainer";
 
 const log = console;
 
@@ -33,7 +33,7 @@ export function isWelcomeScreenPath(path: String): boolean{
 export function WelcomeScreen(){
   return <NavTransition isPath={isWelcomeScreenPath} title={"Cabbage"}>
     <IntroContainer/>
-    <EmailLoginContainer/>
+    <SignInContainer/>
     <CabbageCountContainer/>
   </NavTransition>
 }
@@ -50,7 +50,8 @@ function IntroContainer(){
     <Typography>You can find the source code for Cabbage over
       on <NewWindowLink href={cabbageGithubUrl}>Github</NewWindowLink>.
       <br/>
-      This app was published from the `{Config.environmentName}` branch.
+      This app was published from the `{Config.environmentName}` branch
+      ({Config.gitCommit.substr(0, 8).trim()}).
     </Typography>
   </SmallScreenContainer>
 }

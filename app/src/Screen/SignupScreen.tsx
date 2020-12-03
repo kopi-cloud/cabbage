@@ -119,7 +119,9 @@ function EmailSignupForm(){
         inputProps={{autoCapitalize: "none"}}
       />
       <br/>
-      <ButtonContainer justifyRight error={signupError}>
+      <ButtonContainer  error={signupError}
+        style={{justifyContent: 'flex-end'}}
+      >
         <SecondaryButton disabled={isSigningUp}
           onClick={(e)=>{stopClick(e);window.history.back();}}
         >

@@ -1,7 +1,8 @@
 import React from "react";
-import {Link as MuiLink} from "@material-ui/core";
+import {ButtonProps, Link as MuiLink} from "@material-ui/core";
 import {useNavigation} from "Navigation/NavigationProvider";
 import {stopClick} from "Util/EventUtil";
+import Button from "@material-ui/core/Button";
 
 /** Just for convenience so caller doesn't need to inject nav,
  * duplicate href and weird typing of mui Link.
@@ -20,4 +21,20 @@ export function Link({href, children}:{
   >
     {children}
   </MuiLink>
+}
+
+export function NavButton({href, children, ...buttonProps}:{
+  href:string,
+  children: React.ReactNode
+} & ButtonProps ){
+  const nav = useNavigation();
+  return <Button {...buttonProps} variant="text"
+    style={{...buttonProps.style, textTransform: "none"}}
+    onClick={(e)=>{
+      stopClick(e);
+      nav.navigateTo(e, href);
+    }}
+  >
+    {children}
+  </Button>
 }
