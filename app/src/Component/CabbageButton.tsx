@@ -36,7 +36,9 @@ export function PrimaryButton({ isLoading, error, ...buttonProps }:
   return <>
     {/*for the absolute positioning of linearProgress*/}
     <div style={{position: "relative",}}>
-      <Button {...primaryButtonProps} {...buttonProps}/>
+      <Button {...primaryButtonProps} {...buttonProps}
+        style={{...primaryButtonProps.style}}
+      />
       { isLoading &&
         <LinearProgress style={{...primaryLinearStyle}}/>
       }

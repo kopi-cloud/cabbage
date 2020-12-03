@@ -12,6 +12,7 @@ import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import {stopClick} from "Util/EventUtil";
 import {useNavigation} from "Navigation/NavigationProvider";
 import Divider from "@material-ui/core/Divider";
+import {GitHub, YouTube} from "@material-ui/icons";
 
 const log = console;
 
@@ -113,18 +114,21 @@ export function SignInContainer(){
       <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
         SSO sign in
       </Typography>
-      <div style={{display: "flex", justifyContent: "space-around"}}>
+      <div style={{display: "flex", justifyContent: "center"}}>
         <PrimaryButton disabled={disabled}
           isLoading={currentAction === "google sign in"}
           onClick={onGoogleSignIn}
+          endIcon={<YouTube/>}
         >
-          Sign in with Google
+          Google
         </PrimaryButton>
+        &emsp;
         <PrimaryButton disabled={disabled}
           isLoading={currentAction === "github sign in"}
           onClick={onGithubSignIn}
+          endIcon={<GitHub/>}
         >
-          Sign in with Github
+          Github
         </PrimaryButton>
       </div>
     </>

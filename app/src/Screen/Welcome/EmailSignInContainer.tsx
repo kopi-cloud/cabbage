@@ -5,6 +5,7 @@ import {NavButton} from "Navigation/Link";
 import {TextField} from "@material-ui/core";
 import {ButtonContainer} from "Component/ButtonContainer";
 import Typography from "@material-ui/core/Typography";
+import {MailOutline} from "@material-ui/icons";
 
 const log = console;
 
@@ -70,6 +71,7 @@ export function EmailSignInContainer({
         </NavButton>
         <PrimaryButton type="submit" isLoading={isSigningIn}
           disabled={!canClickLogin || disabled}
+          endIcon={<MailOutline/>}
         >
           Sign in
         </PrimaryButton>
