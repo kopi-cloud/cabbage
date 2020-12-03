@@ -18,8 +18,8 @@ const log = console;
 export function SignInContainer(){
   const {db, user} = useSupabase();
   const nav = useNavigation();
-  const [currentAction, setCurrentAction] = useState(undefined as
-    undefined | "email sign in" | "google sign in" | "signing out");
+  const [currentAction, setCurrentAction] = useState(undefined as undefined |
+    "email sign in" | "google sign in" | "github sign in" | "signing out");
   const [lastActionError, setLastActionError] = useState(
     undefined as undefined | ErrorInfo);
 
@@ -77,6 +77,21 @@ export function SignInContainer(){
     // leave currentAction so controls are disabled for browser SSO navigation
   }
 
+  async function onGithubSignIn(event: SyntheticEvent,){
+    stopClick(event);
+    setCurrentAction("github sign in");
+
+    const result = await db.auth.signIn({provider: "github"});
+    log.debug("github signin result", result);
+    if( result.error ){
+      setLastActionError({ problem: result.error,
+        message: result.error.message ?? "error while signing in via github"
+      });
+    }
+
+    // leave currentAction so controls are disabled for browser SSO navigation
+  }
+
   const disabled = !!currentAction;
 
   let content;
@@ -104,6 +119,12 @@ export function SignInContainer(){
           onClick={onGoogleSignIn}
         >
           Sign in with Google
+        </PrimaryButton>
+        <PrimaryButton disabled={disabled}
+          isLoading={currentAction === "github sign in"}
+          onClick={onGithubSignIn}
+        >
+          Sign in with Github
         </PrimaryButton>
       </div>
     </>

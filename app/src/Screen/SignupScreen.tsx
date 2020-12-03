@@ -39,7 +39,6 @@ export function SignupScreen(){
 function EmailSignupForm(){
   const {db} = useSupabase();
   const nav = useNavigation();
-  const location = useLocation();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isSigningUp, setIsSigningUp] = React.useState(false);
