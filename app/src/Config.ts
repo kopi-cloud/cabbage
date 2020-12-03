@@ -43,6 +43,7 @@ const sharedConfig = {
   buildDate: process.env.REACT_APP_BUILD_DATE_MS ||
     new Date().getTime().toString(),
   supabaseAnonKey: process.env.REACT_APP_SUPABASE_ANON_KEY,
+  gitCommit: process.env.REACT_APP_COMMIT_REF ?? "unknown commit",
 };
 
 
