@@ -11,6 +11,7 @@ import {EmailSignInContainer} from "Screen/Welcome/EmailSignInContainer";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import {stopClick} from "Util/EventUtil";
 import {useNavigation} from "Navigation/NavigationProvider";
+import Divider from "@material-ui/core/Divider";
 
 const log = console;
 
@@ -18,7 +19,7 @@ export function SignInContainer(){
   const {db, user} = useSupabase();
   const nav = useNavigation();
   const [currentAction, setCurrentAction] = useState(undefined as
-    undefined | "signing in via email" | "signing out");
+    undefined | "email sign in" | "google sign in" | "signing out");
   const [lastActionError, setLastActionError] = useState(
     undefined as undefined | ErrorInfo);
 
@@ -44,7 +45,7 @@ export function SignInContainer(){
     password: string
   ){
     stopClick(event);
-    setCurrentAction("signing in via email");
+    setCurrentAction("email sign in");
     setLastActionError(undefined);
 
     const result = await db.auth.signIn({email, password});
@@ -61,6 +62,21 @@ export function SignInContainer(){
     }
   }
 
+  async function onGoogleSignIn(event: SyntheticEvent,){
+    stopClick(event);
+    setCurrentAction("google sign in");
+
+    const result = await db.auth.signIn({provider: "google"});
+    log.debug("google signin result", result);
+    if( result.error ){
+      setLastActionError({ problem: result.error,
+        message: result.error.message ?? "error while signing in via google"
+      });
+    }
+
+    // leave currentAction so controls are disabled for browser SSO navigation
+  }
+
   const disabled = !!currentAction;
 
   let content;
@@ -71,10 +87,26 @@ export function SignInContainer(){
     />
   }
   else {
-    content = <EmailSignInContainer disabled={disabled}
-      isSigningIn={currentAction === "signing in via email"}
-      onSignIn={onEmailSignIn}
-    />
+    content = <>
+      <EmailSignInContainer disabled={disabled}
+        isSigningIn={currentAction === "email sign in"}
+        onSignIn={onEmailSignIn}
+      />
+      <br/>
+      <Divider variant={"middle"}/>
+      <br/>
+      <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
+        SSO sign in
+      </Typography>
+      <div style={{display: "flex", justifyContent: "space-around"}}>
+        <PrimaryButton disabled={disabled}
+          isLoading={currentAction === "google sign in"}
+          onClick={onGoogleSignIn}
+        >
+          Sign in with Google
+        </PrimaryButton>
+      </div>
+    </>
   }
 
   return <SmallScreenContainer center>

@@ -12,6 +12,7 @@ import {
   User
 } from '@supabase/gotrue-js/dist/main/lib/types';
 import { STORAGE_KEY } from '@supabase/gotrue-js/dist/main/lib/constants';
+import {safeStringify} from "Util/ObjectUtil";
 
 const log = console;
 
@@ -71,8 +72,10 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     }
 
     if( !localStorage.getItem(STORAGE_KEY) ){
-      // user never logged in, deleted localstorage, or previously logged out
-      log.debug("no supabase token found in localstorage");
+      /* user never logged in, deleted localstorage, previously logged out,
+      or we're being landing a redirect for google SSO */
+      log.debug("no supabase token found in localstorage",
+        safeStringify(newClient));
       setApiState({
         db: newClient,
         session: newClient.auth.session(),
