@@ -10,7 +10,10 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Cabbage</title>
   </head>
-  <body>
+  <!-- scroll-y so that ever screen has a scrollbar, short screens just have
+  a disabled scrollbar - this stops the page "jumping" left and right when
+  scrollbars dis/appear -->
+  <body style="overflow-y: scroll">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
