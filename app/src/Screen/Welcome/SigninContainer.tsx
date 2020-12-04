@@ -4,7 +4,6 @@ import {ErrorInfo} from "Error/ErrorUtil";
 import {SmallScreenContainer} from "Component/Screen";
 import {getUserScreenLink} from "Screen/UserScreen";
 import {EmailSignInContainer} from "Screen/Welcome/EmailSignInContainer";
-import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import {stopClick} from "Util/EventUtil";
 import {useNavigation} from "Navigation/NavigationProvider";
 import Divider from "@material-ui/core/Divider";
@@ -16,17 +15,18 @@ const log = console;
 export type SignInAction =
   "email sign in" | "google sign in" | "github sign in" | "signing out";
 
+/** IMPROVE: this might be better using a reducer? */
 export function SignInContainer(){
   const {db, user} = useSupabase();
   const nav = useNavigation();
-  const [currentAction, setCurrentAction] = useState(undefined as
-    undefined | SignInAction);
-  const [lastEmailError, setLastEmailError] = useState(
-    undefined as undefined | ErrorInfo);
-  const [lastSsoError, setLastSsoError] = useState(
-    undefined as undefined | ErrorInfo);
-  const [lastSignOutError, setLastSignOutError] = useState(
-    undefined as undefined | ErrorInfo);
+  const [currentAction, setCurrentAction] =
+    useState(undefined as undefined | SignInAction);
+  const [lastEmailError, setLastEmailError] =
+    useState(undefined as undefined | ErrorInfo);
+  const [lastSsoError, setLastSsoError] =
+    useState(undefined as undefined | ErrorInfo);
+  const [lastSignOutError, setLastSignOutError] =
+    useState(undefined as undefined | ErrorInfo);
 
   async function onSignOut(event: SyntheticEvent){
     stopClick(event);
@@ -90,27 +90,22 @@ export function SignInContainer(){
 
   const disabled = !!currentAction;
 
-  let content;
   if( user ){
-    content = <CurrentUserContainer disabled={disabled}
-      isSigningOut={currentAction === "signing out"}
-      onSignOut={onSignOut} lastSignOutError={lastSignOutError} />
-  }
-  else {
-    content = <>
-      <EmailSignInContainer disabled={disabled}
-        isSigningIn={currentAction === "email sign in"}
-        onSignIn={onEmailSignIn} lastEmailError={lastEmailError} />
-      <Divider variant={"middle"}/>
-      <br/>
-      <SsoSignInContainer disabled={disabled} onSsoSignIn={onSsoSignIn}
-        currentAction={currentAction} lastSsoError={lastSsoError} />
-    </>
+    return <SmallScreenContainer center>
+      <CurrentUserContainer disabled={disabled}
+        isSigningOut={currentAction === "signing out"}
+        onSignOut={onSignOut} lastSignOutError={lastSignOutError} />
+    </SmallScreenContainer>
   }
 
   return <SmallScreenContainer center>
-    {content}
-    <CompactErrorPanel error={lastSsoError}/>
+    <EmailSignInContainer disabled={disabled}
+      isSigningIn={currentAction === "email sign in"}
+      onSignIn={onEmailSignIn} lastEmailError={lastEmailError} />
+    <Divider variant={"middle"}/>
+    <br/>
+    <SsoSignInContainer disabled={disabled} onSsoSignIn={onSsoSignIn}
+      currentAction={currentAction} lastSsoError={lastSsoError} />
   </SmallScreenContainer>
 }
 

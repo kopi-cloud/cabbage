@@ -8,7 +8,7 @@ import {ReactErrorBoundary} from "Error/ReactErrorBoundary";
 import {SupabaseProvider} from "Api/SupabaseProvider";
 import {NavigationProvider} from "Navigation/NavigationProvider";
 import {IndexScreen} from "Screen/IndexScreen";
-import {SignupScreen} from "Screen/SignupScreen";
+import {SignupScreen} from "Screen/Welcome/SignupScreen";
 import {UserScreen} from "Screen/UserScreen";
 
 export function App(){

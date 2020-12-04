@@ -6,7 +6,6 @@ import {useSupabase} from "Api/SupabaseProvider";
 import {PrimaryButton, SecondaryButton} from "Component/CabbageButton";
 import {stopClick} from "Util/EventUtil";
 import Typography from "@material-ui/core/Typography";
-import {useLocation} from "Navigation/UseLocation";
 import {ButtonContainer} from "Component/ButtonContainer";
 import {ErrorInfo, isError} from "Error/ErrorUtil";
 import {getUserScreenLink} from "Screen/UserScreen";

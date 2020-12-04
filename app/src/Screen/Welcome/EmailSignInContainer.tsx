@@ -1,6 +1,6 @@
 import React, {ChangeEvent, SyntheticEvent} from "react";
 import {PrimaryButton} from "Component/CabbageButton";
-import {getSignupScreenLink} from "Screen/SignupScreen";
+import {getSignupScreenLink} from "Screen/Welcome/SignupScreen";
 import {NavButton} from "Navigation/Link";
 import {TextField} from "@material-ui/core";
 import {ButtonContainer} from "Component/ButtonContainer";
