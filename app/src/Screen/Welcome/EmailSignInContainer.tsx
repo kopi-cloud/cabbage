@@ -6,6 +6,7 @@ import {TextField} from "@material-ui/core";
 import {ButtonContainer} from "Component/ButtonContainer";
 import Typography from "@material-ui/core/Typography";
 import {MailOutline} from "@material-ui/icons";
+import {ErrorInfo} from "Error/ErrorUtil";
 
 const log = console;
 
@@ -13,10 +14,12 @@ export function EmailSignInContainer({
   disabled,
   isSigningIn,
   onSignIn,
+  lastEmailError,
 }:{
   disabled: boolean,
   isSigningIn: boolean,
-  onSignIn: (event: SyntheticEvent, email: string, password: string)=>void
+  onSignIn: (event: SyntheticEvent, email: string, password: string)=>void,
+  lastEmailError?: ErrorInfo,
 }){
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -64,8 +67,9 @@ export function EmailSignInContainer({
         fullWidth={true}
         inputProps={{autoCapitalize: "none"}}
       />
-      <br/>
-      <ButtonContainer style={{justifyContent: 'flex-end'}}>
+      <ButtonContainer style={{justifyContent: 'center', marginTop: "1em"}}
+        error={lastEmailError}
+      >
         <NavButton href={getSignupScreenLink()} style={{marginRight: "1em"}}>
           Sign up
         </NavButton>

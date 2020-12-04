@@ -55,8 +55,8 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     ){
       log.debug("supabase auth state change", {
         authEvent, session, user: session?.user });
-      if( isOauthRedirect.current && session ){
-        log.debug("session restored from oauth redirect");
+      if( authEvent === "SIGNED_IN" && isOauthRedirect.current ){
+        log.debug("session restored from oauth redirect", {session: !!session});
         isOauthRedirect.current = false;
       }
       setApiState((apiState)=>{
@@ -66,6 +66,7 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     }
 
     const newClient = createClient(Config.supabaseUrl, Config.supabaseAnonKey)
+    log.debug("subabase client created");
 
     if( window.location.hash.indexOf('access_token') >= 0 ){
       log.debug("detected this is an oauth redirect");
@@ -76,7 +77,6 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     function cleanup(){
       subscription.data?.unsubscribe();
     }
-    log.debug("subabase client created");
 
     if( newClient.auth.session() ){
       // don't think I've seen this happen
@@ -92,11 +92,6 @@ export function SupabaseProvider({children}: {children: ReactNode}){
       /* user never logged in, deleted localstorage, previously logged out,
       or we're being landing a redirect for google SSO */
       log.debug("X no supabase token found in localstorage");
-      // setApiState({
-      //   db: newClient,
-      //   session: newClient.auth.session(),
-      //   user: newClient.auth?.session()?.user ?? null });
-      // return cleanup;
     }
 
     /* session restore is async, see:

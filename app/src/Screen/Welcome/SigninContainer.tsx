@@ -2,36 +2,40 @@ import {useSupabase} from "Api/SupabaseProvider";
 import React, {SyntheticEvent, useState} from "react";
 import {ErrorInfo} from "Error/ErrorUtil";
 import {SmallScreenContainer} from "Component/Screen";
-import {Typography} from "@material-ui/core";
-import {Link} from "Navigation/Link";
 import {getUserScreenLink} from "Screen/UserScreen";
-import {ButtonContainer} from "Component/ButtonContainer";
-import {PrimaryButton} from "Component/CabbageButton";
 import {EmailSignInContainer} from "Screen/Welcome/EmailSignInContainer";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import {stopClick} from "Util/EventUtil";
 import {useNavigation} from "Navigation/NavigationProvider";
 import Divider from "@material-ui/core/Divider";
-import {GitHub, YouTube} from "@material-ui/icons";
+import {CurrentUserContainer} from "./CurrentUserContainer";
+import {SsoSignInContainer} from "Screen/Welcome/SsoSignInContainer";
 
 const log = console;
+
+export type SignInAction =
+  "email sign in" | "google sign in" | "github sign in" | "signing out";
 
 export function SignInContainer(){
   const {db, user} = useSupabase();
   const nav = useNavigation();
-  const [currentAction, setCurrentAction] = useState(undefined as undefined |
-    "email sign in" | "google sign in" | "github sign in" | "signing out");
-  const [lastActionError, setLastActionError] = useState(
+  const [currentAction, setCurrentAction] = useState(undefined as
+    undefined | SignInAction);
+  const [lastEmailError, setLastEmailError] = useState(
+    undefined as undefined | ErrorInfo);
+  const [lastSsoError, setLastSsoError] = useState(
+    undefined as undefined | ErrorInfo);
+  const [lastSignOutError, setLastSignOutError] = useState(
     undefined as undefined | ErrorInfo);
 
   async function onSignOut(event: SyntheticEvent){
     stopClick(event);
     setCurrentAction("signing out");
-    setLastActionError(undefined);
+    setLastSignOutError(undefined);
     try {
       const result = await db.auth.signOut();
       if( result.error ){
-        setLastActionError({
+        setLastSignOutError({
           message: "error while signing out", problem: result.error });
       }
     }
@@ -47,14 +51,15 @@ export function SignInContainer(){
   ){
     stopClick(event);
     setCurrentAction("email sign in");
-    setLastActionError(undefined);
+    setLastEmailError(undefined);
 
     const result = await db.auth.signIn({email, password});
     log.debug("sb signin result", result);
     const {error} = result;
 
     if( error ){
-      setLastActionError({ problem: error,
+      setCurrentAction(undefined);
+      setLastEmailError({ problem: error,
         message: error.message ?? "error while signing in via email" });
     }
     else {
@@ -63,30 +68,20 @@ export function SignInContainer(){
     }
   }
 
-  async function onGoogleSignIn(event: SyntheticEvent,){
+  async function onSsoSignIn(
+    event: SyntheticEvent,
+    provider: 'google'|'github'
+  ){
     stopClick(event);
-    setCurrentAction("google sign in");
+    setCurrentAction(provider === "google" ?
+      "google sign in" : "github sign in" );
+    setLastSsoError(undefined);
 
-    const result = await db.auth.signIn({provider: "google"});
-    log.debug("google signin result", result);
+    const result = await db.auth.signIn({provider});
+    log.debug(`${provider} signin result`, result);
     if( result.error ){
-      setLastActionError({ problem: result.error,
-        message: result.error.message ?? "error while signing in via google"
-      });
-    }
-
-    // leave currentAction so controls are disabled for browser SSO navigation
-  }
-
-  async function onGithubSignIn(event: SyntheticEvent,){
-    stopClick(event);
-    setCurrentAction("github sign in");
-
-    const result = await db.auth.signIn({provider: "github"});
-    log.debug("github signin result", result);
-    if( result.error ){
-      setLastActionError({ problem: result.error,
-        message: result.error.message ?? "error while signing in via github"
+      setLastSsoError({ problem: result.error,
+        message: result.error.message ?? `error signing in via ${provider}`
       });
     }
 
@@ -99,82 +94,24 @@ export function SignInContainer(){
   if( user ){
     content = <CurrentUserContainer disabled={disabled}
       isSigningOut={currentAction === "signing out"}
-      onSignOut={onSignOut}
-    />
+      onSignOut={onSignOut} lastSignOutError={lastSignOutError} />
   }
   else {
     content = <>
       <EmailSignInContainer disabled={disabled}
         isSigningIn={currentAction === "email sign in"}
-        onSignIn={onEmailSignIn}
-      />
-      <br/>
+        onSignIn={onEmailSignIn} lastEmailError={lastEmailError} />
       <Divider variant={"middle"}/>
       <br/>
-      <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
-        SSO sign in
-      </Typography>
-      <div style={{display: "flex", justifyContent: "center"}}>
-        <PrimaryButton disabled={disabled}
-          isLoading={currentAction === "google sign in"}
-          onClick={onGoogleSignIn}
-          endIcon={<YouTube/>}
-        >
-          Google
-        </PrimaryButton>
-        &emsp;
-        <PrimaryButton disabled={disabled}
-          isLoading={currentAction === "github sign in"}
-          onClick={onGithubSignIn}
-          endIcon={<GitHub/>}
-        >
-          Github
-        </PrimaryButton>
-      </div>
+      <SsoSignInContainer disabled={disabled} onSsoSignIn={onSsoSignIn}
+        currentAction={currentAction} lastSsoError={lastSsoError} />
     </>
   }
 
   return <SmallScreenContainer center>
     {content}
-    <CompactErrorPanel error={lastActionError}/>
+    <CompactErrorPanel error={lastSsoError}/>
   </SmallScreenContainer>
 }
 
-export function CurrentUserContainer({
-  disabled,
-  isSigningOut,
-  onSignOut,
-}:{
-  disabled: boolean,
-  isSigningOut: boolean,
-  onSignOut: (event: SyntheticEvent)=>void
-}){
-  const {user} = useSupabase();
 
-  if( !user ){
-    return <SmallScreenContainer center>
-      <Typography paragraph>
-        You are not currently signed in.
-      </Typography>
-    </SmallScreenContainer>
-  }
-
-  return <>
-    <Typography paragraph>
-      You are currently signed in
-      via '{user.app_metadata.provider ?? 'unknown'}'{' '}
-      as '{user.email ?? 'unknown'}'.
-    </Typography>
-    <Typography paragraph>
-      Sign out if you want to change user, or click here to go to
-      the <Link href={getUserScreenLink()}>home screen</Link>.
-    </Typography>
-    <ButtonContainer style={{justifyContent: 'space-around'}}>
-      <PrimaryButton isLoading={isSigningOut} disabled={disabled}
-        onClick={onSignOut}
-      >
-        Sign out
-      </PrimaryButton>
-    </ButtonContainer>
-  </>
-}
