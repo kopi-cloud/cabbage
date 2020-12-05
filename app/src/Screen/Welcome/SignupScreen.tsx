@@ -68,7 +68,7 @@ function EmailSignupForm(){
       }
       else {
         log.debug("after signup auth.user", db.auth.user());
-        nav.navigateTo(event, getUserScreenLink());
+        nav.navigateTo(getUserScreenLink(), event);
       }
 
     }

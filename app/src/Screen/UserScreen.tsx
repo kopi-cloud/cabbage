@@ -5,6 +5,7 @@ import React from "react";
 import {useSupabase} from "Api/SupabaseProvider";
 import {safeStringify} from "Util/ObjectUtil";
 import { TextSpan } from "Component/TextSpan";
+import {CurrentUser} from "Component/CurrentUser";
 
 const log = console;
 
@@ -28,6 +29,7 @@ export function UserScreen(){
       <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
         User details
       </Typography>
+      <CurrentUser/>
       <TextSpan paragraph>
           <pre style={{overflowX: 'auto'}}>
             {safeStringify(user, '2-indent')}

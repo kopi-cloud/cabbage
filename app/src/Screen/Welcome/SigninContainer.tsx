@@ -2,12 +2,11 @@ import {useSupabase} from "Api/SupabaseProvider";
 import React, {SyntheticEvent, useState} from "react";
 import {ErrorInfo} from "Error/ErrorUtil";
 import {SmallScreenContainer} from "Component/Screen";
-import {getUserScreenLink} from "Screen/UserScreen";
 import {EmailSignInContainer} from "Screen/Welcome/EmailSignInContainer";
 import {stopClick} from "Util/EventUtil";
 import {useNavigation} from "Navigation/NavigationProvider";
 import Divider from "@material-ui/core/Divider";
-import {CurrentUserContainer} from "./CurrentUserContainer";
+import {CurrentUserSignOutContainer} from "./CurrentUserSignOutContainer";
 import {SsoSignInContainer} from "Screen/Welcome/SsoSignInContainer";
 
 const log = console;
@@ -16,7 +15,7 @@ export type SignInAction =
   "email sign in" | "google sign in" | "github sign in" | "signing out";
 
 /** IMPROVE: this might be better using a reducer? */
-export function SignInContainer(){
+export function SignInContainer({signInRedirect}:{signInRedirect?: string}){
   const {db, user} = useSupabase();
   const nav = useNavigation();
   const [currentAction, setCurrentAction] =
@@ -64,7 +63,6 @@ export function SignInContainer(){
     }
     else {
       // leave currentAction so controls are disabled during animation
-      nav.navigateTo(event, getUserScreenLink());
     }
   }
 
@@ -84,18 +82,32 @@ export function SignInContainer(){
         message: result.error.message ?? `error signing in via ${provider}`
       });
     }
-
-    // leave currentAction so controls are disabled for browser SSO navigation
+    else {
+      // leave currentAction so controls are disabled for browser SSO navigation
+    }
   }
 
   const disabled = !!currentAction;
 
   if( user ){
-    return <SmallScreenContainer center>
-      <CurrentUserContainer disabled={disabled}
-        isSigningOut={currentAction === "signing out"}
-        onSignOut={onSignOut} lastSignOutError={lastSignOutError} />
-    </SmallScreenContainer>
+    if( signInRedirect ){
+      log.debug("user is signed in, naving to screen", signInRedirect);
+      /* navigation is usually done during event handling, but here we're
+       rendering; so use a timeout to do the hav *after* rendering otherwise
+       react will complain about setting NavProvider state during rendering
+       of SignInContainer. */
+      setTimeout(()=>nav.navigateTo(signInRedirect));
+
+      /* let render fall through to displaying the signin container, no
+      point showing something different for one or two renders */
+    }
+    else {
+      return <SmallScreenContainer center>
+        <CurrentUserSignOutContainer disabled={disabled}
+          isSigningOut={currentAction === "signing out"}
+          onSignOut={onSignOut} lastSignOutError={lastSignOutError} />
+      </SmallScreenContainer>
+    }
   }
 
   return <SmallScreenContainer center>

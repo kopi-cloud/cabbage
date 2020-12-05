@@ -16,7 +16,7 @@ export function Link({href, children}:{
     // have to define type with using m-ui Link, no idea why
     onClick={(e:React.SyntheticEvent)=>{
       stopClick(e);
-      nav.navigateTo(e, href);
+      nav.navigateTo(href, e);
     }}
   >
     {children}
@@ -32,7 +32,7 @@ export function NavButton({href, children, ...buttonProps}:{
     style={{...buttonProps.style, textTransform: "none"}}
     onClick={(e)=>{
       stopClick(e);
-      nav.navigateTo(e, href);
+      nav.navigateTo(href, e);
     }}
   >
     {children}

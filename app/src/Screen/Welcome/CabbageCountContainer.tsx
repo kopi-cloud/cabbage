@@ -5,9 +5,11 @@ import {SmallScreenContainer} from "Component/Screen";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import {Typography} from "@material-ui/core";
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
+import {useIsMounted} from "Util/ReactUtil";
 
 export function CabbageCountContainer(){
   const {db} = useSupabase();
+  const isMounted = useIsMounted();
   const [cabbageCount, setCabbageCount] = React.useState("loading" as
     "loading" | number | ErrorInfo);
   const [incrementError, setIncrementError] = React.useState(undefined as
@@ -15,6 +17,9 @@ export function CabbageCountContainer(){
 
   const getCount = React.useCallback( async ()=>{
     const count = await getWelcomeCount(db);
+    /*avoid error from setting unmounted state, caused byimmediately redirecting
+     away to the /user screen after a SSO login. */
+    if(!isMounted.current) return;
     setCabbageCount( count );
     if( !isErrorInfo(count) ){
       const incResult = await incrementWelcomeCount(db, count+1);
@@ -22,7 +27,7 @@ export function CabbageCountContainer(){
         setIncrementError(incResult);
       }
     }
-  }, [db]);
+  }, [db, isMounted]);
 
   React.useEffect(()=>{
     // noinspection JSIgnoredPromiseFromCall

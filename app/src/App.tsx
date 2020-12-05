@@ -10,20 +10,25 @@ import {NavigationProvider} from "Navigation/NavigationProvider";
 import {IndexScreen} from "Screen/IndexScreen";
 import {SignupScreen} from "Screen/Welcome/SignupScreen";
 import {UserScreen} from "Screen/UserScreen";
+import {AuthenticatedUserProvider} from "Api/AuthenticatedUserProvider";
+import {OtherScreen} from "Screen/OtherScreen";
 
 export function App(){
   return <MuiThemeProvider theme={theme}>
     <CssBaseline/>
     <ReactErrorBoundary>
       <ErrorDialogProvider>
-        <SupabaseProvider>
-          <NavigationProvider>
+        <NavigationProvider>
+          <SupabaseProvider>
             <IndexScreen/>
             <WelcomeScreen/>
             <SignupScreen/>
-            <UserScreen/>
-          </NavigationProvider>
-        </SupabaseProvider>
+            <AuthenticatedUserProvider>
+              <UserScreen/>
+              <OtherScreen/>
+            </AuthenticatedUserProvider>
+          </SupabaseProvider>
+        </NavigationProvider>
       </ErrorDialogProvider>
     </ReactErrorBoundary>
   </MuiThemeProvider>;

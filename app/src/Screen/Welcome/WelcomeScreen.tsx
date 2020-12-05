@@ -11,6 +11,7 @@ import {Config} from "Config";
 import {NavTransition} from "Navigation/NavigationProvider";
 import {SignInContainer} from "Screen/Welcome/SigninContainer";
 import {CabbageCountContainer} from "Screen/Welcome/CabbageCountContainer";
+import {getUserScreenLink} from "Screen/UserScreen";
 
 const log = console;
 
@@ -28,9 +29,11 @@ export function isWelcomeScreenPath(path: String): boolean{
 }
 
 export function WelcomeScreen(){
-  return <NavTransition isPath={isWelcomeScreenPath} title={"Cabbage"}>
+  return <NavTransition isPath={isWelcomeScreenPath}
+    title={"Cabbage - welcome"}
+  >
     <IntroContainer/>
-    <SignInContainer/>
+    <SignInContainer signInRedirect={getUserScreenLink()} />
     <CabbageCountContainer/>
   </NavTransition>
 }

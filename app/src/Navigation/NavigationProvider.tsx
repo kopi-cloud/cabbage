@@ -25,7 +25,7 @@ export const navTime = muiAppDrawerTimeout * 2;
 export interface NavigationState {
   currentLocation: string,
   navigatingTo: string | undefined,
-  navigateTo: (event: SyntheticEvent, to: string) => void,
+  navigateTo: (to: string, event?: SyntheticEvent) => void,
 }
 
 const NavigationContext = React.createContext({} as NavigationState );
@@ -36,8 +36,8 @@ export function NavigationProvider(props: {children: React.ReactNode}){
   const [navigatingTo, setNavigatingTo] = useState(
     undefined as string | undefined );
 
-  const navTo = React.useCallback((event, to)=> {
-    event.preventDefault();
+  const navTo = React.useCallback((to, event)=> {
+    event?.preventDefault();
     setNavigatingTo(to);
     setTimeout(()=>{
       location.pushState(to);

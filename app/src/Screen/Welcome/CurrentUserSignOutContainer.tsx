@@ -8,7 +8,7 @@ import {getUserScreenLink} from "Screen/UserScreen";
 import {ButtonContainer} from "Component/ButtonContainer";
 import {PrimaryButton} from "Component/CabbageButton";
 
-export function CurrentUserContainer({
+export function CurrentUserSignOutContainer({
   disabled,
   isSigningOut,
   onSignOut,

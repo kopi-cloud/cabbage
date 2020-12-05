@@ -1,3 +1,9 @@
+import {TextSpan} from "Component/TextSpan";
+import {Divider} from "@material-ui/core";
+import {LargeScreenContainer} from "Component/Screen";
+import * as React from "react";
+import {ErrorInfoComponent} from "Error/ErrorInforComponent";
+
 /** This component deals with unexpected errors (usally programming errors)
  * during component rendering.
  * See https://reactjs.org/docs/error-boundaries.html
@@ -7,12 +13,6 @@
  * errors while still rendering the normal component hierarchy - we can't
  * show the component hierarchy while it's causing errors.
  */
-import {TextSpan} from "Component/TextSpan";
-import {Divider} from "@material-ui/core";
-import {LargeScreenContainer} from "Component/Screen";
-import * as React from "react";
-import {ErrorInfoComponent} from "Error/ErrorInforComponent";
-
 export class ReactErrorBoundary extends React.Component {
   state = {} as { hasError: undefined|Error };
 
