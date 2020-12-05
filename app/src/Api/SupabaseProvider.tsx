@@ -19,6 +19,8 @@ import {
   User
 } from '@supabase/gotrue-js/dist/main/lib/types';
 import {STORAGE_KEY} from '@supabase/gotrue-js/dist/main/lib/constants';
+import {getUserScreenLink} from "Screen/UserScreen";
+import {useNavigation} from "Navigation/NavigationProvider";
 
 const log = console;
 
@@ -38,6 +40,7 @@ export function SupabaseProvider({children}: {children: ReactNode}){
   const [apiState, setApiState] = useState(undefined as undefined|SupabaseApi);
   const [isAnonKeyValid, setIsAnonKeyValid] = useState(true);
   const isOauthRedirect = useRef(false);
+  const nav = useNavigation();
 
   /* IMPROVE: too verbose both in terms of code and logging.
    Most conditionals can probably be collapsed if the logging is removed,
@@ -58,6 +61,7 @@ export function SupabaseProvider({children}: {children: ReactNode}){
       if( authEvent === "SIGNED_IN" && isOauthRedirect.current ){
         log.debug("session restored from oauth redirect", {session: !!session});
         isOauthRedirect.current = false;
+        nav.navigateTo(getUserScreenLink());
       }
       setApiState((apiState)=>{
         if( !apiState ) throw new Error("change event with no apiState");
@@ -123,7 +127,7 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     });
 
     return cleanup;
-  }, []);
+  }, [nav]);
 
   if( !isAnonKeyValid ){
     return <SmallScreenContainer><TextSpan>

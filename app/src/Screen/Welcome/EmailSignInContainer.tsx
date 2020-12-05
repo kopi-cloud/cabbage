@@ -1,12 +1,12 @@
-import React, {ChangeEvent, SyntheticEvent} from "react";
-import {PrimaryButton} from "Component/CabbageButton";
-import {getSignupScreenLink} from "Screen/Welcome/SignupScreen";
-import {NavButton} from "Navigation/Link";
+import React, {ChangeEvent, SyntheticEvent, useState} from "react";
+import {PrimaryButton, SecondaryButton} from "Component/CabbageButton";
+import {EmailSignupContainer} from "Screen/Welcome/EmailSignupContainer";
 import {TextField} from "@material-ui/core";
 import {ButtonContainer} from "Component/ButtonContainer";
 import Typography from "@material-ui/core/Typography";
 import {MailOutline} from "@material-ui/icons";
 import {ErrorInfo} from "Error/ErrorUtil";
+import {stopClick} from "Util/EventUtil";
 
 const log = console;
 
@@ -21,8 +21,9 @@ export function EmailSignInContainer({
   onSignIn: (event: SyntheticEvent, email: string, password: string)=>void,
   lastEmailError?: ErrorInfo,
 }){
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isShowSignUp, setIsShowSignUp] = useState(false);
 
   const onEmailTextChange = (event: ChangeEvent<HTMLInputElement>) => {
     let newValue = event.currentTarget.value as string;
@@ -37,6 +38,13 @@ export function EmailSignInContainer({
   let canClickLogin = false;
   if( email && password ){
     canClickLogin = true;
+  }
+
+  if( isShowSignUp ){
+    return <EmailSignupContainer onCancel={(e)=>{
+      stopClick(e);
+      setIsShowSignUp(false);
+    }}/>
   }
 
   return <>
@@ -70,9 +78,12 @@ export function EmailSignInContainer({
       <ButtonContainer style={{justifyContent: 'center', marginTop: "1em"}}
         error={lastEmailError}
       >
-        <NavButton href={getSignupScreenLink()} style={{marginRight: "1em"}}>
+        <SecondaryButton style={{marginRight: "1em"}} onClick={(e)=>{
+          stopClick(e);
+          setIsShowSignUp(true);
+        }}>
           Sign up
-        </NavButton>
+        </SecondaryButton>
         <PrimaryButton type="submit" isLoading={isSigningIn}
           disabled={!canClickLogin || disabled}
           endIcon={<MailOutline/>}

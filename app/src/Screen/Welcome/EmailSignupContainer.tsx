@@ -1,6 +1,5 @@
-import {NavTransition, useNavigation} from "Navigation/NavigationProvider";
-import React, {ChangeEvent} from "react";
-import {SmallScreenContainer} from "Component/Screen";
+import {useNavigation} from "Navigation/NavigationProvider";
+import React, {ChangeEvent, SyntheticEvent, useState} from "react";
 import {TextField} from "@material-ui/core";
 import {useSupabase} from "Api/SupabaseProvider";
 import {PrimaryButton, SecondaryButton} from "Component/CabbageButton";
@@ -12,39 +11,19 @@ import {getUserScreenLink} from "Screen/UserScreen";
 
 const log = console;
 
-const signupUrl = "/signup";
 
-
-export function getSignupScreenLink(): string{
-  return signupUrl;
-}
-
-export function isSignupScreenPath(path: String): boolean{
-  const normalizedPath = path.toLowerCase();
-  return normalizedPath.startsWith(signupUrl);
-}
-
-export function SignupScreen(){
-  return <NavTransition isPath={isSignupScreenPath} title={"Cabbage - signup"}>
-    <SmallScreenContainer>
-      <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
-        Signup for a Cabbage
-      </Typography>
-      <EmailSignupForm />
-    </SmallScreenContainer>
-  </NavTransition>
-}
-
-function EmailSignupForm(){
+export function EmailSignupContainer({onCancel}:{
+  onCancel:(e: SyntheticEvent)=>void
+}){
   const {db} = useSupabase();
   const nav = useNavigation();
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [isSigningUp, setIsSigningUp] = React.useState(false);
-  const [signupError, setSignupError] = React.useState(undefined as
-    undefined | ErrorInfo);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSigningUp, setIsSigningUp] = useState(false);
+  const [signupError, setSignupError] =
+    useState(undefined as undefined | ErrorInfo);
 
-  async function onSubmit(event: React.FormEvent){
+  async function onSubmit(event: SyntheticEvent){
     stopClick(event);
 
     setIsSigningUp(true);
@@ -93,6 +72,9 @@ function EmailSignupForm(){
   }
 
   return <div>
+    <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
+      Signup for a Cabbage
+    </Typography>
     <form onSubmit={onSubmit} noValidate autoComplete="off">
       <TextField id="emailInputField" label="Email"
         autoFocus
@@ -118,10 +100,10 @@ function EmailSignupForm(){
       />
       <br/>
       <ButtonContainer  error={signupError}
-        style={{justifyContent: 'flex-end'}}
+        style={{justifyContent: 'center', marginTop: "1em"}}
       >
         <SecondaryButton disabled={isSigningUp}
-          onClick={(e)=>{stopClick(e);window.history.back();}}
+          onClick={onCancel}
         >
           Cancel
         </SecondaryButton>

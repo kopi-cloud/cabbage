@@ -2,8 +2,21 @@ import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
 import {Session, User} from "@supabase/gotrue-js/dist/main/lib/types";
 import * as React from "react";
 import {createContext, ReactNode, useContext} from "react";
-import {SignInContainer} from "Screen/Welcome/SigninContainer";
 import {useSupabase} from "Api/SupabaseProvider";
+import {SignInContainer} from "Screen/Welcome/SigninContainer";
+import {getUserScreenLink} from "Screen/UserScreen";
+import {CabbageCountContainer} from "Screen/Welcome/CabbageCountContainer";
+import {SmallScreenContainer} from "Component/Screen";
+import {Typography} from "@material-ui/core";
+import {
+  cabbageGithubUrl,
+  netlifyUrl,
+  NewWindowLink,
+  supabaseUrl
+} from "Component/ExternalLinks";
+import {Config} from "Config";
+
+const log = console;
 
 export interface AuthenticatedUser {
   db: SupabaseClient,
@@ -26,9 +39,12 @@ export function AuthenticatedUserProvider({children}: {children: ReactNode}){
   const supabase = useSupabase();
 
   if( !supabase.session || !supabase.user ){
-    // leave the browser location alone, user will see the sign-in container
-    // but as soon as they signin, they see the screen for the url
-    return <SignInContainer/>
+    log.debug("unauthenticated render")
+    return <>
+      <IntroContainer/>
+      <SignInContainer signInRedirect={getUserScreenLink()} />
+      <CabbageCountContainer/>
+    </>
   }
 
   return <AuthenticatedUserContext.Provider value={{
@@ -38,5 +54,22 @@ export function AuthenticatedUserProvider({children}: {children: ReactNode}){
   }}>
     {children}
   </AuthenticatedUserContext.Provider>
+}
+
+function IntroContainer(){
+  return <SmallScreenContainer center>
+    <Typography paragraph>Cabbage is a simple demo app
+      for <NewWindowLink href={supabaseUrl}>Supabase</NewWindowLink>.
+    </Typography>
+    <Typography paragraph>The Cabbage app is published
+      via <NewWindowLink href={netlifyUrl}>Netlify</NewWindowLink>.
+    </Typography>
+    <Typography>You can find the source code for Cabbage over
+      on <NewWindowLink href={cabbageGithubUrl}>Github</NewWindowLink>.
+      <br/>
+      This app was published from the `{Config.environmentName}` branch
+      ({Config.gitCommit.substr(0, 8).trim()}).
+    </Typography>
+  </SmallScreenContainer>
 }
 
