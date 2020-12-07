@@ -19,8 +19,7 @@ import {
   User
 } from '@supabase/gotrue-js/dist/main/lib/types';
 import {STORAGE_KEY} from '@supabase/gotrue-js/dist/main/lib/constants';
-import {getUserScreenLink} from "Screen/UserScreen";
-import {useNavigation} from "Navigation/NavigationProvider";
+import {getOtherScreenLink} from "Screen/OtherScreen";
 
 const log = console;
 
@@ -35,6 +34,17 @@ export const SupabaseApiContext: React.Context<SupabaseApi> =
   createContext({db: "no SupabaseProvider"} as unknown as SupabaseApi);
 
 export const useSupabase = ()=> useContext(SupabaseApiContext);
+
+/** send the user to the user screen, don't want to use navTo because this is
+ * called from a useEffect and we'd have to add the nav to the useEffect
+ * inputs, which will cause this effect to re-run (and re-build the SB client).
+ * React knows about the change because useLocation() hook is watching
+ * push/resultState, which will force a re-render.
+ */
+export function redirectAfterSignIn(){
+  log.debug("force location path");
+  window.location.pathname = getOtherScreenLink();
+}
 
 export function SupabaseProvider({children}: {children: ReactNode}){
   const [apiState, setApiState] = useState(undefined as undefined|SupabaseApi);
@@ -60,10 +70,6 @@ export function SupabaseProvider({children}: {children: ReactNode}){
       if( authEvent === "SIGNED_IN" && isOauthRedirect.current ){
         log.debug("session restored from oauth redirect", {session: !!session});
         isOauthRedirect.current = false;
-        /* force the user to the user screen, don't want to use navTo because
-         then we need to add it to the useEffect inputs, which will cause this
-         effect to re-run (and re-build the SB client). */
-        window.location.pathname = getUserScreenLink();
       }
       setApiState((apiState)=>{
         if( !apiState ) throw new Error("change event with no apiState");
@@ -77,6 +83,7 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     if( window.location.hash.indexOf('access_token') >= 0 ){
       log.debug("detected this is an oauth redirect");
       isOauthRedirect.current = true;
+      redirectAfterSignIn();
     }
 
     const subscription = newClient.auth.onAuthStateChange(onAuthStateChange);

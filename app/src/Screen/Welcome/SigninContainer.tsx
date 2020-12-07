@@ -1,4 +1,4 @@
-import {useSupabase} from "Api/SupabaseProvider";
+import {redirectAfterSignIn, useSupabase} from "Api/SupabaseProvider";
 import React, {SyntheticEvent, useState} from "react";
 import {ErrorInfo} from "Error/ErrorUtil";
 import {SmallScreenContainer} from "Component/Screen";
@@ -64,7 +64,7 @@ export function SignInContainer({signInRedirect}:{signInRedirect?: string}){
     }
     else {
       // leave currentAction so controls are disabled during animation
-      nav.navigateTo(getUserScreenLink());
+      redirectAfterSignIn();
     }
   }
 

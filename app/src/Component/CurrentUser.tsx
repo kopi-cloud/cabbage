@@ -5,7 +5,8 @@ import {useAuthnUser} from "Api/AuthenticatedUserProvider";
 export function CurrentUser(){
   const {user} = useAuthnUser();
 
-  return <TextSpan paragraph>
-    Currently signed in as '{user.email ?? 'unknown'}'.
+  return <TextSpan>
+    Currently signed in as '{user.email ?? 'unknown'}'
+    via {user.app_metadata.provider}.
   </TextSpan>
 }
