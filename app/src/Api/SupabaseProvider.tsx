@@ -40,7 +40,6 @@ export function SupabaseProvider({children}: {children: ReactNode}){
   const [apiState, setApiState] = useState(undefined as undefined|SupabaseApi);
   const [isAnonKeyValid, setIsAnonKeyValid] = useState(true);
   const isOauthRedirect = useRef(false);
-  const nav = useNavigation();
 
   /* IMPROVE: too verbose both in terms of code and logging.
    Most conditionals can probably be collapsed if the logging is removed,
@@ -61,7 +60,10 @@ export function SupabaseProvider({children}: {children: ReactNode}){
       if( authEvent === "SIGNED_IN" && isOauthRedirect.current ){
         log.debug("session restored from oauth redirect", {session: !!session});
         isOauthRedirect.current = false;
-        nav.navigateTo(getUserScreenLink());
+        /* force the user to the user screen, don't want to use navTo because
+         then we need to add it to the useEffect inputs, which will cause this
+         effect to re-run (and re-build the SB client). */
+        window.location.pathname = getUserScreenLink();
       }
       setApiState((apiState)=>{
         if( !apiState ) throw new Error("change event with no apiState");
@@ -127,7 +129,7 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     });
 
     return cleanup;
-  }, [nav]);
+  }, []);
 
   if( !isAnonKeyValid ){
     return <SmallScreenContainer><TextSpan>
