@@ -30,11 +30,21 @@ export function App(){
   </MuiThemeProvider>;
 }
 
+export const navbarDarkBgColor = "#343a40";
+
 export const theme = createMuiTheme({
   overrides: {
     MuiAppBar: {
       colorPrimary: {
+        backgroundColor: navbarDarkBgColor,
       },
     },
-  }
+  },
+  props: {
+    MuiModal: {
+      // for dealing with "scroll-jumping" caused by m-ui
+      // see https://stackoverflow.com/a/65174620/924597
+      disableScrollLock: true,
+    },
+  },
 });

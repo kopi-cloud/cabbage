@@ -1,5 +1,4 @@
 import * as React from "react";
-import {makeStyles} from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
 import {ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
@@ -9,24 +8,17 @@ import {getUserScreenLink, isUserScreenPath} from "Screen/UserScreen";
 import {useLocation} from "Navigation/UseLocation";
 import {getOtherScreenLink, isOtherScreenPath} from "Screen/OtherScreen";
 
-const useAppDrawerStyle = makeStyles({
-  list: {
-    // hardcoded to remind folks that mobile is a thing
-    width: 250,
-  },
-});
-
 
 export function AppDrawer(props: {
   anchor: 'left' |'right',
   open: boolean,
   toggleDrawer: (open:boolean)=>void,
 }){
-  const style = useAppDrawerStyle();
   const {currentLocation} = useLocation();
 
   const sideList = (
-    <div className={style.list}>
+    // hardcoded width reminds folks that mobile is a thing
+    <div style={{width: 250}}>
       <List>
         <ListNavButton href={getUserScreenLink()}
           isCurrent={isUserScreenPath(currentLocation)}
