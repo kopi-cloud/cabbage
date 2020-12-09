@@ -16,6 +16,9 @@
     "typescript": "4.1.2",
     "@supabase/supabase-js": "1.0.7"
   },
+  "devDependencies": {
+    "openapi-typescript": "2.4.2"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -23,7 +26,8 @@
     "eject": "react-scripts eject",
     "serve": "react-scripts build && serve -s build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "audit": "npm audit"
+    "audit": "npm audit",
+    "generate-types": "openapi-typescript --output ./src/Generated/cabbage-sb-types.ts "
   },
   "eslintConfig": {
     "extends": [
