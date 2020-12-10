@@ -15,9 +15,6 @@ ext {
   cabbageDbId = System.getenv("CABBAGE_DB_ID")
 
   cabbageDbConnection = "db.${cabbageDbId}.supabase.co:5432/postgres"
-  if ( envName == "DEV" ){
-    cabbageDbConnection = "192.168.99.100:6200/postgres"
-  }
 }
 
 flyway {
@@ -41,8 +38,10 @@ task checkFlywayEnv(){
 }
 
 flywayClean.doFirst{
-  assert envName != "PRD" : "do not run flywayClean in PRD!"
+  // see https://github.com/supabase/supabase/discussions/344#discussioncomment-182886
+  assert false: "must not run flywayClean on supabase databases"
 }
+
 
 // don't let any of these run if the env isn't configured properly
 flywayInfo.dependsOn checkFlywayEnv

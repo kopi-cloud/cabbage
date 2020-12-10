@@ -48,9 +48,16 @@ jobs:
       - name: Show home structure
         run: ls -la ~
 
+      # do flyway before and after migrate to surface changes to the log
+      - name: flyway info CI
+        run: ./gradlew :database:flywayInfo
+        env:
+          CABBAGE_TARGET_ENV: CI
+          CABBAGE_DB_ID: ${{ secrets.CABBAGE_CI_DB_ID }}
+          CABBAGE_DB_PASSWORD: ${{ secrets.CABBAGE_CI_DB_PASSWORD }}
 
-      - name: flyway clean-migrate CI
-        run: ./gradlew :database:flywayClean :database:flywayMigrate :database:flywayInfo
+      - name: flyway migrate CI
+        run: ./gradlew :database:flywayMigrate :database:flywayInfo
         env:
           CABBAGE_TARGET_ENV: CI
           CABBAGE_DB_ID: ${{ secrets.CABBAGE_CI_DB_ID }}

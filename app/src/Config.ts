@@ -66,20 +66,20 @@ function chooseEnvironmentConfig(env: string | undefined){
 const ciConfig: EnvironmentConfig = {
   isProd: false,
   environmentName: "ci",
-  supabaseUrl: "https://sftsjtucvrgpeogudzge.supabase.co",
+  supabaseUrl: "https://gbsobldqxhgoutktxwbb.supabase.co",
 };
 
+const stoDevDbUrl = "https://cqerjnimaqgfojrkpxcg.supabase.co";
 const devConfig: EnvironmentConfig = {
   isProd: false,
   environmentName: "dev",
-  // wouldn't work in a team environment, but whatev's
-  supabaseUrl: ciConfig.supabaseUrl,
+  supabaseUrl: process.env.REACT_APP_SUPBASE_DEV_URL ?? stoDevDbUrl,
 };
 
 const tstConfig: EnvironmentConfig = {
   isProd: false,
   environmentName: "tst",
-  supabaseUrl: "https://vyqfnlxhctlvofaludro.supabase.co",
+  supabaseUrl: "https://wzoqznflznnxcszsdmkw.supabase.co",
 };
 
 const prdConfig: EnvironmentConfig = {
