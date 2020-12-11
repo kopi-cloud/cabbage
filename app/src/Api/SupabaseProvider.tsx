@@ -39,11 +39,11 @@ export const useSupabase = ()=> useContext(SupabaseApiContext);
  * called from a useEffect and we'd have to add the nav to the useEffect
  * inputs, which will cause this effect to re-run (and re-build the SB client).
  * React knows about the change because useLocation() hook is watching
- * push/resultState, which will force a re-render.
+ * push/replaceState, which will force a re-render.
  */
 export function redirectAfterSignIn(){
-  log.debug("force location path");
-  window.location.pathname = getUserScreenLink();
+  log.debug("redirectAfterSignIn()");
+  window.history.replaceState({}, "", getUserScreenLink());
 }
 
 export function SupabaseProvider({children}: {children: ReactNode}){
