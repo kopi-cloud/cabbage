@@ -31,29 +31,26 @@ export function EmailSignupContainer({onCancel}:{
     setSignupError(undefined);
     log.debug("signing up user", {email, password});
 
-    try {
-        // IMPROVE: was returning a "422" at one point, handle that
-      const { data, user, error } = await db.auth.signUp({email, password});
-      log.debug("sb signup result", {data, user, error});
+    // IMPROVE: was returning a "422" at one point, handle that
+    const { data, user, error } = await db.auth.signUp({email, password});
+    log.debug("sb signup result", {data, user, error});
 
-      if( error ){
-        if( isError(error) ){
-          setSignupError({
-            message: error.message, problem: error });
-        }
-        else {
-          setSignupError({
-            message: "error while signing up with Supabase", problem: error });
-        }
+    if( error ){
+      setIsSigningUp(false);
+      if( isError(error) ){
+        setSignupError({
+          message: error.message, problem: error });
       }
       else {
-        log.debug("after signup auth.user", db.auth.user());
-        nav.navigateTo(getUserScreenLink(), event);
+        setSignupError({
+          message: "error while signing up with Supabase", problem: error });
       }
-
     }
-    finally {
-      setIsSigningUp(false);
+    else {
+      log.debug("after signup auth.user", db.auth.user());
+      nav.navigateTo(getUserScreenLink(), event);
+      /* don't reset isSignignUp to keep the button disabled while navigating
+      and to avoid changing unmounted state error */
     }
   }
 

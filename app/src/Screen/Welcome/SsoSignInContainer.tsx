@@ -22,7 +22,7 @@ export function SsoSignInContainer({
 }){
   return <>
     <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
-      SSO sign in
+      Sign in
     </Typography>
     <div style={{display: "flex", justifyContent: "center"}}>
       <PrimaryButton disabled={disabled}

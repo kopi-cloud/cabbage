@@ -113,13 +113,14 @@ export function SignInContainer({signInRedirect}:{signInRedirect?: string}){
   }
 
   return <SmallScreenContainer center>
+    <SsoSignInContainer disabled={disabled} onSsoSignIn={onSsoSignIn}
+      currentAction={currentAction} lastSsoError={lastSsoError} />
+    <Divider variant={"middle"}
+      style={{paddingTop: "2em", paddingBottom: "2em"}}
+    >Or</Divider>
     <EmailSignInContainer disabled={disabled}
       isSigningIn={currentAction === "email sign in"}
       onSignIn={onEmailSignIn} lastEmailError={lastEmailError} />
-    <Divider variant={"middle"}>Or</Divider>
-    <br/>
-    <SsoSignInContainer disabled={disabled} onSsoSignIn={onSsoSignIn}
-      currentAction={currentAction} lastSsoError={lastSsoError} />
   </SmallScreenContainer>
 }
 
