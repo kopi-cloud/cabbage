@@ -22,25 +22,33 @@ const swaggerUrl =
   `${Config.supabaseUrl}/rest/v1/?apikey=${Config.supabaseAnonKey}`;
 
 export function OtherScreen(){
-  const {session, user} = useSupabase();
-
   return <NavTransition isPath={isOtherScreenPath} title={"Cabbage - other"}>
-    <SmallScreenContainer>
-      <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
-        Other stuff
-      </Typography>
-      <Typography paragraph>
-        This screen is just a placeholder because I needed 2
-        authenticated screens.
-      </Typography>
-      <Typography paragraph>
-        Types:
-        <a rel={"noopener noreferrer"} target={"_"} href={swaggerUrl}>
-          swagger
-        </a>
-      </Typography>
-    </SmallScreenContainer>
+    <Content/>
   </NavTransition>
 }
+
+function Content(){
+  const {session, user} = useSupabase();
+
+  return <SmallScreenContainer>
+    <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
+      Other stuff
+    </Typography>
+    <Typography paragraph>
+      This screen is just a placeholder because I needed 2
+      authenticated screens.
+    </Typography>
+    <Typography paragraph>
+      Types:
+      <a rel={"noopener noreferrer"} target={"_"} href={swaggerUrl}>
+        swagger
+      </a>
+    </Typography>
+    { [...Array(100)].map((value, index) => {
+      return <Typography key={index} paragraph>content</Typography>
+    })}
+  </SmallScreenContainer>
+}
+
 
 
