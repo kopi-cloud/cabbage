@@ -32,6 +32,8 @@ export function App(){
 
 export const navbarDarkBgColor = "#343a40";
 
+/* V4 global theming
+
 export const theme = createMuiTheme({
   overrides: {
     MuiAppBar: {
@@ -45,6 +47,31 @@ export const theme = createMuiTheme({
       // for dealing with "scroll-jumping" caused by m-ui
       // see https://stackoverflow.com/a/65174620/924597
       disableScrollLock: true,
+    },
+  },
+});
+
+ */
+
+// V5 global theming
+export const theme = createMuiTheme({
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: navbarDarkBgColor,
+        },
+      },
+      defaultProps: {
+
+      },
+    },
+    MuiDrawer: {
+      defaultProps: {
+        // for dealing with "scroll-jumping" caused by m-ui
+        // see https://stackoverflow.com/a/65174620/924597
+        disableScrollLock: true,
+      }
     },
   },
 });

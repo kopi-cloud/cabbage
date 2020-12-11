@@ -8,9 +8,17 @@ import {DialogTitleProps} from "@material-ui/core/DialogTitle";
 
 const maxScreenWidth = 1024;
 
+/* quick hack to get m-ui v5 working, theme.spacing() in V5 returns a string?
+Not really sure what the hell I was trying to achieve with that width calc to
+begin with though.  So this is a documented hack on top of an undocumented
+hack - probably time for a re-write of this. */
+function spacing( theme: Theme, multiplier: number): number {
+  return 16 * multiplier;
+}
+
 function mainLayoutBreakpoints(theme: Theme, width: number){
   return {
-    [theme.breakpoints.up(width + (theme.spacing(2) * 2))]: {
+    [theme.breakpoints.up(width + (spacing(theme, 2) * 2))]: {
       width: width,
       marginLeft: 'auto',
       marginRight: 'auto',
@@ -37,7 +45,7 @@ export function LargeScreenContainer(props: {
 
 function paperBreakpoints(theme: Theme, width: number){
   return {
-    [theme.breakpoints.up(width + (theme.spacing(3) * 2))]: {
+    [theme.breakpoints.up(width + (spacing(theme, 3) * 2))]: {
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3),
