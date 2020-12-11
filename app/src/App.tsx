@@ -73,5 +73,10 @@ export const theme = createMuiTheme({
         disableScrollLock: true,
       }
     },
+    MuiMenu: {
+      defaultProps: {
+        disableScrollLock: true,
+      }
+    }
   },
 });
