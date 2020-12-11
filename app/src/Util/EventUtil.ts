@@ -5,7 +5,12 @@ export function stopClick(e: SyntheticEvent<any>){
   e.stopPropagation();
 }
 
-export function delay(ms: number):Promise<never> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+export function delay(ms: number, msg?: string):Promise<never> {
+  return new Promise(resolve => {
+    if( msg ) {
+      console.trace(msg);
+    }
+    setTimeout(resolve, ms)
+  });
 }
 
