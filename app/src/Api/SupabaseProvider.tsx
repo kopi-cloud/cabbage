@@ -19,7 +19,7 @@ import {
   User
 } from '@supabase/gotrue-js/dist/main/lib/types';
 import {STORAGE_KEY} from '@supabase/gotrue-js/dist/main/lib/constants';
-import {getOtherScreenLink} from "Screen/OtherScreen";
+import {getUserScreenLink} from "Screen/UserScreen";
 
 const log = console;
 
@@ -43,7 +43,7 @@ export const useSupabase = ()=> useContext(SupabaseApiContext);
  */
 export function redirectAfterSignIn(){
   log.debug("force location path");
-  window.location.pathname = getOtherScreenLink();
+  window.location.pathname = getUserScreenLink();
 }
 
 export function SupabaseProvider({children}: {children: ReactNode}){
