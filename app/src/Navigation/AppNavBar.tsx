@@ -76,6 +76,7 @@ function AccountMenu(){
   const {user} = useAuthnUser();
   const[ isMenuOpen, setIsMenuOpen] = React.useState(false);
   const menuAnchorRef = React.useRef<HTMLButtonElement>(null!);
+  const nav = useNavigation();
 
   function onClose(){
     setIsMenuOpen(false);
@@ -106,6 +107,7 @@ function AccountMenu(){
         log.debug("clicked logout");
         const result = await db.auth.signOut();
         log.debug("signout result", result);
+        nav.navigateTo("/");
       }}>
         <Typography>Sign out</Typography>
       </MenuItem>
