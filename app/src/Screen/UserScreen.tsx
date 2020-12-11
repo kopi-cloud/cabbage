@@ -48,7 +48,7 @@ function UserDetailsForm(){
     undefined | "reading" | "updating");
   const [displayName, setDisplayName] = useState("");
   function onSubmit(e: SyntheticEvent){
-    stopClick(e);
+  stopClick(e);
 
   }
 

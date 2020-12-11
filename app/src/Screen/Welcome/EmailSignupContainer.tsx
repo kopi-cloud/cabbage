@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import {ButtonContainer} from "Component/ButtonContainer";
 import {ErrorInfo, isError} from "Error/ErrorUtil";
 import {getUserScreenLink} from "Screen/UserScreen";
+import {PasswordField} from "Component/PasswordField";
 
 const log = console;
 
@@ -87,17 +88,8 @@ export function EmailSignupContainer({onCancel}:{
         fullWidth={true}
         inputProps={{autoCapitalize: "none"}}
       />
-      <TextField id="passwordInputField" type="password"
-        label="Password"
-        value={password}
-        onChange={onPasswordTextChange}
-        disabled={isSigningUp}
-            margin="normal"
-            variant="outlined"
-        autoComplete="on"
-        fullWidth={true}
-        inputProps={{autoCapitalize: "none"}}
-      />
+      <PasswordField value={password} onChange={onPasswordTextChange}
+        disabled={isSigningUp} />
       <br/>
       <ButtonContainer  error={signupError}
         style={{justifyContent: 'center', marginTop: "1em"}}

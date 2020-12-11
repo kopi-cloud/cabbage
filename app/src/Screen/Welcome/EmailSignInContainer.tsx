@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import {MailOutline} from "@material-ui/icons";
 import {ErrorInfo} from "Error/ErrorUtil";
 import {stopClick} from "Util/EventUtil";
+import {PasswordField} from "Component/PasswordField";
 
 const log = console;
 
@@ -64,17 +65,8 @@ export function EmailSignInContainer({
         fullWidth={true}
         inputProps={{autoCapitalize: "none"}}
       />
-      <TextField id="passwordInputField" type="password"
-        label="Password"
-        value={password}
-        onChange={onPasswordTextChange}
-        disabled={disabled}
-        margin="normal"
-        variant="outlined"
-        autoComplete="on"
-        fullWidth={true}
-        inputProps={{autoCapitalize: "none"}}
-      />
+      <PasswordField value={password} onChange={onPasswordTextChange}
+        disabled={disabled} />
       <ButtonContainer style={{justifyContent: 'center', marginTop: "1em"}}
         error={lastEmailError}
       >
@@ -94,3 +86,4 @@ export function EmailSignInContainer({
     </form>
   </>
 }
+
