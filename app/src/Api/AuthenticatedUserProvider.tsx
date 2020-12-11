@@ -31,7 +31,7 @@ export const AuthenticatedUserContext: React.Context<AuthenticatedUser> =
 
 export const useAuthnUser = ()=> useContext(AuthenticatedUserContext);
 
-/** The AuthnProvider is t consumers not having to deal with the "what if the
+/** The AuthnProvider allows consumers to not have to deal with the "what if the
  * user is not signed in" scenario - note user/session is not-null/undefined in
  * the interface returned by useAuthnUser().
  */
