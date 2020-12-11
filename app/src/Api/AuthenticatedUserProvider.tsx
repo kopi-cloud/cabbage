@@ -58,7 +58,7 @@ export function AuthenticatedUserProvider({children}: {children: ReactNode}){
 
 function IntroContainer(){
   return <SmallScreenContainer center>
-    <Typography paragraph>Cabbage is a simple demo app
+    <Typography paragraph>Cabbage is a <del>simple</del> demo app
       for <NewWindowLink href={supabaseUrl}>Supabase</NewWindowLink>.
     </Typography>
     <Typography paragraph>The Cabbage app is published
