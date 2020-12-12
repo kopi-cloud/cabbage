@@ -5,12 +5,17 @@ import React, {useCallback} from "react";
 import {TextSpan} from "Component/TextSpan";
 import {CurrentUser} from "Component/CurrentUser";
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
-import {ErrorInfo} from "Error/ErrorUtil";
+import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {definitions} from "Generated/cabbage-sb-types";
 import {useAuthnUser} from "Api/AuthenticatedUserProvider";
 import {HelpPopover} from "Component/HelpPopover";
 import {SavingTextField} from "Component/SavingTextField";
 import Divider from "@material-ui/core/Divider";
+import {
+  loadContactDetails,
+  loadDisplayName, saveContactDetails,
+  saveDisplayName
+} from "Api/CabbageApi";
 
 const log = console;
 
@@ -50,20 +55,16 @@ function UserDetailsForm(){
   }, [db]);
 
   const writeDisplayName = useCallback(async (value: string)=>{
-    return {
-      message: "save doesn't work yet",
-      problem: `can't save value ${value}` };
-  }, []);
+    return await saveDisplayName(db, value);
+  }, [db]);
 
   const readContactDetails = useCallback(async ()=>{
-    return loadDisplayName(db);
+    return loadContactDetails(db);
   }, [db]);
 
   const writeContactDetails = useCallback(async (value: string)=>{
-    return {
-      message: "save doesn't work yet",
-      problem: `can't save value ${value}` };
-  }, []);
+    return await saveContactDetails(db, value);
+  }, [db]);
 
   return <div style={{display: "flex", flexDirection: "column"}}>
 
@@ -95,25 +96,4 @@ function UserDetailsForm(){
   </div>
 }
 
-
-export async function loadDisplayName(db: SupabaseClient):Promise<string|ErrorInfo>{
-
-  /*
-   import {PostgrestResponse} from "@supabase/postgrest-js/dist/main/lib/types";
-   Module '"../../node_modules/@supabase/postgrest-js/dist/main/lib/types"' declares 'PostgrestResponse' locally, but it is not exported.
-   const row: PostgrestResponse<definitions["user_info"]> =
-  */
-  const row =
-    await db.from<definitions["user_info"]>("user_info").select('display_name');
-  log.debug("openapi row", {row});
-  if( row.error ){
-    return { problem: row.error,
-      message: row.error.message ?? "problem while loading display name" };
-  }
-  if( row?.data === null || row?.data === undefined || row?.data.length < 1 ){
-    return "";
-  }
-  const data: definitions["user_info"][] = row.data;
-  return data[0].display_name ?? "";
-}
 

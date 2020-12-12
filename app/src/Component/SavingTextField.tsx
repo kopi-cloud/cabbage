@@ -16,7 +16,7 @@ import { TextSpan } from "./TextSpan";
 
 type Props = {
   readValue: ()=>Promise<string|ErrorInfo>,
-  writeValue: (value:string)=>Promise<undefined|ErrorInfo>,
+  writeValue: (value:string)=>Promise<string|ErrorInfo>,
 } & TextFieldProps;
 
 /**
@@ -44,7 +44,6 @@ export function SavingTextField({
     if( !isMounted.current ){
       return;
     }
-    await delay(1000, "show spinner delay");
     if( isErrorInfo(result) ){
       setValueError(result);
     }
@@ -67,9 +66,12 @@ export function SavingTextField({
     if( !isMounted.current ){
       return;
     }
-    await delay(1000, "show spinner delay");
     if( isErrorInfo(result) ){
       setValueError(result);
+    }
+    else {
+      setLoadedValue(result);
+      setValue(result);
     }
     setCurrentAction(undefined);
   }
@@ -118,9 +120,7 @@ export function SavingTextField({
             <IconButton disabled={!!currentAction || !isValueEdited}
               onClick={onSubmit}
             >
-              { currentAction === "reading" ?
-                <CircularProgress size={"1em"}/> : <Save/>
-              }
+              { !!currentAction ? <CircularProgress size={"1em"}/> : <Save/> }
             </IconButton>
           </InputAdornment>
         }}
