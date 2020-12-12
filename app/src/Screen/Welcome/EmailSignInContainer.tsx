@@ -49,8 +49,11 @@ export function EmailSignInContainer({
   }
 
   return <>
-    <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
+    <Typography variant={"h5"} style={{textAlign: "center"}}>
       Sign in via email
+    </Typography>
+    <Typography paragraph variant={"subtitle2"} style={{textAlign: "center"}}>
+      (Not verified, doesn't need to be a real email)
     </Typography>
     <form noValidate autoComplete="off"
       onSubmit={(e)=>onSignIn(e, email, password)}

@@ -70,8 +70,11 @@ export function EmailSignupContainer({onCancel}:{
   }
 
   return <div>
-    <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
+    <Typography variant={"h5"} style={{textAlign: "center"}}>
       Signup for a Cabbage
+    </Typography>
+    <Typography paragraph variant={"subtitle2"} style={{textAlign: "center"}}>
+      (Not verified, doesn't need to be a real email)
     </Typography>
     <form onSubmit={onSubmit} noValidate autoComplete="off">
       <TextField id="emailInputField" label="Email"
