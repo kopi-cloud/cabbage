@@ -29,6 +29,7 @@
     "serve": "react-scripts build && serve -s build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "audit": "npm audit",
+    "testthing": "node app-build/testthing",
     "generate-types": "openapi-typescript --output ./src/Generated/cabbage-sb-types.ts "
   },
   "eslintConfig": {
