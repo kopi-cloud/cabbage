@@ -62,9 +62,6 @@ export const theme = createMuiTheme({
           backgroundColor: navbarDarkBgColor,
         },
       },
-      defaultProps: {
-
-      },
     },
     MuiDrawer: {
       defaultProps: {
@@ -74,9 +71,10 @@ export const theme = createMuiTheme({
       }
     },
     MuiMenu: {
-      defaultProps: {
-        disableScrollLock: true,
-      }
-    }
+      defaultProps: {disableScrollLock: true}
+    },
+    MuiPopover: {
+      defaultProps: {disableScrollLock: true}
+    },
   },
 });
