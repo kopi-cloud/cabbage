@@ -1,26 +1,16 @@
 import {NavTransition} from "Navigation/NavigationProvider";
 import {SmallScreenContainer} from "Component/Screen";
 import Typography from "@material-ui/core/Typography";
-import React, {
-  ChangeEvent,
-  SyntheticEvent,
-  useCallback,
-  useEffect,
-  useState
-} from "react";
+import React, {useCallback} from "react";
 import {TextSpan} from "Component/TextSpan";
 import {CurrentUser} from "Component/CurrentUser";
-import {delay, stopClick} from "Util/EventUtil";
-import TextField from "@material-ui/core/TextField/TextField";
-import {ButtonContainer} from "Component/ButtonContainer";
-import {PrimaryButton, SecondaryButton} from "Component/CabbageButton";
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
-import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
+import {ErrorInfo} from "Error/ErrorUtil";
 import {definitions} from "Generated/cabbage-sb-types";
 import {useAuthnUser} from "Api/AuthenticatedUserProvider";
-import {useIsMounted} from "Util/ReactUtil";
-import {CircularProgress, IconButton, InputAdornment} from "@material-ui/core";
-import {Save, Sync, Undo, Visibility, VisibilityOff} from "@material-ui/icons";
+import {HelpPopover} from "Component/HelpPopover";
+import {SavingTextField} from "Component/SavingTextField";
+import Divider from "@material-ui/core/Divider";
 
 const log = console;
 
@@ -44,107 +34,67 @@ export function UserScreen(){
 }
 
 function UserContainer(){
-  return <>
+  return <div style={{display: "flex", flexDirection: "column"}}>
     <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
       User details
     </Typography>
     <CurrentUser/>
     <UserDetailsForm/>
-    <TextSpan/>
-  </>
+  </div>
 }
 
 function UserDetailsForm(){
-  const [currentAction, setCurrentAction] = useState("reading" as
-    undefined | "reading" | "updating");
-  const [loadedDisplayName, setLoadedDisplayName] =
-    useState(undefined as undefined | string);
-  const [displayName, setDisplayName] = useState("");
-  const [displayNameError, setDisplayNameError] =
-    useState(undefined as undefined | ErrorInfo);
   const {db} = useAuthnUser();
-  const isMounted = useIsMounted();
+  const readDisplayName = useCallback(async ()=>{
+    return loadDisplayName(db);
+  }, [db]);
 
-  const loadName = React.useCallback(async ()=>{
-    setCurrentAction("reading");
-    setDisplayNameError(undefined);
-    const result = await loadDisplayName(db);
-    await delay(1000, "show spinner delay");
-    if( isErrorInfo(result) ){
-      setDisplayNameError(result);
-    }
-    else {
-      setLoadedDisplayName(result);
-      setDisplayName(result);
-    }
-    setCurrentAction(undefined);
-    if( isMounted.current ){
-      setCurrentAction(undefined);
-    }
-  }, [db, isMounted]);
+  const writeDisplayName = useCallback(async (value: string)=>{
+    return {
+      message: "save doesn't work yet",
+      problem: `can't save value ${value}` };
+  }, []);
 
-  useEffect(()=>{
-    // noinspection JSIgnoredPromiseFromCall
-    loadName();
-  }, [loadName]);
+  const readContactDetails = useCallback(async ()=>{
+    return loadDisplayName(db);
+  }, [db]);
 
-  function onSubmit(e: SyntheticEvent){
-    stopClick(e);
-  }
+  const writeContactDetails = useCallback(async (value: string)=>{
+    return {
+      message: "save doesn't work yet",
+      problem: `can't save value ${value}` };
+  }, []);
 
-  function onDisplayNameChange(e: ChangeEvent<HTMLInputElement>){
-    stopClick(e);
-    setDisplayName(e.currentTarget.value as string);
-  }
+  return <div style={{display: "flex", flexDirection: "column"}}>
 
-  const isDisplayNameEdited = loadedDisplayName !== displayName;
-  return <>
-    <form noValidate autoComplete="off"
-      onSubmit={onSubmit}
-    >
-      <TextField id="displayNameInputField" label="Display name"
-        value={displayName}
-        onChange={onDisplayNameChange}
-        disabled={!!currentAction}
-        margin="normal"
-        variant="outlined"
-        autoComplete="on"
-        fullWidth={true}
-        helperText={<TextSpan>
-          {displayNameError?.message ?? "display name is shown publicly"}
-        </TextSpan>}
-        inputProps={{autoCapitalize: "none"}}
-        InputProps={{
-          endAdornment: <InputAdornment position="end">
-            <IconButton onClick={()=>{
-              if( isDisplayNameEdited ){
-                setDisplayName(loadedDisplayName ?? "");
-              }
-              else {
-                // noinspection JSIgnoredPromiseFromCall
-                loadName();
-              }
-            }}>
-              <Undo/>
-            </IconButton>
-            <IconButton disabled={!!currentAction || !isDisplayNameEdited}
-              onClick={()=>{
-                setDisplayNameError({
-                  message: "save doesn't work yet",
-                  problem: "work in progress" });
-              }}
-            >
-              { currentAction === "reading" ?
-                <CircularProgress size={"1em"}/> : <Save/>
-              }
-            </IconButton>
-          </InputAdornment>
-        }}
+    <Divider style={{paddingTop: "2em"}}>Public details</Divider>
+    <SavingTextField id="displayNameInputField" label="Display name"
+      readValue={readDisplayName}
+      writeValue={writeDisplayName}
+      helperText={<TextSpan>
+        <HelpPopover content={<TextSpan>
+          This value is shown to other users to identify any content
+          you post.
+        </TextSpan>}/>
+        Note: display name is publicly visible
+      </TextSpan>}
+    />
 
-      />
-    </form>
-  </>
+    <Divider style={{paddingTop: "2em"}}>Private details</Divider>
+    <SavingTextField id="contactInputField" label="Contact details"
+      readValue={readContactDetails}
+      writeValue={writeContactDetails}
+      helperText={<TextSpan>
+        <HelpPopover content={<TextSpan>
+          This value is never seen by other users.
+        </TextSpan>}/>
+        Note: Contact details are private
+      </TextSpan>}
+    />
+
+  </div>
 }
+
 
 export async function loadDisplayName(db: SupabaseClient):Promise<string|ErrorInfo>{
 
