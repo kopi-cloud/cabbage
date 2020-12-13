@@ -32,6 +32,11 @@ export async function saveDisplayName(
 
   log.debug("result of save", result);
   if( result.error ){
+    if( result.status === 404 ){
+      /* when I was having problems with bad RLS policicies, sometimes
+       error was populated with an empty array - wtf? */
+      return { problem: result, message: result.statusText};
+    }
     return { problem: result.error, message: result.error.message};
   }
   if( result.data?.length !== 1 || !result.data[0].display_name){
