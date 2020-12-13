@@ -1,4 +1,10 @@
-import React, {ChangeEvent, SyntheticEvent, useEffect, useState} from "react";
+import React, {
+  ChangeEvent,
+  ReactNode,
+  SyntheticEvent,
+  useEffect,
+  useState
+} from "react";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {useIsMounted} from "Util/ReactUtil";
 import {delay, stopClick} from "Util/EventUtil";
@@ -62,6 +68,7 @@ export function SavingTextField({
   async function onSubmit(e: SyntheticEvent){
     stopClick(e);
     setCurrentAction("updating");
+    setValueError(undefined);
     const result = await writeValue(value);
     if( !isMounted.current ){
       return;
@@ -82,28 +89,32 @@ export function SavingTextField({
   }
 
   const isValueEdited = loadedValue !== value;
+  let helperTextContent = helperText;
+  if( valueError ){
+    helperTextContent = <span style={{
+      /* make be like a div for overflow:hidden,
+       but can't be div cause helperText is a <p> */
+      display: "block",
+      // don't want the message to wrap or be really long, so clip it
+      whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+    }}>
+      <HelpPopover content={<TextSpan>
+        Click the link to see details of the error.
+        Click the <Undo/> icon to undo your edit, click it again to
+        re-set the field completely.
+      </TextSpan>}/>
+      <CompactErrorPanel error={valueError}/>
+    </span>
+  }
   return <>
     <form noValidate autoComplete="off" onSubmit={onSubmit}>
-      <TextField
-        margin="normal"
-        variant="outlined"
-        autoComplete="on"
-        fullWidth
-        inputProps={{autoCapitalize: "none"}}
+      <TextField margin="normal" variant="outlined" autoComplete="on"
+        fullWidth inputProps={{autoCapitalize: "none"}}
         {...textFieldProps}
         value={value}
         onChange={onValueChange}
         disabled={!!currentAction}
-        helperText={ valueError ?
-          <>
-            <HelpPopover content={<TextSpan>
-              Click the link to see details of the error.
-              Click the <Undo/> icon to undo your edit, click it again to
-              re-set the field completely.
-            </TextSpan>}/>
-            <CompactErrorPanel error={valueError}/>
-          </> : helperText
-        }
+        helperText={<HelperText error={valueError} content={helperText}/>}
         InputProps={{
           endAdornment: <InputAdornment position="end">
             <IconButton onClick={()=>{
@@ -124,8 +135,30 @@ export function SavingTextField({
             </IconButton>
           </InputAdornment>
         }}
-
       />
     </form>
   </>
+}
+
+function HelperText({error, content}:{
+  error?: ErrorInfo,
+  content?: ReactNode,
+}){
+  if( !error ){
+    return <>{content}</>;
+  }
+  return <span style={{
+    /* make be like a div for overflow:hidden,
+     but can't be div cause helperText is a <p> */
+    display: "block",
+    // don't want the message to wrap or be really long, so clip it
+    whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+  }}>
+    <HelpPopover content={<TextSpan>
+      Click the link to see details of the error.
+      Click the <Undo/> icon to undo your edit, click it again to
+      re-set the field completely.
+    </TextSpan>}/>
+    <CompactErrorPanel error={error}/>
+  </span>;
 }
