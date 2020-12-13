@@ -10,6 +10,7 @@ import {UserScreen} from "Screen/UserScreen";
 import {AuthenticatedUserProvider} from "Api/AuthenticatedUserProvider";
 import {OtherScreen} from "Screen/OtherScreen";
 import {AppNavBar} from "Navigation/AppNavBar";
+import {ScratchScreen} from "Screen/ScratchScreen";
 
 export function App(){
   return <MuiThemeProvider theme={theme}>
@@ -22,6 +23,7 @@ export function App(){
               <AppNavBar/>
               <UserScreen/>
               <OtherScreen/>
+              <ScratchScreen/>
             </AuthenticatedUserProvider>
           </SupabaseProvider>
         </NavigationProvider>

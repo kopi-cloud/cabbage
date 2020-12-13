@@ -7,6 +7,7 @@ import {useNavigation} from "Navigation/NavigationProvider";
 import {getUserScreenLink, isUserScreenPath} from "Screen/UserScreen";
 import {useLocation} from "Navigation/UseLocation";
 import {getOtherScreenLink, isOtherScreenPath} from "Screen/OtherScreen";
+import {getScratchScreenLink, isScratchScreenPath} from "Screen/ScratchScreen";
 
 
 export function AppDrawer(props: {
@@ -28,6 +29,9 @@ export function AppDrawer(props: {
         <ListNavButton href={getOtherScreenLink()}
           isCurrent={isOtherScreenPath(currentLocation)}
           description="Other stuff" />
+        <ListNavButton href={getScratchScreenLink()}
+          isCurrent={isScratchScreenPath(currentLocation)}
+          description="Scratch" />
       </List>
     </div>
   );
