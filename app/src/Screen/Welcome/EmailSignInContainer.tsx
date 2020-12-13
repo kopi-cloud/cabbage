@@ -73,7 +73,7 @@ export function EmailSignInContainer({
       <ButtonContainer style={{justifyContent: 'center', marginTop: "1em"}}
         error={lastEmailError}
       >
-        <SecondaryButton style={{marginRight: "1em"}} onClick={(e)=>{
+        <SecondaryButton type="button" style={{marginRight: "1em"}} onClick={(e)=>{
           stopClick(e);
           setIsShowSignUp(true);
         }}>
