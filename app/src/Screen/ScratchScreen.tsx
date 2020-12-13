@@ -7,6 +7,7 @@ import {SecondaryButton} from "Component/CabbageButton";
 import {useSupabase} from "Api/SupabaseProvider";
 import {stopClick} from "Util/EventUtil";
 import {ButtonContainer} from "Component/ButtonContainer";
+import {ErrorInfo} from "Error/ErrorUtil";
 
 const log = console;
 
@@ -31,21 +32,33 @@ export function ScratchScreen(){
 }
 
 function Content(){
-  const {db} = useSupabase();
-  const [isRestarting, setIsRestarting] = useState(false);
-
   return <SmallScreenContainer>
     <TextSpan>Miscellaneous stuff</TextSpan>
     <ButtonContainer>
-      <SecondaryButton isLoading={isRestarting} disabled={isRestarting}
-        onClick={async (e)=>{
-          stopClick(e);
-          setIsRestarting(true);
-          const result = await db.rpc('notify_api_restart');
-          log.debug("api restart", result);
-          setIsRestarting(false);
-        }}
-      >API restart</SecondaryButton>
+      <ApiRestartButton/>
     </ButtonContainer>
   </SmallScreenContainer>
+}
+
+function ApiRestartButton(){
+  const {db} = useSupabase();
+  const [isRestarting, setIsRestarting] = useState(false);
+  const [restartError, setRestartError] =
+    useState(undefined as undefined | ErrorInfo);
+
+  return <SecondaryButton error={restartError}
+    isLoading={isRestarting} disabled={isRestarting}
+      onClick={async (e)=>{
+        stopClick(e);
+        setIsRestarting(true);
+        setRestartError(undefined);
+        const result = await db.rpc('notify_api_restart');
+        log.debug("api restart", result);
+        if( result.error ){
+          setRestartError({
+            message: result.error.message, problem: result.error });
+        }
+        setIsRestarting(false);
+      }}
+    >API restart</SecondaryButton>
 }
