@@ -39,10 +39,10 @@ export async function saveDisplayName(
     }
     return { problem: result.error, message: result.error.message};
   }
-  if( result.data?.length !== 1 || !result.data[0].display_name){
+  if( result.data?.length !== 1 ){
     return { problem: result, message: "unexpected data returned from db"};
   }
-  return result.data[0].display_name;
+  return result.data[0].display_name ?? "";
 }
 
 export async function saveContactDetails(
@@ -58,10 +58,10 @@ export async function saveContactDetails(
   if( result.error ){
     return { problem: result.error, message: result.error.message};
   }
-  if( result.data?.length !== 1 || !result.data[0].contact_details){
+  if( result.data?.length !== 1 ){
     return { problem: result, message: "unexpectec data returned from db"};
   }
-  return result.data[0].contact_details;
+  return result.data[0].contact_details ?? "";
 }
 
 
