@@ -13,7 +13,8 @@ const log = console;
 export async function loadDisplayName(db: SupabaseClient):
   Promise<string|ErrorInfo>{
   const result = await db.from<public_user_info>(Tables.public_user_info).
-    select(Columns.public_user_info.display_name);
+    select(Columns.public_user_info.display_name).
+    eq("uuid", db.auth.user()?.id);
 
   const data = parseSbQueryResult<public_user_info>(result);
   if( isErrorInfo(data) ){
@@ -34,7 +35,7 @@ export async function saveDisplayName(
     return { problem: result.error, message: result.error.message};
   }
   if( result.data?.length !== 1 || !result.data[0].display_name){
-    return { problem: result, message: "unexpectec data returned from db"};
+    return { problem: result, message: "unexpected data returned from db"};
   }
   return result.data[0].display_name;
 }
