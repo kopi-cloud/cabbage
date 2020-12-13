@@ -1,12 +1,59 @@
 
-select * from welcome;
+select * from flyway_schema_history;
 
 select * from pg_policies;
 
-drop policy if exists "only authn users can read public_user_info"
-  on public.public_user_info
-;
+select * from public_user_info;
 
+drop policy if exists "only authn users can read public_user_info"
+  on public.public_user_info;
+drop policy if exists "users can insert only own  public_user_info"
+  on public.public_user_info;
+drop policy if exists "users can update only own  public_user_info"
+  on public.public_user_info;
+drop policy if exists "users can delete only own public_user_info"
+  on public.public_user_info;
+
+
+create policy "only authn users can read public_user_info"
+  on public.public_user_info
+  for select
+  using ( auth.role() = 'authenticated' );
+create policy "users can insert only own  public_user_info"
+  on public.public_user_info
+  for insert
+  with check (auth.uid() = uuid);
+create policy "users can update only own  public_user_info"
+  on public.public_user_info
+  for update
+  using ( auth.role() = 'authenticated' )
+  with check (auth.uid() = uuid);
+create policy "users can delete only own public_user_info"
+  on public.public_user_info
+  for delete
+  using (auth.uid() = uuid);
+
+create policy "users can insert"
+  on public.public_user_info
+  for insert with check (true);
+create policy "users can update"
+  on public.public_user_info
+  for update using (true) with check (true) ;
+create policy "users can select"
+  on public.public_user_info
+  for select using (true);
+
+drop policy "users can select"
+  on public.public_user_info;
+drop policy "users can update"
+  on public.public_user_info;
+drop policy "users can insert"
+  on public.public_user_info;
+
+create policy "only authn users can read public_user_info"
+  on public.public_user_info
+  for select
+  using ( auth.role() = 'authenticated' );
 
 alter table public.public_user_info
   enable row level security ;
