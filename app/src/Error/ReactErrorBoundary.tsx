@@ -4,14 +4,14 @@ import {LargeScreenContainer} from "Component/Screen";
 import * as React from "react";
 import {ErrorInfoComponent} from "Error/ErrorInforComponent";
 
-/** This component deals with unexpected errors (usally programming errors)
+/** This component deals with unexpected errors (usually programming errors)
  * during component rendering.
  * See https://reactjs.org/docs/error-boundaries.html
  * Has to be a class because React error boundaries only work with class
  * components AFAIK.
  * Needs to be separate from ErrorDialog because that's designed to show
  * errors while still rendering the normal component hierarchy - we can't
- * show the component hierarchy while it's causing errors.
+ * render the component hierarchy if it's causing errors.
  */
 export class ReactErrorBoundary extends React.Component {
   state = {} as { hasError: undefined|Error };
