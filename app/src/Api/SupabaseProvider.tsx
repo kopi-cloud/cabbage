@@ -139,6 +139,8 @@ export function SupabaseProvider({children}: {children: ReactNode}){
   }, []);
 
   if( !isAnonKeyValid ){
+    /* Usually seen when you forget to add env variables like
+     REACT_APP_CABBAGE_ENV, etc. */
     return <SmallScreenContainer><TextSpan>
       There's a problem with the build - the Supabase anon key is not valid.
     </TextSpan></SmallScreenContainer>
