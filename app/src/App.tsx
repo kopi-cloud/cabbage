@@ -11,6 +11,8 @@ import {AuthenticatedUserProvider} from "Api/AuthenticatedUserProvider";
 import {OtherScreen} from "Screen/OtherScreen";
 import {AppNavBar} from "Navigation/AppNavBar";
 import {ScratchScreen} from "Screen/ScratchScreen";
+import {ErrorHandlingScreen} from "Screen/ErrorHandling";
+import {DatabaseSchemaScreen} from "Screen/DatabaseSchemaScreen";
 
 export function App(){
   return <MuiThemeProvider theme={theme}>
@@ -24,6 +26,8 @@ export function App(){
               <UserScreen/>
               <OtherScreen/>
               <ScratchScreen/>
+              <ErrorHandlingScreen/>
+              <DatabaseSchemaScreen/>
             </AuthenticatedUserProvider>
           </SupabaseProvider>
         </NavigationProvider>
@@ -55,7 +59,7 @@ export const theme = createMuiTheme({
 
  */
 
-// V5 global theming
+// V5-alpha.18 global theming
 export const theme = createMuiTheme({
   components: {
     MuiAppBar: {

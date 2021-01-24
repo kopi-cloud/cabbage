@@ -1,9 +1,6 @@
 import {NavTransition} from "Navigation/NavigationProvider";
 import React, {ChangeEvent, SyntheticEvent, useCallback, useState} from "react";
-import {SmallScreenContainer} from "Component/Screen";
-import {TextSpan} from "Component/TextSpan";
 import {SecondaryButton} from "Component/CabbageButton";
-import {useSupabase} from "Api/SupabaseProvider";
 import {stopClick} from "Util/EventUtil";
 import {ButtonContainer} from "Component/ButtonContainer";
 import {ErrorInfo} from "Error/ErrorUtil";
@@ -12,6 +9,7 @@ import {TextField} from "@material-ui/core";
 import {useAuthnUser} from "Api/AuthenticatedUserProvider";
 import {private_user_info, public_user_info, Tables} from "Api/CabbageSchema";
 import {CurrentUser} from "Component/CurrentUser";
+import {CardMargin, ContainerCard, FlexCardScreenContainer} from "Component/ContainerCard";
 
 const log = console;
 
@@ -33,36 +31,9 @@ export function ScratchScreen(){
 }
 
 function Content(){
-  return <SmallScreenContainer>
-    <TextSpan>Miscellaneous stuff</TextSpan>
-    <ButtonContainer>
-      <ApiRestartButton/>
-    </ButtonContainer>
-    <HackDisplayNameContainer stompValue={'xxx'}/>
-  </SmallScreenContainer>
-}
-
-function ApiRestartButton(){
-  const {db} = useSupabase();
-  const [isRestarting, setIsRestarting] = useState(false);
-  const [restartError, setRestartError] =
-    useState(undefined as undefined | ErrorInfo);
-
-  return <SecondaryButton error={restartError}
-    isLoading={isRestarting} disabled={isRestarting}
-      onClick={async (e)=>{
-        stopClick(e);
-        setIsRestarting(true);
-        setRestartError(undefined);
-        const result = await db.rpc('notify_api_restart');
-        log.debug("api restart", result);
-        if( result.error ){
-          setRestartError({
-            message: result.error.message, problem: result.error });
-        }
-        setIsRestarting(false);
-      }}
-    >API restart</SecondaryButton>
+  return <FlexCardScreenContainer>
+    <CardMargin><HackDisplayNameContainer stompValue={'xxx'}/></CardMargin>
+  </FlexCardScreenContainer>
 }
 
 export function HackDisplayNameContainer({stompValue}:{
@@ -106,10 +77,7 @@ export function HackDisplayNameContainer({stompValue}:{
     setIsWriting(false);
   }, [db, uuid, stompValue]);
 
-  return <>
-    <Typography variant={"h5"} style={{textAlign: "center"}}>
-      Stomp someone else's display name
-    </Typography>
+  return <ContainerCard title={<>Stomp other's display name</>}>
     <div>
       <CurrentUser/>
       <Typography>Your own UUID is {db.auth.user()?.id}</Typography>
@@ -140,5 +108,5 @@ export function HackDisplayNameContainer({stompValue}:{
         </SecondaryButton>
       </ButtonContainer>
     </form>
-  </>
+  </ContainerCard>
 }

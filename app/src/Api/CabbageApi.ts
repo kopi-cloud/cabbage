@@ -1,12 +1,7 @@
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
-import {
-  Columns,
-  private_user_info,
-  public_user_info,
-  Tables
-} from "Api/CabbageSchema";
-import {parseSbQueryResult} from "Api/SupabaseUtil";
+import {Columns, flyway_schema_history, Functions, private_user_info, public_user_info, store_error_params, Tables} from "Api/CabbageSchema";
+import {parseSbQueryResult, parseSbVoidFunctionResult} from "Api/SupabaseUtil";
 
 const log = console;
 
@@ -66,7 +61,8 @@ export async function saveContactDetails(
 
 
 export async function loadContactDetails(db: SupabaseClient):
-  Promise<string|ErrorInfo>{
+  Promise<string|ErrorInfo>
+{
   const result = await db.from<private_user_info>(Tables.private_user_info).
     select(Columns.private_user_info.contact_details);
 
@@ -76,5 +72,29 @@ export async function loadContactDetails(db: SupabaseClient):
   }
 
   return data?.[0]?.contact_details ?? "";
+}
+
+export async function loadFlywaySchemaHistory(db: SupabaseClient):
+  Promise<flyway_schema_history[]|ErrorInfo>
+{
+  const result = await db.from<flyway_schema_history>(Tables.flyway_schema_history).
+    // note that "version" here is typed - a wrong column name will not compile
+    select().order("version", {ascending: true});
+
+  const data = parseSbQueryResult<flyway_schema_history>(result);
+  if( isErrorInfo(data) ){
+    return data;
+  }
+
+  return data;
+}
+
+/** @return undefined indicates a successful invocation **/
+export async function store_error(db: SupabaseClient, params: store_error_params):
+  Promise<ErrorInfo | undefined>
+{
+  const result = await db.rpc(Functions.store_error, params);
+
+  return parseSbVoidFunctionResult(result);
 }
 

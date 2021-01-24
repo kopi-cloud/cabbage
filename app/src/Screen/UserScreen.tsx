@@ -4,18 +4,11 @@ import Typography from "@material-ui/core/Typography";
 import React, {useCallback} from "react";
 import {TextSpan} from "Component/TextSpan";
 import {CurrentUser} from "Component/CurrentUser";
-import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
-import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
-import {definitions} from "Generated/cabbage-sb-types";
 import {useAuthnUser} from "Api/AuthenticatedUserProvider";
 import {HelpPopover} from "Component/HelpPopover";
 import {SavingTextField} from "Component/SavingTextField";
 import Divider from "@material-ui/core/Divider";
-import {
-  loadContactDetails,
-  loadDisplayName, saveContactDetails,
-  saveDisplayName
-} from "Api/CabbageApi";
+import {loadContactDetails, loadDisplayName, saveContactDetails, saveDisplayName} from "Api/CabbageApi";
 
 const log = console;
 

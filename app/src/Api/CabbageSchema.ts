@@ -1,10 +1,15 @@
-import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
-import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 
-// this stuff will be generated from the DB, eventually
+// This file is currently maintained by hand.
+// This stuff is intended to be generated from the DB schema, eventually.
+
 export const Tables = {
   public_user_info : 'public_user_info',
   private_user_info : 'private_user_info',
+  flyway_schema_history : 'flyway_schema_history',
+}
+
+export const Functions = {
+  store_error: 'store_error',
 }
 
 export const Columns = {
@@ -16,6 +21,24 @@ export const Columns = {
     uuid: "uuid",
     contact_details: "contact_details",
   },
+  flyway_schema_history: {
+    installed_rank: "installed_rank",
+    version: "version",
+    description: "description",
+    type: "type",
+    script: "script",
+    checksum: "checksum",
+    installed_by: "installed_by",
+    installed_on: "installed_on",
+    execution_time: "execution_time",
+    success: "success",
+  },
+}
+
+export interface store_error_params {
+  // I'm going with unknown for the moment until I need more, or someone resolves
+  // https://github.com/microsoft/TypeScript/issues/1897
+  json_content: unknown,
 }
 
 export interface public_user_info {
@@ -26,6 +49,19 @@ export interface public_user_info {
 export interface private_user_info {
   uuid: string,
   contact_details?: string,
+}
+
+export interface flyway_schema_history {
+  installed_rank: number,
+  version?: string,
+  description: string,
+  type: string,
+  script: string,
+  checksum: number,
+  installed_by: string,
+  installed_on: string,
+  execution_time: number,
+  success: boolean,
 }
 
 

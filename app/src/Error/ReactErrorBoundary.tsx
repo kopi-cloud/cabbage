@@ -23,7 +23,7 @@ export class ReactErrorBoundary extends React.Component {
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
     // You can also log the error to an error reporting service
-    console.log("unhandled react error", error, info);
+    console.log("unhandled react render error", error, info);
   }
 
   render() {

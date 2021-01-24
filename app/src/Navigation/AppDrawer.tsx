@@ -8,6 +8,8 @@ import {getUserScreenLink, isUserScreenPath} from "Screen/UserScreen";
 import {useLocation} from "Navigation/UseLocation";
 import {getOtherScreenLink, isOtherScreenPath} from "Screen/OtherScreen";
 import {getScratchScreenLink, isScratchScreenPath} from "Screen/ScratchScreen";
+import {getErrorHandlingScreenLink, isErrorHandlingScreenPath} from "Screen/ErrorHandling";
+import {getDbSchemaScreenLink, isDbSchemaScreenPath} from "Screen/DatabaseSchemaScreen";
 
 
 export function AppDrawer(props: {
@@ -32,6 +34,12 @@ export function AppDrawer(props: {
         <ListNavButton href={getScratchScreenLink()}
           isCurrent={isScratchScreenPath(currentLocation)}
           description="Scratch" />
+        <ListNavButton href={getErrorHandlingScreenLink()}
+          isCurrent={isErrorHandlingScreenPath(currentLocation)}
+          description="Error handling examples" />
+        <ListNavButton href={getDbSchemaScreenLink()}
+          isCurrent={isDbSchemaScreenPath(currentLocation)}
+          description="Database schema" />
       </List>
     </div>
   );

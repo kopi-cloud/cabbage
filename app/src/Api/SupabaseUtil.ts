@@ -13,3 +13,11 @@ export function parseSbQueryResult<T>(selectResult: any):ErrorInfo|T[]{
   return selectResult.data as T[]
 }
 
+
+export function parseSbVoidFunctionResult(selectResult: any):ErrorInfo|undefined{
+  if( selectResult.error ){
+    return { problem: selectResult.error,
+      message: selectResult.error.message ?? "problem while calling function" };
+  }
+  return undefined;
+}
