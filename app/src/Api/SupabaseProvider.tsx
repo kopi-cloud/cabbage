@@ -35,15 +35,21 @@ export const SupabaseApiContext: React.Context<SupabaseApi> =
 
 export const useSupabase = ()=> useContext(SupabaseApiContext);
 
-/** send the user to the user screen, don't want to use navTo because this is
- * called from a useEffect and we'd have to add the nav to the useEffect
- * inputs, which will cause this effect to re-run (and re-build the SB client).
+/** send the user to the user screen if no path specified, don't want to use
+ * navTo because this is called from a useEffect and we'd have to add the
+ * nav to the useEffect inputs, which will cause this effect to re-run
+ * (and re-build the SB client).
  * React knows about the change because useLocation() hook is watching
  * push/replaceState, which will force a re-render.
  */
 export function redirectAfterSignIn(){
-  log.debug("redirectAfterSignIn()");
-  window.history.replaceState({}, "", getUserScreenLink());
+  let path = window.location.pathname;
+  log.debug("redirectAfterSignIn()", path);
+  if( !path || path === "" || path === "/" ){
+    /* OAuth redirect target previously didn't include the path, now
+    that it does, only redirect to the user screen if no path specified. */
+    window.history.replaceState({}, "", getUserScreenLink());
+  }
 }
 
 export function SupabaseProvider({children}: {children: ReactNode}){
@@ -67,12 +73,22 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     ){
       log.debug("supabase auth state change", {
         authEvent, session, user: session?.user });
-      if( authEvent === "SIGNED_IN" && isOauthRedirect.current ){
-        log.debug("session restored from oauth redirect", {session: !!session});
-        isOauthRedirect.current = false;
+      if( authEvent === "SIGNED_IN" ){
+        if( isOauthRedirect.current ){
+          log.debug("session restored from oauth redirect", {session: !!session});
+          isOauthRedirect.current = false;
+        }
+        else {
+          redirectAfterSignIn();
+        }
       }
       setApiState((apiState)=>{
-        if( !apiState ) throw new Error("change event with no apiState");
+        /* this shouldn't happen any more because we do the setApiState() call
+        in the intial render(), instead of in the setTime() handler hack. */
+        if( !apiState ){
+          console.log("change event with no apiState", authEvent, session);
+          return;
+        }
         return {db: apiState.db, session: session, user: session?.user ?? null}
       });
     }
@@ -81,7 +97,7 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     log.debug("subabase client created");
 
     if( window.location.hash.indexOf('access_token') >= 0 ){
-      log.debug("detected this is an oauth redirect");
+      log.debug("detected oauth redirect", window.location.pathname);
       isOauthRedirect.current = true;
       redirectAfterSignIn();
     }
@@ -104,36 +120,20 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     if( !localStorage.getItem(STORAGE_KEY) ){
       /* user never logged in, deleted localstorage, previously logged out,
       or we're being landing a redirect for google SSO */
-      log.debug("X no supabase token found in localstorage");
+      log.debug("no supabase token found in localstorage");
     }
 
-    /* session restore is async, see:
-     https://github.com/supabase/supabase/discussions/318
-     https://github.com/supabase/gotrue-js/blob/f21a620dc3719b7d34aa1bb3ccb5cdb0b1e8c1d9/src/GoTrueClient.ts#L57
-     https://stackoverflow.com/a/14529748/924597
-     As per linked gotrue code, the timeout() for doing the session restore has
-     already been scheduled when createClient() returns.  As per the SO answer
-     linked, our timeout() call should be guaranteed to run /after/ the gotrue
-     timeout. See /doc/example/sb-auth-restore for an example. */
-    log.debug("waiting for supabase to restore session from localstorage");
-    setTimeout(()=>{
-      if( newClient.auth.session() ){
-        log.debug("supabase session restored");
-        setApiState({
-          db: newClient,
-          session: newClient.auth.session(),
-          user: newClient.auth?.session()?.user ?? null });
-      }
-      else {
-        /* likely because session token exists, but was expired - in which case
-        gotrue deletes the token and does not restore the session. */
-        log.debug("no supabase session was restored");
-        setApiState({
-          db: newClient,
-          session: newClient.auth.session(),
-          user: newClient.auth?.session()?.user ?? null });
-      }
-    });
+    /* this is where we used to do the setTimeout() hack, but SB appears to
+    be fixed now, see:
+    https://github.com/supabase/supabase/discussions/318
+    https://github.com/supabase/gotrue-js/blob/f21a620dc3719b7d34aa1bb3ccb5cdb0b1e8c1d9/src/GoTrueClient.ts#L57
+    https://stackoverflow.com/a/14529748/924597
+    */
+    log.debug("set apiState");
+    setApiState({
+      db: newClient,
+      session: newClient.auth.session(),
+      user: newClient.auth?.session()?.user ?? null });
 
     return cleanup;
   }, []);
