@@ -1,0 +1,24 @@
+name: baseline-database
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      # do flyway before and after migrate to surface changes to the log
+      - name: flyway info CI
+        run: ./gradlew :database:flywayInfo
+        env:
+          CABBAGE_TARGET_ENV: CI
+          CABBAGE_DB_ID: ${{ secrets.CABBAGE_CI_DB_ID }}
+          CABBAGE_DB_PASSWORD: ${{ secrets.CABBAGE_CI_DB_PASSWORD }}
