@@ -1,5 +1,6 @@
-name: baseline-database
+name: baseline-ci-database
 
+# only runs when you invoke it via Github UI (or API)
 on:
   workflow_dispatch:
 
