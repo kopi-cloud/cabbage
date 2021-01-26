@@ -10,7 +10,7 @@ want to use (local-dev, ci, tst, prd).
 * login to Supabase and create a project
   * use a new, secure password for the project, save it somewhere like KeePass
 * nav to `/ Authentication / Settings`
-  * `site url` = `http://localhost:6042`, `https://rabbit-cabbage.netlify.app/`
+  * `site url` = `http://localhost:6042` or `https://rabbit-cabbage.netlify.app/`, etc.
     * the localhost port is configured in [.env](/app/.env)
     * I don't actually know what, if any, effect his has  
   * `disable email confirmations` = true
@@ -37,7 +37,7 @@ want to use (local-dev, ci, tst, prd).
     run `npm start` instead
 
 
-## Github CI environment configuration
+## CI environment configuration
 
 Intended for regression testing the `main` branch.  You don't need to configure
 this environment if you don't want.  
@@ -62,7 +62,7 @@ which is allegedly do-able, but there's not a lot of doco on that yet.
   * add secret `CABBAGE_CI_DB_PASSWORD` = password used when creating project   
 
 
-## Github TST environment configuration
+## TST environment configuration
 
 The `tst` git branch is published at:
 [rabbit-cabbage.netlify.app](https://rabbit-cabbage.netlify.app/)
@@ -98,7 +98,7 @@ In my experience, that's usually a better plan than a big-bang deployment
 anyway.
 
 
-## Github PRD environment configuration
+## PRD environment configuration
 
 If Cabbage were a real app, I'd define a "production" (`PRD`) environment and 
 `TST` would be used as a "pre-production" environment. 
@@ -115,8 +115,8 @@ Because a Supabase database is not empty  - we need to do a one-time
 "baseline" operation to prepare the database before Flyway schema migrations
 can be run.
 
-If you haven't run the baseline task, when you try to do a Flyway migration,
-you should see an error like "databse is not empty".
+If you haven't run the baseline task, you'll see an error like 
+"database is not empty" when you try to run a Flyway migration.
 
 Using the Github UI: 
 
