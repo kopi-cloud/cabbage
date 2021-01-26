@@ -8,6 +8,7 @@ const log = console;
 
 export class SentrySupabaseTransport extends Sentry.Transports.BaseTransport {
   sendEvent(event: Event): PromiseLike<SentryResponse>{
+    log.debug("sending error to supabase");
     /* POST the request directly to the Supabase endpoint so that we can log
     errors as soon as the page is loaded, not worrying about if the
     supabase client is properly intialised yet. */
