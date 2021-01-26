@@ -66,7 +66,7 @@ function chooseEnvironmentConfig(env: string | undefined){
 const ciConfig: EnvironmentConfig = {
   isProd: false,
   environmentName: "ci",
-  supabaseUrl: "https://gbsobldqxhgoutktxwbb.supabase.co",
+  supabaseUrl: "https://taiyomopzsnvxsaplvkh.supabase.co",
 };
 
 const stoDevDbUrl = "https://cqerjnimaqgfojrkpxcg.supabase.co";
