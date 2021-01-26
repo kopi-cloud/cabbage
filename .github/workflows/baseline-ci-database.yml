@@ -16,9 +16,8 @@ jobs:
         with:
           java-version: 1.8
 
-      # do flyway before and after migrate to surface changes to the log
-      - name: flyway info CI
-        run: ./gradlew :database:flywayInfo
+      - name: flyway baseline CI
+        run: ./gradlew :database:flywayBaseline :database:flywayInfo
         env:
           CABBAGE_TARGET_ENV: CI
           CABBAGE_DB_ID: ${{ secrets.CABBAGE_CI_DB_ID }}
