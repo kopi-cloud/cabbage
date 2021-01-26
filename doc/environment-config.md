@@ -10,22 +10,22 @@ want to use (local-dev, ci, tst, prd).
 * login to Supabase and create a project
   * use a new, secure password for the project, save it somewhere like KeePass
 * nav to `/ Authentication / Settings`
-  * `site url` = `http://localhost:6042`
-    * the local dev port is configured in [.env](/app/.env)
+  * `site url` = `http://localhost:6042`, `https://rabbit-cabbage.netlify.app/`
+    * the localhost port is configured in [.env](/app/.env)
     * I don't actually know what, if any, effect his has  
   * `disable email confirmations` = true
-    * if you don't do this, you have to register with a real email address
-      that can confgirm
+    * if you don't do this, any new user has to register with a real email a
+      ddress that can follow the confirmation link in the signup email 
   * optional: enable google and github and populate with relevant 
     settings from those sevices
-    * If you don't do this, you won't be able to sign in via those services
+    * If you don't do this, you won't be able to use Single Sign-On
 * nav to `/ Database / Backups`
   * click the `Backup now` button before doing anything so you can restore 
   back to this point if you mess anything up.
   * this is good to have in case you need to re-try steps. 
   A Supabase database is not "empty" and it's nice to be able to restart the 
   whole thing again without having to create new Supabase project (which 
-  will change the database id).
+  will change the "database id").
 
 
 
@@ -48,6 +48,8 @@ way to lock the Github action so that it only runs one `main` action at a time.
 
 I believe the Supabase folks have a plan for supporting branching workflows 
 though, so eventually the regression testing will likely be done on a PR branch.
+The other obvious alternative is to run Supabasee locally on the CI machine, 
+which is allegedly do-able, but there's not a lot of doco on that yet.
 
 * the Github CI pipeline is defined to run on the `main` branch, see 
   [main.yml](/.github/workflows/main.yml)
@@ -76,7 +78,7 @@ From there:
   [netlify.toml](/netlify.toml).  This was configured by signing in to Netlify
   and creating a new "site" pointed at the `tst` branch.
 
-Note that there's no synchronisation between those two actions.
+Note that there's no synchronisation between Github and Nelify.
 So the new DB *or* the new App might be deployed first.  Right now the DB
 migration runs much faster than the app build, so the schema gets migrated 
 before the app is deployed.  But with a production app - that 
