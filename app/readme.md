@@ -1,5 +1,13 @@
-This diretory is both a gradle sub-project (of the larget project) and a
-Node.js project.
+This project is the client "app" for Cabbage.  
+
+It's a [create-react-app](https://create-react-app.dev/) project, statically
+typed using [Typescript](https://www.typescriptlang.org/), using 
+[Material UI](https://material-ui.com/) as the component library.
+Note that, at the moment, Cabbage uses an alpha version of version 5. 
+
+From a build perspective, the project is implemented as both a
+[Gradle sub-project](https://docs.gradle.org/current/userguide/multi_project_builds.html)
+(of the larger Cabbage project) and a standalone Node.js project.
 
 The Gradle functionality is mostly just for downloading node/npm.
 The [main.yml](/.github/workflows/main.yml) file does have a node install
@@ -23,6 +31,9 @@ some env vars to connect to a dev supabase:
 
 
 ### Generating types
+
+*Note*: Type generation is a WIP.  At the moment, I write the types used by 
+Cabbage [by hand](./src/Api/CabbageSchema.ts).
 
 Run the npm `generate-types` build script, you need to add the supabase 
 [swagger url](https://supabase.io/docs/client/generating-types#generate-database-types-from-swagger-openapi-specification)
