@@ -10,6 +10,7 @@ import {
   Tables
 } from "Api/CabbageSchema";
 import {parseSbQueryResult, parseSbVoidFunctionResult} from "Api/SupabaseUtil";
+import {delay} from "Util/EventUtil";
 
 const log = console;
 
@@ -85,8 +86,9 @@ export async function queryContactDetails(db: SupabaseClient):
 export async function queryFlywaySchemaHistory(db: SupabaseClient):
   Promise<flyway_schema_history[]|ErrorInfo>
 {
-  const result = await db.from<flyway_schema_history>(Tables.flyway_schema_history).
-    // note that "version" here is typed - a wrong column name will not compile
+  // note that "version" here is typed - a wrong column name will not compile
+  const result = await db.
+    from<flyway_schema_history>(Tables.flyway_schema_history).
     select().order("version", {ascending: true});
 
   const data = parseSbQueryResult<flyway_schema_history>(result);

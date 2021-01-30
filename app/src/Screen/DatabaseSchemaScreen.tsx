@@ -117,7 +117,7 @@ function SchemaHistoryTable(){
       <TableBody>
       { history === undefined && currentAction === "reading" && <>
         <TableRow><TableCell colSpan={AllCols} align="center">
-          <LinearProgress  variant="indeterminate"/>
+          <LinearProgress style={{height: 2}}/>
         </TableCell></TableRow>
       </> }
       { history !== undefined && history.length < 1 && <>
@@ -135,7 +135,9 @@ function SchemaHistoryTable(){
             formatShortIsoDateTime(parseServerDate(row.installed_on))
           }</StyledTableCell>
           <StyledTableCell align="center">
-            {row.success ? <Check/> : <Warning/>}
+            { row.success ?
+              <Check htmlColor={"green"}/> : <Warning htmlColor={"red"}/>
+            }
           </StyledTableCell>
         </StyledTableRow>
       ))}
