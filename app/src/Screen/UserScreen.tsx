@@ -8,7 +8,7 @@ import {useAuthnUser} from "Api/AuthenticatedUserProvider";
 import {HelpPopover} from "Component/HelpPopover";
 import {SavingTextField} from "Component/SavingTextField";
 import Divider from "@material-ui/core/Divider";
-import {loadContactDetails, loadDisplayName, saveContactDetails, saveDisplayName} from "Api/CabbageApi";
+import {queryContactDetails, queryDisplayName, upsertContactDetails, upsertDisplayName} from "Api/CabbageApi";
 
 const log = console;
 
@@ -44,19 +44,19 @@ function UserContainer(){
 function UserDetailsForm(){
   const {db} = useAuthnUser();
   const readDisplayName = useCallback(async ()=>{
-    return loadDisplayName(db);
+    return queryDisplayName(db);
   }, [db]);
 
   const writeDisplayName = useCallback(async (value: string)=>{
-    return await saveDisplayName(db, value);
+    return await upsertDisplayName(db, value);
   }, [db]);
 
   const readContactDetails = useCallback(async ()=>{
-    return loadContactDetails(db);
+    return queryContactDetails(db);
   }, [db]);
 
   const writeContactDetails = useCallback(async (value: string)=>{
-    return await saveContactDetails(db, value);
+    return await upsertContactDetails(db, value);
   }, [db]);
 
   return <div style={{display: "flex", flexDirection: "column"}}>

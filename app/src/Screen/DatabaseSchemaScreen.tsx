@@ -3,12 +3,20 @@ import {LargeScreenContainer} from "Component/Screen";
 import React, {SyntheticEvent, useCallback, useEffect, useState} from "react";
 import {useSupabase} from "Api/SupabaseProvider";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
-import {loadFlywaySchemaHistory} from "Api/CabbageApi";
+import {queryFlywaySchemaHistory} from "Api/CabbageApi";
 import {flyway_schema_history} from "Api/CabbageSchema";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {useIsMounted} from "Util/ReactUtil";
 import TableContainer from "@material-ui/core/TableContainer/TableContainer";
-import {LinearProgress, Table, TableBody, TableCell, TableHead, TableRow, withStyles} from "@material-ui/core";
+import {
+  LinearProgress,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  withStyles
+} from "@material-ui/core";
 import {TextSpan} from "Component/TextSpan";
 import {formatShortIsoDateTime, parseServerDate} from "Util/DateUtil";
 import {ContainerCard} from "Component/ContainerCard";
@@ -30,7 +38,9 @@ export function isDbSchemaScreenPath(path: String): boolean{
 }
 
 export function DatabaseSchemaScreen(){
-  return <NavTransition isPath={isDbSchemaScreenPath} title={"Cabbage - database schema"}>
+  return <NavTransition isPath={isDbSchemaScreenPath}
+    title={"Cabbage - database schema"}
+  >
     <LargeScreenContainer>
       <Content/>
     </LargeScreenContainer>
@@ -73,7 +83,7 @@ function SchemaHistoryTable(){
   const readHistory = useCallback(async (event?: SyntheticEvent)=>{
     stopClick(event);
     setCurrentAction("reading")
-    const result = await loadFlywaySchemaHistory(db);
+    const result = await queryFlywaySchemaHistory(db);
     if( !isMounted.current ) return;
     if( isErrorInfo(result) ){
       setReadError(result);

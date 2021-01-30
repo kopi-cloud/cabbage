@@ -13,7 +13,7 @@ import {parseSbQueryResult, parseSbVoidFunctionResult} from "Api/SupabaseUtil";
 
 const log = console;
 
-export async function loadDisplayName(db: SupabaseClient):
+export async function queryDisplayName(db: SupabaseClient):
   Promise<string|ErrorInfo>{
   const result = await db.from<public_user_info>(Tables.public_user_info).
     select(Columns.public_user_info.display_name).
@@ -27,7 +27,7 @@ export async function loadDisplayName(db: SupabaseClient):
   return data?.[0]?.display_name ?? "";
 }
 
-export async function saveDisplayName(
+export async function upsertDisplayName(
   db: SupabaseClient, newValue: string
 ): Promise<string|ErrorInfo>{
   const result = await db.from<public_user_info>(Tables.public_user_info).
@@ -48,7 +48,7 @@ export async function saveDisplayName(
   return result.data[0].display_name ?? "";
 }
 
-export async function saveContactDetails(
+export async function upsertContactDetails(
   db: SupabaseClient, newValue: string
 ): Promise<string|ErrorInfo>{
   const result = await db.from<private_user_info>(Tables.private_user_info).
@@ -68,7 +68,7 @@ export async function saveContactDetails(
 }
 
 
-export async function loadContactDetails(db: SupabaseClient):
+export async function queryContactDetails(db: SupabaseClient):
   Promise<string|ErrorInfo>
 {
   const result = await db.from<private_user_info>(Tables.private_user_info).
@@ -82,7 +82,7 @@ export async function loadContactDetails(db: SupabaseClient):
   return data?.[0]?.contact_details ?? "";
 }
 
-export async function loadFlywaySchemaHistory(db: SupabaseClient):
+export async function queryFlywaySchemaHistory(db: SupabaseClient):
   Promise<flyway_schema_history[]|ErrorInfo>
 {
   const result = await db.from<flyway_schema_history>(Tables.flyway_schema_history).
