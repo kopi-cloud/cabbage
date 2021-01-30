@@ -2,20 +2,21 @@
 
 ## Supabase setup
 
-You would need to do this multiple times, depending on what environments you
-want to use (local-dev, ci, tst, prd).
+You might need to do this multiple times, depending on what environments you
+want to use (`dev`, `ci`, `tst`, `prd`).
 
 ### Create Supabase project 
 
 * login to Supabase and create a project
-  * use a new, secure password for the project, save it somewhere like KeePass
+  * use a new, secure password for the project, save it somewhere safe like 
+    [KeePass](https://keepass.info/)
 * nav to `/ Authentication / Settings`
   * `site url` = `http://localhost:6042` or `https://rabbit-cabbage.netlify.app/`, etc.
     * the localhost port is configured in [.env](/app/.env)
-    * I don't actually know what, if any, effect his has  
+    * I don't actually know what, if any, effect the `site url` has  
   * `disable email confirmations` = true
-    * if you don't do this, any new user has to register with a real email a
-      ddress that can follow the confirmation link in the signup email 
+    * if you don't do this, any new user has to register with a real email 
+      a ddress that can follow the confirmation link in the signup email 
   * optional: enable google and github and populate with relevant 
     settings from those sevices
     * If you don't do this, you won't be able to use Single Sign-On

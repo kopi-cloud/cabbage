@@ -10,7 +10,7 @@ of the overall Cabbage project.
 The actual migration files can be found in the 
 [migration](src/main/resources/db/migration) directory. 
 
-# Migrating an existing database
+### Migrating an existing database
 
 The gradle tasks use environment variables (as opposed to Java system 
 properties) because that makes using Github actions simpler.
@@ -19,14 +19,13 @@ I normally run the tasks from within IDEA (which understands Gradle projects).
 Here's an example of running the migration for the dev environment from the 
 command line: 
 
-* from the root of the Git repostiry (i.e. the parent directory to this one), 
-  run:
+* from the root of the Git repository (i.e. the parent directory to this one)
   * `CABBAGE_TARGET_ENV=dev CABBAGE_DB_ID=xxx CABBAGE_DB_PASSWORD=xxx ./gradlew flywayMigrate flywayInfo`
   * see the [environment config doco](../doc/environment-config.md) for an 
   explanation of where to get the "database id" and password.
 
 
-# Making a new database
+### Making a new database
 
 If you want to fork and run your own copy of Cabbage, before worrying about 
 doing any schema migration, you need to create a Supabase project and configure
