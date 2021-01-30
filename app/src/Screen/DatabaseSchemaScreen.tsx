@@ -14,6 +14,7 @@ import {formatShortIsoDateTime, parseServerDate} from "Util/DateUtil";
 import {ContainerCard} from "Component/ContainerCard";
 import {stopClick} from "Util/EventUtil";
 import {RefreshIconButton} from "Component/RefreshIconButton";
+import {Check, Warning} from "@material-ui/icons";
 
 const log = console;
 
@@ -101,7 +102,7 @@ function SchemaHistoryTable(){
         <TableCell align="right"><strong>Version</strong></TableCell>
         <TableCell><strong>Description</strong></TableCell>
         <TableCell><strong>Installed</strong></TableCell>
-        <TableCell><strong>Success</strong></TableCell>
+        <TableCell align="center"><strong>Success</strong></TableCell>
       </TableRow></TableHead>
       <TableBody>
       { history === undefined && currentAction === "reading" && <>
@@ -123,7 +124,7 @@ function SchemaHistoryTable(){
           <StyledTableCell>{
             formatShortIsoDateTime(parseServerDate(row.installed_on))
           }</StyledTableCell>
-          <StyledTableCell>{row.success ? "Yes" : "No"}</StyledTableCell>
+          <StyledTableCell align="center">{row.success ? <Check/> : <Warning/>}</StyledTableCell>
         </StyledTableRow>
       ))}
       </TableBody>
