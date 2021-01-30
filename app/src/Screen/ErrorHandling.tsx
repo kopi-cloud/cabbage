@@ -1,12 +1,16 @@
 import {NavTransition} from "Navigation/NavigationProvider";
 import {TextSpan} from "Component/TextSpan";
 import React, {useState} from "react";
-import {CardMargin, ContainerCard, FlexCardScreenContainer} from "Component/ContainerCard";
+import {
+  CardMargin,
+  ContainerCard,
+  FlexCardScreenContainer
+} from "Component/ContainerCard";
 import {SecondaryButton} from "Component/CabbageButton";
 import {stopClick} from "Util/EventUtil";
 import {useSupabase} from "Api/SupabaseProvider";
 import {ErrorInfo} from "Error/ErrorUtil";
-import {store_error} from "Api/CabbageApi";
+import {store_event} from "Api/CabbageApi";
 
 const log = console;
 
@@ -32,14 +36,16 @@ function Content(){
     <CardMargin><UnhandledEventErrorCard/></CardMargin>
     <CardMargin><ReactRenderErrorCard/></CardMargin>
     <CardMargin><HandledApiErrorCard/></CardMargin>
-    <CardMargin><StoreSbErrorCard/></CardMargin>
+    <CardMargin><StoreSbEventCard/></CardMargin>
   </FlexCardScreenContainer>
 }
 
 function UnhandledEventErrorCard(){
 
   return <ContainerCard title={<>Event handler error</>} >
-    <TextSpan>Throws an error from inside the onClick event.</TextSpan>
+    <TextSpan>Throws an error from inside an onClick event.</TextSpan>
+    <TextSpan>This simulates a coding error when writing event handling code
+    (usually server calls, etc.)</TextSpan>
     <SecondaryButton
       onClick={async (e)=>{
         stopClick(e);
@@ -49,20 +55,20 @@ function UnhandledEventErrorCard(){
   </ContainerCard>
 }
 
-function StoreSbErrorCard(){
+function StoreSbEventCard(){
   const {db} = useSupabase();
 
-  return <ContainerCard title={<>Store supabase error</>} >
-    <TextSpan>Stores an error directly to the endpoint.</TextSpan>
+  return <ContainerCard title={<>Store supabase event</>} >
+    <TextSpan>Stores an event directly to the REST endpoint.</TextSpan>
     <SecondaryButton
       onClick={async (e)=>{
         stopClick(e);
-        log.debug("storing error to supabase")
-        // const result = await db.rpc('store_error', {json_content: {'someerror': 'somevalue2'}});
-        const result = await store_error(db, {json_content: {'someerror': 'somevalue2'}});
+        log.debug("storing event to supabase")
+        const result = await store_event(db, {
+          json_content: {'somefield': 'somevalue2'} });
         log.debug("store result", result);
       }}
-    >Store error</SecondaryButton>
+    >Store event</SecondaryButton>
   </ContainerCard>
 }
 
@@ -73,7 +79,8 @@ function HandledApiErrorCard(){
     useState(undefined as undefined | ErrorInfo);
 
   return <ContainerCard title={<>Handled API error</>} >
-    <TextSpan>Tries to call a trigger as a function, which will cause an error.</TextSpan>
+    <TextSpan>Tries to call a trigger as a function, which will cause an
+      error on the server-side.</TextSpan>
     <SecondaryButton error={restartError}
       isLoading={isRestarting} disabled={isRestarting}
       onClick={async (e) => {
@@ -97,6 +104,9 @@ function ReactRenderErrorCard(){
   const [isRenderError, setIsRenderError] = useState(false);
   return <ContainerCard title={<>React rendering error</>} >
     <TextSpan>Throws an error while trying to render a component.</TextSpan>
+    <TextSpan>
+      This simulates a coding error when writing React display code.
+    </TextSpan>
     { isRenderError && <BadRenderComponent/> }
     <SecondaryButton
       onClick={async (e)=>{

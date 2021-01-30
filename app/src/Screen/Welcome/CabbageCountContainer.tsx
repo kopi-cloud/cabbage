@@ -78,7 +78,7 @@ async function getWelcomeCount(db: SupabaseClient)
 }
 
 async function incrementWelcomeCount(db: SupabaseClient, newCount: number)
-  : Promise<true|ErrorInfo>{
+: Promise<true|ErrorInfo>{
   const {data, error} =
     await db.from("welcome").update({value: newCount}).eq('id', 'visit_count');
   if( error ){

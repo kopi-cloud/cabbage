@@ -9,7 +9,7 @@ export const Tables = {
 }
 
 export const Functions = {
-  store_error: 'store_error',
+  store_sentry_event: 'store_sentry_event',
 }
 
 export const Columns = {
@@ -35,7 +35,7 @@ export const Columns = {
   },
 }
 
-export interface store_error_params {
+export interface store_sentry_event_params {
   // I'm going with unknown for the moment until I need more, or someone resolves
   // https://github.com/microsoft/TypeScript/issues/1897
   json_content: unknown,

@@ -1,6 +1,14 @@
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
-import {Columns, flyway_schema_history, Functions, private_user_info, public_user_info, store_error_params, Tables} from "Api/CabbageSchema";
+import {
+  Columns,
+  flyway_schema_history,
+  Functions,
+  private_user_info,
+  public_user_info,
+  store_sentry_event_params,
+  Tables
+} from "Api/CabbageSchema";
 import {parseSbQueryResult, parseSbVoidFunctionResult} from "Api/SupabaseUtil";
 
 const log = console;
@@ -90,10 +98,13 @@ export async function loadFlywaySchemaHistory(db: SupabaseClient):
 }
 
 /** @return undefined indicates a successful invocation **/
-export async function store_error(db: SupabaseClient, params: store_error_params):
+export async function store_event(
+  db: SupabaseClient,
+  params: store_sentry_event_params
+):
   Promise<ErrorInfo | undefined>
 {
-  const result = await db.rpc(Functions.store_error, params);
+  const result = await db.rpc(Functions.store_sentry_event, params);
 
   return parseSbVoidFunctionResult(result);
 }
