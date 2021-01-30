@@ -7,7 +7,7 @@ Cabbage is a "full-fat" example project that I use for learning about
 [Supabase](https://github.com/supabase/supabase).
 
 I also publish articles on the [Kopi blog](http://kopi.cloud/blog/) using 
-Cabbage as a worked example. Yes; those articles are, in part, content marketing 
+Cabbage as a worked example. Yes, those articles are (partly) content marketing 
 for Kopi. 
 
 I'm using [Gradle](https://docs.gradle.org/current/userguide/userguide.html), 
