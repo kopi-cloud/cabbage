@@ -124,7 +124,9 @@ function SchemaHistoryTable(){
           <StyledTableCell>{
             formatShortIsoDateTime(parseServerDate(row.installed_on))
           }</StyledTableCell>
-          <StyledTableCell align="center">{row.success ? <Check/> : <Warning/>}</StyledTableCell>
+          <StyledTableCell align="center">
+            {row.success ? <Check/> : <Warning/>}
+          </StyledTableCell>
         </StyledTableRow>
       ))}
       </TableBody>
