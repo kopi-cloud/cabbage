@@ -3,6 +3,7 @@ import {Divider} from "@material-ui/core";
 import {LargeScreenContainer} from "Component/Screen";
 import * as React from "react";
 import {ErrorInfoComponent} from "Error/ErrorInforComponent";
+import * as Sentry from "@sentry/browser";
 
 /** This component deals with unexpected errors (usually programming errors)
  * during component rendering.
@@ -21,9 +22,16 @@ export class ReactErrorBoundary extends React.Component {
     return { hasError: error };
   }
 
+  /** The "uncaught exception" logic of sentry does NOT fire when the app is
+   * built in production mode.  Which makes sense - it *is* handled, right
+   * here.
+   * I assume the dev build behaviour is something to do with React development
+   * mode showing stack traces or something.
+   * So render errors will be logged twice by a development build.
+   */
   componentDidCatch(error: Error, info: React.ErrorInfo) {
-    // You can also log the error to an error reporting service
     console.log("unhandled react render error", error, info);
+    Sentry.captureException(error, {extra: {"context":"ReactErrorBoundary"}});
   }
 
   render() {
