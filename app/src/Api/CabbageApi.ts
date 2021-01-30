@@ -89,7 +89,7 @@ export async function queryFlywaySchemaHistory(db: SupabaseClient):
   // note that "version" here is typed - a wrong column name will not compile
   const result = await db.
     from<flyway_schema_history>(Tables.flyway_schema_history).
-    select().order("version", {ascending: true});
+    select().order("installed_rank", {ascending: true});
 
   const data = parseSbQueryResult<flyway_schema_history>(result);
   if( isErrorInfo(data) ){
