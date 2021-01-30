@@ -24,6 +24,7 @@ export interface EnvironmentConfig {
   isProd: boolean,
   environmentName: EnvironmentName,
   supabaseUrl: string,
+  sentryDsn?: string,
 }
 
 function initConfig(){
@@ -74,6 +75,8 @@ const devConfig: EnvironmentConfig = {
   isProd: false,
   environmentName: "dev",
   supabaseUrl: process.env.REACT_APP_SUPBASE_DEV_URL ?? stoDevDbUrl,
+  // remember to turn off ublock if you want to do this
+  // sentryDsn: "https://cc170cd659a7473e907f7bbe779d9dac@o513436.ingest.sentry.io/5615490",
 };
 
 const tstConfig: EnvironmentConfig = {
