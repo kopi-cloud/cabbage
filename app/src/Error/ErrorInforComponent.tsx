@@ -3,7 +3,7 @@ import {List, ListItemText} from "@material-ui/core";
 import {safeStringify} from "Util/ObjectUtil";
 import * as React from "react";
 import {ErrorInfo, } from "Error/ErrorUtil";
-import {isNonEmptyArrayOfStrings} from "Util/TypeUtil";
+import {isNonEmptyArrayOfString} from "Util/TypeUtil";
 import {PrimaryButton} from "Component/CabbageButton";
 
 const log = console;
@@ -24,7 +24,7 @@ export function ErrorInfoComponent(props: {
       <ErrorMoreDetailsExpando error={problem}/>
     </span>
   }
-  else if( isNonEmptyArrayOfStrings(problem) ){
+  else if( isNonEmptyArrayOfString(problem) ){
     log.debug("problem type: string[]");
     // don't need the error screen, there's no further detail to give
     detailsErrorContent = <List>{problem.map((it, index) =>

@@ -20,7 +20,7 @@ import {
 } from '@supabase/gotrue-js/dist/main/lib/types';
 import {STORAGE_KEY} from '@supabase/gotrue-js/dist/main/lib/constants';
 import {getUserScreenLink} from "Screen/UserScreen";
-import * as Sentry from "@sentry/browser";
+import {setUserId} from "Util/SendEventUtil";
 
 const log = console;
 
@@ -157,7 +157,7 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     return <SmallScreenSpinner message={"Processing SSO identity"}/>
   }
 
-  Sentry.setUser({id: apiState.user?.id});
+  setUserId(apiState.user?.id ?? "anonymous");
 
   return <SupabaseApiContext.Provider value={apiState}>
     {children}

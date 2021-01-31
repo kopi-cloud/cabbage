@@ -3,7 +3,7 @@ import {Divider} from "@material-ui/core";
 import {LargeScreenContainer} from "Component/Screen";
 import * as React from "react";
 import {ErrorInfoComponent} from "Error/ErrorInforComponent";
-import * as Sentry from "@sentry/browser";
+import {captureException} from "Util/SendEventUtil";
 
 /** This component deals with unexpected errors (usually programming errors)
  * during component rendering.
@@ -27,11 +27,11 @@ export class ReactErrorBoundary extends React.Component {
    * here.
    * I assume the dev build behaviour is something to do with React development
    * mode showing stack traces or something.
-   * So render errors will be logged twice by a development build.
+   * So render errors may be logged twice by a development build.
    */
   componentDidCatch(error: Error, info: React.ErrorInfo) {
     console.log("unhandled react render error", error, info);
-    Sentry.captureException(error, {extra: {"context":"ReactErrorBoundary"}});
+    captureException(error, "ReactErrorBoundary");
   }
 
   render() {

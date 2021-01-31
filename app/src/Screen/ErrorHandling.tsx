@@ -26,22 +26,23 @@ export function isErrorHandlingScreenPath(path: String): boolean{
 }
 
 export function ErrorHandlingScreen(){
-  return <NavTransition isPath={isErrorHandlingScreenPath} title={"Cabbage - error handling examples"}>
+  return <NavTransition isPath={isErrorHandlingScreenPath}
+    title={"Cabbage - error handling examples"}
+  >
     <Content/>
   </NavTransition>
 }
 
 function Content(){
   return <FlexCardScreenContainer>
-    <CardMargin><UnhandledEventErrorCard/></CardMargin>
+    <CardMargin><UnhandledOnClickErrorCard/></CardMargin>
     <CardMargin><ReactRenderErrorCard/></CardMargin>
     <CardMargin><HandledApiErrorCard/></CardMargin>
     <CardMargin><StoreSbEventCard/></CardMargin>
   </FlexCardScreenContainer>
 }
 
-function UnhandledEventErrorCard(){
-
+function UnhandledOnClickErrorCard(){
   return <ContainerCard title={<>Event handler error</>} >
     <TextSpan>Throws an error from inside an onClick event.</TextSpan>
     <TextSpan>This simulates a coding error when writing event handling code
@@ -57,7 +58,6 @@ function UnhandledEventErrorCard(){
 
 function StoreSbEventCard(){
   const {db} = useSupabase();
-
   return <ContainerCard title={<>Store supabase event</>} >
     <TextSpan>Stores an event directly to the REST endpoint.</TextSpan>
     <SecondaryButton

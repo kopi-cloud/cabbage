@@ -1,31 +1,26 @@
 import * as React from "react"
-import {CSSProperties} from "react"
+import {CSSProperties, useEffect} from "react"
 
 import {Link, Paper} from "@material-ui/core";
 import {TextSpan} from "Component/TextSpan";
-import {
-  ErrorInfo,
-  isErrorInfo,
-} from "Error/ErrorUtil";
+import {isErrorInfo,} from "Error/ErrorUtil";
 import {useOpenErrorDialog} from "Error/ErrorDialog";
-import {safeStringify} from "Util/ObjectUtil";
-import {isNonEmptyArrayOfStrings} from "Util/TypeUtil";
+import {isNonEmptyArrayOfString} from "Util/TypeUtil";
+import {captureException} from "Util/SendEventUtil";
 
 const log = console;
 
 /** This component is intended to be displayed "inline" on a screen;
  ideally next to or in place of the UI element that triggered the error.
  The link to error screen allows the user to inspect the error in more
- detail without disrupting the layout/state of the originating screen.
- If desired, you can use ErrorInfo.message to pass custom JSX
- but the primary purpose of this class is to be simple and compact, if
- you are tempted to get fancy with the rendering of this component so that it
- works with your layout - consider using your own component.  If you change
- how this component renders, you should go check every single place it's used
- to make sure it still looks right.
+ detail without disrupting the layout/state of the originating screen (because
+ it's a dialog that's shown "on top" of the screen, instead of replacing the
+ screen - which would dismount it).
+
  The error property is declared optional so that callers can use the component
  without having to surround it with a conditional, if you pass no error
  nothing will be rendered.
+
  The temptation will arise to re-define the error prop like "ErrorInfo|any"
  so your calling component can declare its state as "ErrorInfo|CustomResult".
  Don't do that - use separate state for "last error" and "last result",
@@ -35,60 +30,47 @@ const log = console;
  If you really want a single piece of state, go define a separate component
  that works as a wrapper HOC using conditional types or something.
  */
-export function CompactErrorPanel(props:{
-  /** can pass anything, but this component only displays something if  the
-   * error is an ErrorInfo */
-  error?: any;
-  nolinkToErrorScreen?: boolean;
-  border?: "redline" | "paper" | "h-pad";
+export function CompactErrorPanel({
+  error,
+  border,
+  errorLink = "add",
+  sendEvent = "send",
+}:{
+  error?: any,
+  border?: "redline" | "paper" | "h-pad",
+  errorLink?: "add"|"skip",
+  sendEvent?: "send"|"skip"
 }){
+  // unwrap to shallow, stable values so useEffect() doesn't fire unexpectedly
+  const {problem, message} = unwrapError(error);
+  useEffect(()=>{
+    if( problem && sendEvent !== "skip" ){
+      captureException(problem, message);
+    }
+  }, [problem, message, sendEvent]);
 
-  if( !props.error ){
+  // must go *after* useEffect()
+  if( !problem ){
     return null;
   }
 
-  if( !isErrorInfo(props.error) ){
-    return null;
-  }
+  log.debug("compact error panel rendered: ", message, problem);
 
-  if( React.isValidElement(props.error.message) ){
-    log.debug("error panel, error.message is a react element", props.error);
-  }
-  else {
-    // can't use JSON.stringify in case error is a react component or the
-    // actual error itself is problematic (circular references, etc.)
-    log.debug("compact error panel rendered for",
-      safeStringify(props.error) );
-  }
-
-  let message = props.error.message;
-  if( !message ){
-    // shouldn't happen, but we're in the land of errors now - trust nothing
-    message = "unknown error";
-  }
-
-  let {border, nolinkToErrorScreen} = props;
-
-  let linkToErrorScreen = true;
   let detailsErrorContent = <TextSpan>
     {message}
   </TextSpan>;
 
-  if( isNonEmptyArrayOfStrings(props.error.problem) ){
+  if( isNonEmptyArrayOfString(problem) ){
     detailsErrorContent = <TextSpan>
-      {props.error.problem.map((i, index)=>
+      {problem.map((i, index)=>
         <React.Fragment key={index}>{i}&nbsp;</React.Fragment>
       )}
     </TextSpan>;
   }
 
-  if( nolinkToErrorScreen ){
-    linkToErrorScreen = false;
-  }
-
   // wrap content in link
-  if( linkToErrorScreen ){
-    detailsErrorContent = <ErrorLink error={props.error}>
+  if( errorLink !== "skip" ){
+    detailsErrorContent = <ErrorLink problem={problem} message={message}>
       {detailsErrorContent}
     </ErrorLink>;
   }
@@ -110,17 +92,40 @@ export function CompactErrorPanel(props:{
   return compactPanel;
 }
 
-function ErrorLink(props: {
-  error: ErrorInfo, children: React.ReactNode,
+function ErrorLink({problem, message, children}: {
+  problem: any, message: string, children: React.ReactNode,
 }){
   const handleError = useOpenErrorDialog();
   return <Link onClick={() =>{
-    handleError({type: "handleError", error: props.error})
+    handleError({type: "handleError", error: {problem, message}})
   }}>
-    {props.children}
+    {children}
   </Link>
 }
 
+function unwrapError(error?: any):{
+  problem?: any,
+  message: string
+}{
+  if( error === undefined || error === null ){
+    return {
+      problem: undefined,
+      message: "no error",
+    }
+  }
+  else if( isErrorInfo(error) ){
+    return {
+      problem: error.problem ?? "no problem",
+      message: error.message ?? "no message",
+    }
+  }
+  else {
+    return {
+      message: error.message ?? "any error",
+      problem: error
+    };
+  }
+}
 
 export const RedBorderStyle: CSSProperties = {
   border: "solid red 1px", borderRadius: ".25em",

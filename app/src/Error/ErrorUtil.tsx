@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export interface ErrorInfo {
-  message: string | JSX.Element;
+  message: string;
   problem: any;
 }
 
