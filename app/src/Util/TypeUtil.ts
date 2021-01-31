@@ -1,5 +1,5 @@
 
-export function isNonEmptyArrayOfStrings(value: any): value is string[] {
+export function isNonEmptyArrayOfString(value: any): value is string[] {
   return Array.isArray(value) &&
     !!value.length &&
     value.every(item => typeof item === "string");
