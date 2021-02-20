@@ -4,7 +4,7 @@ import List from '@material-ui/core/List';
 import {ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import {useNavigation} from "Navigation/NavigationProvider";
-import {getUserScreenLink, isUserScreenPath} from "Screen/UserScreen";
+import {getUserEditScreenLink, isUserEditScreenPath} from "Screen/User/UserEditScreen";
 import {useLocation} from "Navigation/UseLocation";
 import {getOtherScreenLink, isOtherScreenPath} from "Screen/OtherScreen";
 import {getScratchScreenLink, isScratchScreenPath} from "Screen/ScratchScreen";
@@ -23,8 +23,8 @@ export function AppDrawer(props: {
     // hardcoded width reminds folks that mobile is a thing
     <div style={{width: 250}}>
       <List>
-        <ListNavButton href={getUserScreenLink()}
-          isCurrent={isUserScreenPath(currentLocation)}
+        <ListNavButton href={getUserEditScreenLink()}
+          isCurrent={isUserEditScreenPath(currentLocation)}
            description={"User home"}
           icon={<HomeIcon/>}
         />

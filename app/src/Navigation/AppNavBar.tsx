@@ -1,7 +1,7 @@
 import {useNavigation} from "Navigation/NavigationProvider";
 import React, {useState} from "react";
 import {AppBar, Hidden, IconButton, Menu, MenuItem, Toolbar} from "@material-ui/core";
-import {getUserScreenLink} from "Screen/UserScreen";
+import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {Cabbage} from "Component/Icon";
 import {getOtherScreenLink} from "Screen/OtherScreen";
 import {useAuthnUser} from "Api/AuthenticatedUserProvider";
@@ -19,8 +19,8 @@ export function AppNavBar(){
 
   return <AppBar position="static">
     <Toolbar variant={"dense"}>
-      <IconButton color="inherit" href={getUserScreenLink()}
-        onClick={event=>nav.navigateTo(getUserScreenLink(), event)}
+      <IconButton color="inherit" href={getUserEditScreenLink()}
+        onClick={event=>nav.navigateTo(getUserEditScreenLink(), event)}
       >
         <Cabbage/>
       </IconButton>

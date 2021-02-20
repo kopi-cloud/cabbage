@@ -19,7 +19,7 @@ import {
   User
 } from '@supabase/gotrue-js/dist/main/lib/types';
 import {STORAGE_KEY} from '@supabase/gotrue-js/dist/main/lib/constants';
-import {getUserScreenLink} from "Screen/UserScreen";
+import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {setUserId} from "Util/SendEventUtil";
 
 const log = console;
@@ -49,7 +49,7 @@ export function redirectAfterSignIn(){
   if( !path || path === "" || path === "/" ){
     /* OAuth redirect target previously didn't include the path, now
     that it does, only redirect to the user screen if no path specified. */
-    window.history.replaceState({}, "", getUserScreenLink());
+    window.history.replaceState({}, "", getUserEditScreenLink());
   }
 }
 

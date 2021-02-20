@@ -6,7 +6,7 @@ import {ErrorDialogProvider} from "Error/ErrorDialog";
 import {ReactErrorBoundary} from "Error/ReactErrorBoundary";
 import {SupabaseProvider} from "Api/SupabaseProvider";
 import {NavigationProvider} from "Navigation/NavigationProvider";
-import {UserScreen} from "Screen/UserScreen";
+import {UserEditScreen} from "Screen/User/UserEditScreen";
 import {AuthenticatedUserProvider} from "Api/AuthenticatedUserProvider";
 import {OtherScreen} from "Screen/OtherScreen";
 import {AppNavBar} from "Navigation/AppNavBar";
@@ -23,7 +23,7 @@ export function App(){
           <SupabaseProvider>
             <AuthenticatedUserProvider>
               <AppNavBar/>
-              <UserScreen/>
+              <UserEditScreen/>
               <OtherScreen/>
               <ScratchScreen/>
               <ErrorHandlingScreen/>

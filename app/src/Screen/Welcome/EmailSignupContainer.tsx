@@ -7,7 +7,7 @@ import {stopClick} from "Util/EventUtil";
 import Typography from "@material-ui/core/Typography";
 import {ButtonContainer} from "Component/ButtonContainer";
 import {ErrorInfo, isError} from "Error/ErrorUtil";
-import {getUserScreenLink} from "Screen/UserScreen";
+import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {PasswordField} from "Component/PasswordField";
 
 const log = console;
@@ -48,7 +48,7 @@ export function EmailSignupContainer({onCancel}:{
     }
     else {
       log.debug("after signup auth.user", db.auth.user());
-      nav.navigateTo(getUserScreenLink(), event);
+      nav.navigateTo(getUserEditScreenLink(), event);
       /* don't reset isSignignUp to keep the button disabled while navigating
       and to avoid changing unmounted state error */
     }

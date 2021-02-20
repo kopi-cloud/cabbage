@@ -4,7 +4,7 @@ import {useSupabase} from "Api/SupabaseProvider";
 import {SmallScreenContainer} from "Component/Screen";
 import {Typography} from "@material-ui/core";
 import {Link} from "Navigation/Link";
-import {getUserScreenLink} from "Screen/UserScreen";
+import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {ButtonContainer} from "Component/ButtonContainer";
 import {PrimaryButton} from "Component/CabbageButton";
 
@@ -37,7 +37,7 @@ export function CurrentUserSignOutContainer({
     </Typography>
     <Typography paragraph>
       Sign out if you want to change user, or click here to go to
-      the <Link href={getUserScreenLink()}>home screen</Link>.
+      the <Link href={getUserEditScreenLink()}>home screen</Link>.
     </Typography>
     <ButtonContainer style={{justifyContent: 'space-around'}}
       error={lastSignOutError}

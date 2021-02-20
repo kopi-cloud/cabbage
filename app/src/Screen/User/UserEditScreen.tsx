@@ -20,17 +20,17 @@ const log = console;
 
 const userUrl = "/user";
 
-export function getUserScreenLink(): string{
+export function getUserEditScreenLink(): string{
   return userUrl;
 }
 
-export function isUserScreenPath(path: String): boolean{
+export function isUserEditScreenPath(path: String): boolean{
   const normalizedPath = path.toLowerCase();
   return normalizedPath.startsWith(userUrl);
 }
 
-export function UserScreen(){
-  return <NavTransition isPath={isUserScreenPath} title={"Cabbage - user home"}>
+export function UserEditScreen(){
+  return <NavTransition isPath={isUserEditScreenPath} title={"Cabbage - user home"}>
     <SmallScreenContainer>
       <UserContainer/>
     </SmallScreenContainer>
