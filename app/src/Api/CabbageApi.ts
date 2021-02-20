@@ -1,4 +1,5 @@
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
+import {PostgrestResponse} from "@supabase/postgrest-js/dist/main/lib/types";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {
   Columns,
@@ -10,12 +11,11 @@ import {
   Tables
 } from "Api/CabbageSchema";
 import {parseSbQueryResult, parseSbVoidFunctionResult} from "Api/SupabaseUtil";
-import {delay} from "Util/EventUtil";
 
 const log = console;
 
 export async function queryDisplayName(db: SupabaseClient):
-  Promise<string|ErrorInfo>{
+Promise<string|ErrorInfo>{
   const result = await db.from<public_user_info>(Tables.public_user_info).
     select(Columns.public_user_info.display_name).
     eq("uuid", db.auth.user()?.id);
@@ -47,6 +47,39 @@ export async function upsertDisplayName(
     return { problem: result, message: "unexpected data returned from db"};
   }
   return result.data[0].display_name ?? "";
+}
+
+export async function queryAbout(db: SupabaseClient):
+  Promise<string|ErrorInfo>{
+  const result = await db.from<public_user_info>(Tables.public_user_info).
+    select(Columns.public_user_info.about).
+    eq("uuid", db.auth.user()?.id);
+
+  const data = parseSbQueryResult<public_user_info>(result);
+  if( isErrorInfo(data) ){
+    return data;
+  }
+
+  return data?.[0].about ?? "";
+}
+
+export async function upsertAbout(
+  db: SupabaseClient, newValue: string
+): Promise<string|ErrorInfo>{
+  const result = await db.from<public_user_info>(Tables.public_user_info).
+    insert({uuid: db.auth.user()?.id, about: newValue}, {upsert: true});
+
+  log.debug("result of save", result);
+  if( result.error ){
+    if( result.status === 404 ){
+      return { problem: result, message: result.statusText};
+    }
+    return { problem: result.error, message: result.error.message};
+  }
+  if( result.data?.length !== 1 ){
+    return { problem: result, message: "unexpected data returned from db"};
+  }
+  return result.data[0].about ?? "";
 }
 
 export async function upsertContactDetails(

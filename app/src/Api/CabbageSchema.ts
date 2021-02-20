@@ -16,6 +16,7 @@ export const Columns = {
   public_user_info: {
     uuid: "uuid",
     display_name: "display_name",
+    about: "about",
   },
   private_user_info: {
     uuid: "uuid",
@@ -44,6 +45,7 @@ export interface store_sentry_event_params {
 export interface public_user_info {
   uuid: string,
   display_name?: string,
+  about?: string,
 }
 
 export interface private_user_info {
