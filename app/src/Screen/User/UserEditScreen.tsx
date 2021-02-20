@@ -11,7 +11,8 @@ import Divider from "@material-ui/core/Divider";
 import {
   queryAbout,
   queryContactDetails,
-  queryDisplayName, upsertAbout,
+  queryDisplayName,
+  upsertAbout,
   upsertContactDetails,
   upsertDisplayName
 } from "Api/CabbageApi";
@@ -26,7 +27,7 @@ export function getUserEditScreenLink(): string{
 
 export function isUserEditScreenPath(path: String): boolean{
   const normalizedPath = path.toLowerCase();
-  return normalizedPath.startsWith(userUrl);
+  return normalizedPath === userUrl || normalizedPath === userUrl;
 }
 
 export function UserEditScreen(){

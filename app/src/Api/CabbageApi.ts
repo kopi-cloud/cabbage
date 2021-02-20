@@ -144,3 +144,17 @@ export async function store_event(
   return parseSbVoidFunctionResult(result);
 }
 
+export async function queryPublicUserInfo(db: SupabaseClient):
+  Promise<public_user_info[]|ErrorInfo>
+{
+  const result = await db.
+    from<public_user_info>(Tables.public_user_info).
+    select().order("uuid", {ascending: true});
+
+  const data = parseSbQueryResult<public_user_info>(result);
+  if( isErrorInfo(data) ){
+    return data;
+  }
+
+  return data;
+}

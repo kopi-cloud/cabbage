@@ -10,6 +10,10 @@ import {getOtherScreenLink, isOtherScreenPath} from "Screen/OtherScreen";
 import {getScratchScreenLink, isScratchScreenPath} from "Screen/ScratchScreen";
 import {getErrorHandlingScreenLink, isErrorHandlingScreenPath} from "Screen/ErrorHandling";
 import {getDbSchemaScreenLink, isDbSchemaScreenPath} from "Screen/DatabaseSchemaScreen";
+import {
+  getUserListScreenLink,
+  isUserListScreenPath
+} from "Screen/User/UserListScreen";
 
 
 export function AppDrawer(props: {
@@ -28,18 +32,21 @@ export function AppDrawer(props: {
            description={"User home"}
           icon={<HomeIcon/>}
         />
-        <ListNavButton href={getOtherScreenLink()}
-          isCurrent={isOtherScreenPath(currentLocation)}
-          description="Other stuff" />
-        <ListNavButton href={getScratchScreenLink()}
-          isCurrent={isScratchScreenPath(currentLocation)}
-          description="Scratch" />
+        <ListNavButton href={getUserListScreenLink()}
+          isCurrent={isUserListScreenPath(currentLocation)}
+          description="Users" />
         <ListNavButton href={getErrorHandlingScreenLink()}
           isCurrent={isErrorHandlingScreenPath(currentLocation)}
           description="Error handling examples" />
         <ListNavButton href={getDbSchemaScreenLink()}
           isCurrent={isDbSchemaScreenPath(currentLocation)}
           description="Database schema" />
+        <ListNavButton href={getOtherScreenLink()}
+          isCurrent={isOtherScreenPath(currentLocation)}
+          description="Other stuff" />
+        <ListNavButton href={getScratchScreenLink()}
+          isCurrent={isScratchScreenPath(currentLocation)}
+          description="Scratch" />
       </List>
     </div>
   );
