@@ -3,7 +3,7 @@ import {LargeScreenContainer} from "Component/Screen";
 import React, {SyntheticEvent, useCallback, useEffect, useState} from "react";
 import {useSupabase} from "Api/SupabaseProvider";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
-import {queryPublicUserInfo} from "Api/CabbageApi";
+import {queryListPublicUserInfo} from "Api/CabbageApi";
 import {public_user_info} from "Api/CabbageSchema";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {useIsMounted} from "Util/ReactUtil";
@@ -82,7 +82,7 @@ function UserListTable(){
   const readUsers = useCallback(async (event?: SyntheticEvent)=>{
     stopClick(event);
     setCurrentAction("reading")
-    const result = await queryPublicUserInfo(db);
+    const result = await queryListPublicUserInfo(db);
     if( !isMounted.current ) return;
     if( isErrorInfo(result) ){
       setReadError(result);

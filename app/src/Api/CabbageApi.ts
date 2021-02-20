@@ -50,7 +50,7 @@ export async function upsertDisplayName(
 }
 
 export async function queryAbout(db: SupabaseClient):
-  Promise<string|ErrorInfo>{
+Promise<string|ErrorInfo>{
   const result = await db.from<public_user_info>(Tables.public_user_info).
     select(Columns.public_user_info.about).
     eq("uuid", db.auth.user()?.id);
@@ -144,9 +144,8 @@ export async function store_event(
   return parseSbVoidFunctionResult(result);
 }
 
-export async function queryPublicUserInfo(db: SupabaseClient):
-  Promise<public_user_info[]|ErrorInfo>
-{
+export async function queryListPublicUserInfo(db: SupabaseClient):
+Promise<public_user_info[]|ErrorInfo>{
   const result = await db.
     from<public_user_info>(Tables.public_user_info).
     select().order("uuid", {ascending: true});
@@ -158,3 +157,24 @@ export async function queryPublicUserInfo(db: SupabaseClient):
 
   return data;
 }
+
+export async function queryReadPublicUserInfo(
+  db: SupabaseClient, 
+  uuid:string
+): Promise<public_user_info|ErrorInfo>{
+  const result = await db.from<public_user_info>(Tables.public_user_info).
+    select().eq("uuid", uuid);
+
+  const data = parseSbQueryResult<public_user_info>(result);
+  if( isErrorInfo(data) ){
+    return data;
+  }
+  
+  if( data.length === 0 ){
+    // haven't tested this yet
+    return {message: "no row returned for uuid", uuid};
+  }
+
+  return data?.[0];
+}
+
