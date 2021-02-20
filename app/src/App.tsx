@@ -6,13 +6,15 @@ import {ErrorDialogProvider} from "Error/ErrorDialog";
 import {ReactErrorBoundary} from "Error/ReactErrorBoundary";
 import {SupabaseProvider} from "Api/SupabaseProvider";
 import {NavigationProvider} from "Navigation/NavigationProvider";
-import {UserScreen} from "Screen/UserScreen";
+import {UserEditScreen} from "Screen/User/UserEditScreen";
 import {AuthenticatedUserProvider} from "Api/AuthenticatedUserProvider";
 import {OtherScreen} from "Screen/OtherScreen";
 import {AppNavBar} from "Navigation/AppNavBar";
 import {ScratchScreen} from "Screen/ScratchScreen";
 import {ErrorHandlingScreen} from "Screen/ErrorHandling";
 import {DatabaseSchemaScreen} from "Screen/DatabaseSchemaScreen";
+import {UserListScreen} from "Screen/User/UserListScreen";
+import {UserDisplayScreen} from "Screen/User/UserDisplayScreen";
 
 export function App(){
   return <MuiThemeProvider theme={theme}>
@@ -23,7 +25,9 @@ export function App(){
           <SupabaseProvider>
             <AuthenticatedUserProvider>
               <AppNavBar/>
-              <UserScreen/>
+              <UserEditScreen/>
+              <UserListScreen/>
+              <UserDisplayScreen/>
               <OtherScreen/>
               <ScratchScreen/>
               <ErrorHandlingScreen/>

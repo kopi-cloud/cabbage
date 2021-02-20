@@ -1,5 +1,5 @@
 /**
- * This class encapsulates all the event sending stuff so I can replace
+ * Encapsulates all the event sending functions so I can replace
  * Sentry later (20KB zipped is way too big).
  */
 import * as Sentry from "@sentry/browser";

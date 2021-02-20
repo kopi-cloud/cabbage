@@ -8,7 +8,6 @@ import {useNavigation} from "Navigation/NavigationProvider";
 import Divider from "@material-ui/core/Divider";
 import {CurrentUserSignOutContainer} from "./CurrentUserSignOutContainer";
 import {SsoSignInContainer} from "Screen/Welcome/SsoSignInContainer";
-import {getUserScreenLink} from "Screen/UserScreen";
 
 const log = console;
 

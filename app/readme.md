@@ -3,7 +3,8 @@ This project is the client "app" for Cabbage.
 It's a [create-react-app](https://create-react-app.dev/) project, statically
 typed using [Typescript](https://www.typescriptlang.org/), using 
 [Material UI](https://material-ui.com/) as the component library.
-Note that, at the moment, Cabbage uses an alpha version of version 5. 
+Note that, at the moment, Cabbage uses an alpha version of Material-UI 
+version 5. 
 
 From a build perspective, the project is implemented as both a
 [Gradle sub-project](https://docs.gradle.org/current/userguide/multi_project_builds.html)

@@ -8,23 +8,30 @@ import {useAuthnUser} from "Api/AuthenticatedUserProvider";
 import {HelpPopover} from "Component/HelpPopover";
 import {SavingTextField} from "Component/SavingTextField";
 import Divider from "@material-ui/core/Divider";
-import {queryContactDetails, queryDisplayName, upsertContactDetails, upsertDisplayName} from "Api/CabbageApi";
+import {
+  queryAbout,
+  queryContactDetails,
+  queryDisplayName,
+  upsertAbout,
+  upsertContactDetails,
+  upsertDisplayName
+} from "Api/CabbageApi";
 
 const log = console;
 
 const userUrl = "/user";
 
-export function getUserScreenLink(): string{
+export function getUserEditScreenLink(): string{
   return userUrl;
 }
 
-export function isUserScreenPath(path: String): boolean{
+export function isUserEditScreenPath(path: String): boolean{
   const normalizedPath = path.toLowerCase();
-  return normalizedPath.startsWith(userUrl);
+  return normalizedPath === userUrl || normalizedPath === userUrl;
 }
 
-export function UserScreen(){
-  return <NavTransition isPath={isUserScreenPath} title={"Cabbage - user home"}>
+export function UserEditScreen(){
+  return <NavTransition isPath={isUserEditScreenPath} title={"Cabbage - user home"}>
     <SmallScreenContainer>
       <UserContainer/>
     </SmallScreenContainer>
@@ -43,12 +50,21 @@ function UserContainer(){
 
 function UserDetailsForm(){
   const {db} = useAuthnUser();
+  
   const readDisplayName = useCallback(async ()=>{
     return queryDisplayName(db);
   }, [db]);
 
   const writeDisplayName = useCallback(async (value: string)=>{
     return await upsertDisplayName(db, value);
+  }, [db]);
+
+  const readAbout = useCallback(async ()=>{
+    return queryAbout(db);
+  }, [db]);
+
+  const writeAbout = useCallback(async (value: string)=>{
+    return await upsertAbout(db, value);
   }, [db]);
 
   const readContactDetails = useCallback(async ()=>{
@@ -70,7 +86,19 @@ function UserDetailsForm(){
           This value is shown to other users to identify any content
           you post.
         </TextSpan>}/>
-        Note: display name is publicly visible
+        Note: publicly visible
+      </TextSpan>}
+    />
+
+    <SavingTextField id="aboutInputField" label="About you"
+      readValue={readAbout}
+      writeValue={writeAbout}
+      helperText={<TextSpan>
+        <HelpPopover content={<TextSpan>
+          This value is shown to other users if they want to know more about 
+          you.
+        </TextSpan>}/>
+        Note: publicly visible
       </TextSpan>}
     />
 
@@ -82,7 +110,7 @@ function UserDetailsForm(){
         <HelpPopover content={<TextSpan>
           This value is never seen by other users.
         </TextSpan>}/>
-        Note: Contact details are private
+        Note: only visible to yourself and admin staff.
       </TextSpan>}
     />
 

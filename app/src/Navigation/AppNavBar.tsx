@@ -1,14 +1,21 @@
 import {useNavigation} from "Navigation/NavigationProvider";
 import React, {useState} from "react";
-import {AppBar, Hidden, IconButton, Menu, MenuItem, Toolbar} from "@material-ui/core";
-import {getUserScreenLink} from "Screen/UserScreen";
+import {
+  AppBar,
+  Hidden,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar
+} from "@material-ui/core";
+import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {Cabbage} from "Component/Icon";
-import {getOtherScreenLink} from "Screen/OtherScreen";
 import {useAuthnUser} from "Api/AuthenticatedUserProvider";
 import {AccountCircle, Menu as MenuIcon} from "@material-ui/icons";
 import Typography from "@material-ui/core/Typography";
 import {AppDrawer} from "Navigation/AppDrawer";
 import {useSupabase} from "Api/SupabaseProvider";
+import {getUserListScreenLink} from "Screen/User/UserListScreen";
 
 const log = console;
 
@@ -19,14 +26,14 @@ export function AppNavBar(){
 
   return <AppBar position="static">
     <Toolbar variant={"dense"}>
-      <IconButton color="inherit" href={getUserScreenLink()}
-        onClick={event=>nav.navigateTo(getUserScreenLink(), event)}
+      <IconButton color="inherit" href={getUserEditScreenLink()}
+        onClick={event=>nav.navigateTo(getUserEditScreenLink(), event)}
       >
         <Cabbage/>
       </IconButton>
       <MenuShortcutBar>
-        <MenuShortcutNavItem href={getOtherScreenLink()}>
-          Other
+        <MenuShortcutNavItem href={getUserListScreenLink()}>
+          Users
         </MenuShortcutNavItem>
       </MenuShortcutBar>
 

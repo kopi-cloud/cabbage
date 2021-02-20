@@ -4,7 +4,7 @@ import * as React from "react";
 import {createContext, ReactNode, useContext} from "react";
 import {useSupabase} from "Api/SupabaseProvider";
 import {SignInContainer} from "Screen/Welcome/SigninContainer";
-import {getUserScreenLink} from "Screen/UserScreen";
+import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {CabbageCountContainer} from "Screen/Welcome/CabbageCountContainer";
 import {SmallScreenContainer} from "Component/Screen";
 import {Typography} from "@material-ui/core";
@@ -42,7 +42,7 @@ export function AuthenticatedUserProvider({children}: {children: ReactNode}){
     log.debug("unauthenticated render")
     return <>
       <IntroContainer/>
-      <SignInContainer signInRedirect={getUserScreenLink()} />
+      <SignInContainer signInRedirect={getUserEditScreenLink()} />
       <CabbageCountContainer/>
     </>
   }
