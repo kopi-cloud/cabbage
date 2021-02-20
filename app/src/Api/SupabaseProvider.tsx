@@ -118,7 +118,10 @@ export function SupabaseProvider({children}: {children: ReactNode}){
       return cleanup;
     }
 
-    if( !localStorage.getItem(STORAGE_KEY) ){
+    if( localStorage.getItem(STORAGE_KEY) ){
+      log.debug("supabase token found in localstorage");
+    }
+    else {
       /* user never logged in, deleted localstorage, previously logged out,
       or we're being landing a redirect for google SSO */
       log.debug("no supabase token found in localstorage");
