@@ -4,7 +4,7 @@ import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {
   Columns,
   flyway_schema_history,
-  Functions,
+  Functions, list_public_user_info,
   private_user_info,
   public_user_info,
   store_sentry_event_params,
@@ -145,12 +145,12 @@ export async function store_event(
 }
 
 export async function queryListPublicUserInfo(db: SupabaseClient):
-Promise<public_user_info[]|ErrorInfo>{
+Promise<list_public_user_info[]|ErrorInfo>{
   const result = await db.
-    from<public_user_info>(Tables.public_user_info).
-    select().order("uuid", {ascending: true});
+    from<list_public_user_info>(Tables.list_public_user_info).
+    select().order("created", {ascending: false, nullsFirst: false});
 
-  const data = parseSbQueryResult<public_user_info>(result);
+  const data = parseSbQueryResult<list_public_user_info>(result);
   if( isErrorInfo(data) ){
     return data;
   }

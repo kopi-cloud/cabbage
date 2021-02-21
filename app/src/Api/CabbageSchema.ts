@@ -4,6 +4,7 @@
 
 export const Tables = {
   public_user_info : 'public_user_info',
+  list_public_user_info : 'list_public_user_info',
   private_user_info : 'private_user_info',
   flyway_schema_history : 'flyway_schema_history',
 }
@@ -12,11 +13,17 @@ export const Functions = {
   store_sentry_event: 'store_sentry_event',
 }
 
+const publicUserInfoColumns = {
+  uuid: "uuid",
+  display_name: "display_name",
+  about: "about",
+};
+
 export const Columns = {
-  public_user_info: {
-    uuid: "uuid",
-    display_name: "display_name",
-    about: "about",
+  public_user_info: publicUserInfoColumns,
+  list_public_user_info: {
+    ...publicUserInfoColumns,
+    created: "created",
   },
   private_user_info: {
     uuid: "uuid",
@@ -46,6 +53,11 @@ export interface public_user_info {
   uuid: string,
   display_name?: string,
   about?: string,
+}
+
+export interface list_public_user_info extends public_user_info {
+  // row in auth.users table might be deleted? 
+  created?: "string",
 }
 
 export interface private_user_info {

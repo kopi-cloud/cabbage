@@ -4,12 +4,12 @@ import React, {SyntheticEvent, useCallback, useEffect, useState} from "react";
 import {useSupabase} from "Api/SupabaseProvider";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import {queryListPublicUserInfo} from "Api/CabbageApi";
-import {public_user_info} from "Api/CabbageSchema";
+import {list_public_user_info, public_user_info} from "Api/CabbageSchema";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {useIsMounted} from "Util/ReactUtil";
 import TableContainer from "@material-ui/core/TableContainer/TableContainer";
 import {
-  LinearProgress,
+  LinearProgress, 
   Table,
   TableBody,
   TableCell,
@@ -22,6 +22,8 @@ import {ContainerCard} from "Component/ContainerCard";
 import {stopClick} from "Util/EventUtil";
 import {RefreshIconButton} from "Component/RefreshIconButton";
 import {getUserDisplayScreenLink} from "Screen/User/UserDisplayScreen";
+import {formatShortIsoDateTime, parseServerDate} from "Util/DateUtil";
+import {Link} from "Navigation/Link";
 
 const log = console;
 
@@ -74,7 +76,7 @@ function UserListTable(){
   const [currentAction, setCurrentAction] = useState("reading" as
     undefined | "reading");
   const [users, setUsers] =
-    useState(undefined as undefined | public_user_info[]);
+    useState(undefined as undefined | list_public_user_info[]);
   const [readError, setReadError] =
     useState(undefined as undefined | ErrorInfo);
   const isMounted = useIsMounted();
@@ -108,8 +110,8 @@ function UserListTable(){
     <CompactErrorPanel error={readError}/>
     <TableContainer ><Table>
       <TableHead><TableRow>
-        <TableCell><strong>UUID</strong></TableCell>
         <TableCell><strong>Display name</strong></TableCell>
+        <TableCell><strong>Created</strong></TableCell>
       </TableRow></TableHead>
       <TableBody>
       { users === undefined && currentAction === "reading" && <>
@@ -125,9 +127,11 @@ function UserListTable(){
       { users?.map((row) => (
         <StyledTableRow key={row.uuid} >
           <StyledTableCell>
-            <Link href={getUserDisplayScreenLink(row.uuid)}>{row.uuid}</Link>
+            <UserNameLink user={row}/>
           </StyledTableCell>
-          <StyledTableCell>{row.display_name}</StyledTableCell>
+          <StyledTableCell>
+            <UserCreatedText user={row}/>
+          </StyledTableCell>
         </StyledTableRow>
       ))}
       </TableBody>
@@ -135,13 +139,21 @@ function UserListTable(){
   </ContainerCard>
 }
 
-export function Link({href, children}: {
-  href: string,
-  children: React.ReactNode,
-}){
-  const nav = useNavigation();
+export function UserNameLink({user}:{user: public_user_info}){
+  return <Link href={getUserDisplayScreenLink(user.uuid)}
+    variant="body1"
+  >
+    { user.display_name || "unspecified" }
+  </Link>
+}
 
-  return <a href={href}
-    onClick={event=>nav.navigateTo(href, event)}
-  >{children}</a>
+export function UserCreatedText({user}:{user: list_public_user_info}){
+  return <TextSpan>
+    { !!user.created &&
+      formatShortIsoDateTime(parseServerDate(user.created))  
+    }
+    { !user.created &&
+      "user deleted"  
+    }
+  </TextSpan>
 }
