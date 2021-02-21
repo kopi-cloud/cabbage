@@ -30,40 +30,37 @@ export const primaryLinearStyle : CSSProperties = {
   width: "80%", 
 };
 
-export function PrimaryButton({ isLoading, error, ...buttonProps }:
+export function PrimaryButton({ isLoading, error, children, ...buttonProps }:
   { isLoading?: boolean, error?: ErrorInfo} & ButtonProps
 ){
   return <>
     {/*for the absolute positioning of linearProgress*/}
     <div style={{position: "relative",}}>
       <Button {...primaryButtonProps} {...buttonProps}
-        style={{...primaryButtonProps.style}}
-      />
-      { isLoading &&
-        <LinearProgress style={{...primaryLinearStyle}}/>
-      }
+        style={{...primaryButtonProps.style}}>
+          {children}
+          { isLoading &&
+            <LinearProgress style={{...primaryLinearStyle}}/>
+          }
+      </Button>
     </div>
     <CompactErrorPanel error={error} border={"h-pad"}/>
   </>
 }
 
-export function SecondaryButton({ isLoading, error, ...buttonProps }:
+export function SecondaryButton({ isLoading, error, children, ...buttonProps }:
   { isLoading?: boolean, error?: ErrorInfo} & ButtonProps
 ){
-  const {children, ...restButtonProps} = buttonProps;
   return <>
     {/*for the absolute positioning of linearProgress*/}
     <div style={{position: "relative",}}>
-      <Button {...secondaryButtonProps} {...restButtonProps}
+      <Button {...secondaryButtonProps} {...buttonProps}
         style={{...secondaryButtonProps.style}}
       >
-        <>
-          {children}
-          { isLoading &&
+        {children}
+        { isLoading &&
           <LinearProgress style={{...primaryLinearStyle}}/>
-          }
-        </>
-        
+        }
       </Button>
     </div>
     <CompactErrorPanel error={error} border={"h-pad"}/>
