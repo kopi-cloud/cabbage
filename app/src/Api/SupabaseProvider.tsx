@@ -20,7 +20,7 @@ import {
 } from '@supabase/gotrue-js/dist/main/lib/types';
 import {STORAGE_KEY} from '@supabase/gotrue-js/dist/main/lib/constants';
 import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
-import {setUserId} from "Util/SendEventUtil";
+import {captureException, setUserId} from "Util/SendEventUtil";
 
 const log = console;
 
@@ -57,6 +57,7 @@ export function SupabaseProvider({children}: {children: ReactNode}){
   const [apiState, setApiState] = useState(undefined as undefined|SupabaseApi);
   const [isAnonKeyValid, setIsAnonKeyValid] = useState(true);
   const isOauthRedirect = useRef(false);
+  const [isAutoSignIn, setIsAutoSignIn] = useState(false);
 
   /* IMPROVE: too verbose both in terms of code and logging.
    Most conditionals can probably be collapsed if the logging is removed,
@@ -74,6 +75,7 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     ){
       log.debug("supabase auth state change", {
         authEvent, session, user: session?.user });
+      setIsAutoSignIn(false);
       if( authEvent === "SIGNED_IN" ){
         if( isOauthRedirect.current ){
           log.debug("session restored from oauth redirect", {session: !!session});
@@ -119,11 +121,27 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     }
 
     if( localStorage.getItem(STORAGE_KEY) ){
-      log.debug("supabase token found in localstorage");
+      if( newClient.auth.session() ){
+        // never seen this
+        log.debug("supabase token found, user has session");
+      }
+      else {
+        log.debug("supabase token found and no session, wait for autoSignIn");
+        setIsAutoSignIn(true);
+        setTimeout(()=>{
+          setIsAutoSignIn((currentVal)=>{
+            if( currentVal ){
+              log.debug("autoSignIn timed out");
+              captureException("autoSignIn timed out", "");
+            }
+            return false
+          });
+        }, 3000);
+      }
     }
     else {
       /* user never logged in, deleted localstorage, previously logged out,
-      or we're being landing a redirect for google SSO */
+      or we're landing a redirect for google SSO */
       log.debug("no supabase token found in localstorage");
     }
 
@@ -160,6 +178,11 @@ export function SupabaseProvider({children}: {children: ReactNode}){
     return <SmallScreenSpinner message={"Processing SSO identity"}/>
   }
 
+  if( isAutoSignIn && !apiState.session){
+    log.debug("showing spinner while waiting for autoSignIn");
+    return <SmallScreenSpinner message={"Automatic sign-in"}/>
+  }
+  
   setUserId(apiState.user?.id ?? "anonymous");
 
   return <SupabaseApiContext.Provider value={apiState}>
