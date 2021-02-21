@@ -60,6 +60,10 @@ Promise<string|ErrorInfo>{
     return data;
   }
 
+  if( data?.length < 1 ){
+    return "";
+  }
+  
   return data?.[0].about ?? "";
 }
 
