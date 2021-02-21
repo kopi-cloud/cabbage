@@ -27,7 +27,7 @@ export const primaryLinearStyle : CSSProperties = {
   height: "2px", bottom: "5px",
 
   // center the progress bar
-  width: "80%", marginLeft: "10%",
+  width: "80%", 
 };
 
 export function PrimaryButton({ isLoading, error, ...buttonProps }:
@@ -50,15 +50,21 @@ export function PrimaryButton({ isLoading, error, ...buttonProps }:
 export function SecondaryButton({ isLoading, error, ...buttonProps }:
   { isLoading?: boolean, error?: ErrorInfo} & ButtonProps
 ){
+  const {children, ...restButtonProps} = buttonProps;
   return <>
     {/*for the absolute positioning of linearProgress*/}
     <div style={{position: "relative",}}>
-      <Button {...secondaryButtonProps} {...buttonProps}
+      <Button {...secondaryButtonProps} {...restButtonProps}
         style={{...secondaryButtonProps.style}}
-      />
-      { isLoading &&
-        <LinearProgress style={{...primaryLinearStyle}}/>
-      }
+      >
+        <>
+          {children}
+          { isLoading &&
+          <LinearProgress style={{...primaryLinearStyle}}/>
+          }
+        </>
+        
+      </Button>
     </div>
     <CompactErrorPanel error={error} border={"h-pad"}/>
   </>
