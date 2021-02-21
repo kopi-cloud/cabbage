@@ -7,17 +7,17 @@ import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import {CSSProperties} from "@material-ui/core/styles/withStyles";
 
 
-export const primaryButtonProps : ButtonProps = {
-  variant:"contained", color:"primary",
-  style:{textTransform: "none"},
+export const primaryButtonProps: ButtonProps = {
+  variant: "contained", color: "primary",
+  style: {textTransform: "none"},
 };
 
-export const secondaryButtonProps : ButtonProps = {
-  variant:"outlined", color:"primary",
-  style:{textTransform: "none"},
+export const secondaryButtonProps: ButtonProps = {
+  variant: "outlined", color: "primary",
+  style: {textTransform: "none"},
 };
 
-export const primaryLinearStyle : CSSProperties = {
+export const primaryLinearStyle: CSSProperties = {
   /* this "overlays" the progress bar without taking up vertical space,
   so that the content doesn't "jump" when toggling the progress state  */
   position: "absolute",
@@ -27,42 +27,39 @@ export const primaryLinearStyle : CSSProperties = {
   height: "2px", bottom: "5px",
 
   // center the progress bar
-  width: "80%", 
+  width: "80%",
 };
 
-export function PrimaryButton({ isLoading, error, children, ...buttonProps }:
-  { isLoading?: boolean, error?: ErrorInfo} & ButtonProps
-){
+export function PrimaryButton({
+  isLoading, error, children, ...buttonProps
+}: {
+  isLoading?: boolean, error?: ErrorInfo
+} & ButtonProps){
   return <>
-    {/*for the absolute positioning of linearProgress*/}
-    <div style={{position: "relative",}}>
-      <Button {...primaryButtonProps} {...buttonProps}
-        style={{...primaryButtonProps.style}}>
-          {children}
-          { isLoading &&
-            <LinearProgress style={{...primaryLinearStyle}}/>
-          }
-      </Button>
-    </div>
+    <Button {...primaryButtonProps} {...buttonProps}
+      style={{...primaryButtonProps.style}}
+    >
+      {children}
+      { isLoading &&
+        <LinearProgress style={{...primaryLinearStyle}}/>
+      }
+    </Button>
     <CompactErrorPanel error={error} border={"h-pad"}/>
   </>
 }
 
-export function SecondaryButton({ isLoading, error, children, ...buttonProps }:
-  { isLoading?: boolean, error?: ErrorInfo} & ButtonProps
+export function SecondaryButton({isLoading, error, children, ...buttonProps}:
+  { isLoading?: boolean, error?: ErrorInfo } & ButtonProps
 ){
   return <>
-    {/*for the absolute positioning of linearProgress*/}
-    <div style={{position: "relative",}}>
-      <Button {...secondaryButtonProps} {...buttonProps}
-        style={{...secondaryButtonProps.style}}
-      >
-        {children}
-        { isLoading &&
-          <LinearProgress style={{...primaryLinearStyle}}/>
-        }
-      </Button>
-    </div>
+    <Button {...secondaryButtonProps} {...buttonProps}
+      style={{...secondaryButtonProps.style}}
+    >
+      {children}
+      { isLoading &&
+        <LinearProgress style={{...primaryLinearStyle}}/>
+      }
+    </Button>
     <CompactErrorPanel error={error} border={"h-pad"}/>
   </>
 }
