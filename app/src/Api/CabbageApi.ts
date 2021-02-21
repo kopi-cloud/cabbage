@@ -1,10 +1,10 @@
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
-import {PostgrestResponse} from "@supabase/postgrest-js/dist/main/lib/types";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {
   Columns,
   flyway_schema_history,
-  Functions, list_public_user_info,
+  Functions,
+  list_public_user_info,
   private_user_info,
   public_user_info,
   store_sentry_event_params,
@@ -144,7 +144,6 @@ export async function store_event(
   Promise<ErrorInfo | undefined>
 {
   const result = await db.rpc(Functions.store_sentry_event, params);
-
   return parseSbVoidFunctionResult(result);
 }
 
