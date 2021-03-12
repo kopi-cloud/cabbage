@@ -1,3 +1,4 @@
+export const simulatedApiDelay = 1000;
 
 export interface VendorSummary {
   id: string,
@@ -9,13 +10,13 @@ export interface VendorDetail extends VendorSummary {
 }
 
 export async function listVendors(): Promise<VendorSummary[]>{
-  await delay(1000);
+  await delay(simulatedApiDelay);
   return [...database]; 
 }
 
 export async function getVendorDetail(vendorId: string)
 : Promise<VendorDetail|undefined> {
-  await delay(1000);
+  await delay(simulatedApiDelay);
   const found = database.find(iVendor => iVendor.id === vendorId)
   if( !found ){
     return undefined;
