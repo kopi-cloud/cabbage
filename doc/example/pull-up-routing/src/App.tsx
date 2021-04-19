@@ -5,7 +5,7 @@ import {VendorsPage} from "Page/VendorsPage";
 
 // const log = console;
 
-export const windowTitle = "simple-pull-routing";
+export const windowTitle = "pull-up-routing";
 
 export function App(){
   return <>

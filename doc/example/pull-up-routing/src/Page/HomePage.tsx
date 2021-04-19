@@ -28,7 +28,7 @@ function Content(){
   return <div>
     <h1>Home Page</h1>
 
-    <div>simple-pull-routing example project</div>
+    <div>pull-up-routing example project</div>
     <CommitInfo/>
 
     <h2>Navigations links</h2>
