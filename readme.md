@@ -1,16 +1,16 @@
 # Cabbage
 
-The `tst` branch is published at: 
-[rabbit-cabbage.netlify.app](https://rabbit-cabbage.netlify.app/)
-
-Cabbage is a "full-fat" example project that I use for learning about 
+Cabbage is a "full-fat" example project that I use for learning about
 [Supabase](https://github.com/supabase/supabase).
 
 I also publish articles on the [Kopi blog](http://kopi.cloud/blog/) using 
 Cabbage as a worked example. Yes, those articles are (partly) content marketing 
 for Kopi. 
 
-Ask questions or make suggestions in the Discussions of the Github repo.
+The `tst` branch is published at:
+[rabbit-cabbage.netlify.app](https://rabbit-cabbage.netlify.app/)
+
+Ask questions or make suggestions in the Discussions or Issues section of the Github repo.
 
 
 ## Structure 
