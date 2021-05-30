@@ -54,7 +54,7 @@ function VendorList(){
   return <>
     <h2>Vendors</h2>
     <ul>{vendors.map((it)=>{
-      return <a key={it.id} href={"getVendorPagePath(it.id)"} 
+      return <a key={it.id} href={getVendorPagePath(it.id)} 
         onClick={e=>{
           e.preventDefault();
           location.pushState(getVendorPagePath(it.id))
