@@ -26,5 +26,5 @@ Ask questions or make suggestions in the Discussions or Issues section of the Gi
 I'm using [Gradle](https://docs.gradle.org/current/userguide/userguide.html),
 [Flyway](https://flywaydb.org/documentation/), Java etc. just because they're
 the tools that I know best.  
-I'm not saying this is the Correct Way to do things.
+I'm not saying this is the Right Way to do things.
 
