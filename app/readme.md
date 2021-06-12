@@ -31,7 +31,11 @@ It's what I call a
 
 Run the npm `start` script to start a local dev server, you will need to provide
 some env vars to connect to a dev supabase:
-`REACT_APP_CABBAGE_ENV=DEV;REACT_APP_SUPABASE_ANON_KEY=xxx.yyy.zzz`
+`REACT_APP_CABBAGE_ENV=DEV;REACT_APP_SUPABASE_ANON_KEY=xxadd intro contax.yyy.zzz`
+
+Look in the Supabase UI under /Settings/API/API Keys for your anon key.
+Remember that Supabase will "pause" your DB after it's been inactive for a while 
+(1 week at the moment for free tier: https://supabase.io/pricing).
 
 
 ### Generating types

@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import React, {useCallback} from "react";
 import {TextSpan} from "Component/TextSpan";
 import {CurrentUser} from "Component/CurrentUser";
-import {useAuthnUser} from "Api/AuthenticatedUserProvider";
+import {IntroContainer, useAuthnUser} from "Api/AuthenticatedUserProvider";
 import {HelpPopover} from "Component/HelpPopover";
 import {SavingTextField} from "Component/SavingTextField";
 import Divider from "@material-ui/core/Divider";
@@ -35,6 +35,7 @@ export function UserEditScreen(){
     <SmallScreenContainer>
       <UserContainer/>
     </SmallScreenContainer>
+    <IntroContainer/>
   </NavTransition>
 }
 
