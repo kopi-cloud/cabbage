@@ -1,3 +1,16 @@
+select au.id "uuid",
+  pui.display_name "display_name",
+  au.email,
+  au.raw_app_meta_data,
+  pui.about "about",
+  au.created_at "created"
+from auth.users au
+  left join postgres.public.public_user_info pui on pui.uuid = au.id
+order by au.updated_at desc
+;
+
+select * 
+from auth.users;
 
 select * from flyway_schema_history;
 
