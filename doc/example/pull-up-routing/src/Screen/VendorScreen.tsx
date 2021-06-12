@@ -1,24 +1,23 @@
-// import React from 'react';
 import {useLocation} from "Component/UseLocation";
 import {windowTitle} from "App";
 import React from "react";
-import {getHomePagePath} from "Page/HomePage";
-import {getVendorsPagePath} from "Page/VendorsPage";
+import {getHomeScreenPath} from "./HomeScreen";
+import {getVendorsScreenPath} from "./VendorsScreen";
 
 export {};
 
-const pagePath = "/vendor/";
+const screenPath = "/vendor/";
 
-export function getVendorPagePath(vendorId: string){
-  return pagePath + vendorId;
+export function getVendorScreenPath(vendorId: string){
+  return screenPath + vendorId;
 }
 
-function isVendorsPagePath(location: string): boolean{
-  return location.startsWith(pagePath);
+function isVendorsScreenPath(location: string): boolean{
+  return location.startsWith(screenPath);
 }
 
 function parseVendorId(location: string): string | undefined{
-  if( !location.startsWith(pagePath) ){
+  if( !location.startsWith(screenPath) ){
     return undefined;
   }
 
@@ -27,9 +26,9 @@ function parseVendorId(location: string): string | undefined{
 }
 
 
-export function VendorPage(){
+export function VendorScreen(){
   const {currentLocation} = useLocation();
-  if( !isVendorsPagePath(currentLocation) ){
+  if( !isVendorsScreenPath(currentLocation) ){
     return null;
   }
   
@@ -46,18 +45,18 @@ function Content({vendorId}: {vendorId: string}){
   const location = useLocation();
   
   return <>
-    <h1>Vendor Detail page</h1>
+    <h1>Vendor Detail screen</h1>
 
-    <a href={getHomePagePath()} onClick={(e)=>{
+    <a href={getHomeScreenPath()} onClick={(e)=>{
       e.preventDefault();
-      location.pushState(getHomePagePath())
+      location.pushState(getHomeScreenPath())
     }}>Home</a>
     
     &emsp;
     
-    <a href={getVendorsPagePath()} onClick={(e)=>{
+    <a href={getVendorsScreenPath()} onClick={(e)=>{
       e.preventDefault();
-      location.pushState(getVendorsPagePath())
+      location.pushState(getVendorsScreenPath())
     }}>Vendors</a>
     
     <h3>Vendor ID: {vendorId}</h3>

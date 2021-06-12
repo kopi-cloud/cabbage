@@ -1,22 +1,22 @@
 import React from 'react';
 import {CommitInfo} from "Component/CommitInfo";
 import {useLocation} from "Component/UseLocation";
-import {getVendorsPagePath} from "Page/VendorsPage";
 import {windowTitle} from "App";
+import {getVendorsScreenPath} from "./VendorsScreen";
 
-const pagePath = "/";
+const screenPath = "/";
 
-export function getHomePagePath(){
-  return pagePath;
+export function getHomeScreenPath(){
+  return screenPath;
 }
 
-function isHomePagePath(location: string): boolean{
-  return location === pagePath;
+function isHomeScreenPath(location: string): boolean{
+  return location === screenPath;
 }
 
-export function HomePage(){
+export function HomeScreen(){
   const {currentLocation} = useLocation()
-  if( !isHomePagePath(currentLocation) ){
+  if( !isHomeScreenPath(currentLocation) ){
     return null;
   }
   window.document.title = windowTitle + " / Home"
@@ -26,16 +26,16 @@ export function HomePage(){
 function Content(){
   const location = useLocation();
   return <div>
-    <h1>Home Page</h1>
+    <h1>Home Screen</h1>
 
     <div>pull-up-routing example project</div>
     <CommitInfo/>
 
     <h2>Navigations links</h2>
     <ul>
-      <li><a href={getVendorsPagePath()} onClick={(e)=>{
+      <li><a href={getVendorsScreenPath()} onClick={(e)=>{
         e.preventDefault();
-        location.pushState(getVendorsPagePath())
+        location.pushState(getVendorsScreenPath())
       }}>Vendors</a></li>
     </ul>
   </div>

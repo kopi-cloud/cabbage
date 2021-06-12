@@ -1,23 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from "Component/UseLocation";
-import {getHomePagePath} from "Page/HomePage";
 import {windowTitle} from "App";
 import {listVendors, VendorSummary} from "Component/ExampleApi";
-import {getVendorPagePath} from "Page/VendorPage";
+import {getHomeScreenPath} from "./HomeScreen";
+import {getVendorScreenPath} from "./VendorScreen";
 
-const pagePath = "/vendors";
+const screenPath = "/vendors";
 
-export function getVendorsPagePath(){
-  return pagePath;
+export function getVendorsScreenPath(){
+  return screenPath;
 }
 
-function isVendorsPagePath(location: string): boolean{
-  return location === pagePath;
+function isVendorsScreenPath(location: string): boolean{
+  return location === screenPath;
 }
 
-export function VendorsPage(){
+export function VendorsScreen(){
   const {currentLocation} = useLocation();
-  if( !isVendorsPagePath(currentLocation) ){
+  if( !isVendorsScreenPath(currentLocation) ){
     return null;
   }
   window.document.title = windowTitle + " / Vendors"
@@ -27,10 +27,10 @@ export function VendorsPage(){
 function Content(){
   const location = useLocation();
   return <>
-    <h1>Vendor list page</h1>
-    <a href={getHomePagePath()} onClick={(e)=>{
+    <h1>Vendor list screen</h1>
+    <a href={getHomeScreenPath()} onClick={(e)=>{
       e.preventDefault();
-      location.pushState(getHomePagePath())
+      location.pushState(getHomeScreenPath())
     }}>Home</a>
     <VendorList/>
   </>
@@ -54,10 +54,10 @@ function VendorList(){
   return <>
     <h2>Vendors</h2>
     <ul>{vendors.map((it)=>{
-      return <a key={it.id} href={getVendorPagePath(it.id)} 
+      return <a key={it.id} href={getVendorScreenPath(it.id)} 
         onClick={e=>{
           e.preventDefault();
-          location.pushState(getVendorPagePath(it.id))
+          location.pushState(getVendorScreenPath(it.id))
         }}
       > 
         <li>{it.name}</li>
