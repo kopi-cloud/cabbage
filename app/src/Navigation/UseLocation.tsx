@@ -1,8 +1,11 @@
 /**
  * Most of the logic in here comes from the wouter library, it's just
  * converted to Typescript and factored a little differently.
+ * Note that I looked at the Wouter code originally back in Approx Jan 2020,
+ * it has been improved significantly since then, but this code has not been
+ * updated to reflect any of those changes.
  *
- * https://github.com/molefrog/wouter/blob/master/use-location.js
+ * https://github.com/molefrog/wouter/blob/bdcb3a4dc152fb998b669d218e4b3a299e4fafb1/use-location.js
  */
 import React, {useEffect, useRef, useState} from "react";
 
