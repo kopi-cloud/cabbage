@@ -1,13 +1,16 @@
 import React from 'react';
-import { HomeScreen } from 'Screen/HomeScreen';
+import {PersonStateScreen} from "Screen/PersonStateScreen";
+import {HomeScreen} from "Screen/HomeScreen";
+import {PersonContextScreen} from "Screen/PersonContextScreen";
 
-// const log = console;
 
 export const windowTitle = "pull-up-routing";
 
 export function App(){
   return <>
     <HomeScreen/>
+    <PersonStateScreen/>
+    <PersonContextScreen/>
   </>
 }
 
