@@ -1,4 +1,4 @@
-import {useLocation} from "Component/UseLocation";
+import {useLocationPath} from "Location/UseLocationPath";
 import {windowTitle} from "App";
 import React from "react";
 import {getHomeScreenPath} from "./HomeScreen";
@@ -27,12 +27,12 @@ function parseVendorId(location: string): string | undefined{
 
 
 export function VendorScreen(){
-  const {currentLocation} = useLocation();
-  if( !isVendorsScreenPath(currentLocation) ){
+  const {currentLocationPath} = useLocationPath();
+  if( !isVendorsScreenPath(currentLocationPath) ){
     return null;
   }
   
-  const vendorId = parseVendorId(currentLocation);
+  const vendorId = parseVendorId(currentLocationPath);
   if( !vendorId ){
     return <h3>Unable to parse vendorId from location</h3>
   }
@@ -42,21 +42,21 @@ export function VendorScreen(){
 }
 
 function Content({vendorId}: {vendorId: string}){
-  const location = useLocation();
+  const location = useLocationPath();
   
   return <>
     <h1>Vendor Detail screen</h1>
 
     <a href={getHomeScreenPath()} onClick={(e)=>{
       e.preventDefault();
-      location.pushState(getHomeScreenPath())
+      location.pushStateLocationPath(getHomeScreenPath())
     }}>Home</a>
     
     &emsp;
     
     <a href={getVendorsScreenPath()} onClick={(e)=>{
       e.preventDefault();
-      location.pushState(getVendorsScreenPath())
+      location.pushStateLocationPath(getVendorsScreenPath())
     }}>Vendors</a>
     
     <h3>Vendor ID: {vendorId}</h3>

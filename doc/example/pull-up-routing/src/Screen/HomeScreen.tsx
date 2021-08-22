@@ -1,6 +1,6 @@
 import React from 'react';
 import {CommitInfo} from "Component/CommitInfo";
-import {useLocation} from "Component/UseLocation";
+import {useLocationPath} from "Location/UseLocationPath";
 import {windowTitle} from "App";
 import {getVendorsScreenPath} from "./VendorsScreen";
 
@@ -15,8 +15,8 @@ function isHomeScreenPath(location: string): boolean{
 }
 
 export function HomeScreen(){
-  const {currentLocation} = useLocation()
-  if( !isHomeScreenPath(currentLocation) ){
+  const {currentLocationPath} = useLocationPath()
+  if( !isHomeScreenPath(currentLocationPath) ){
     return null;
   }
   window.document.title = windowTitle + " / Home"
@@ -24,7 +24,7 @@ export function HomeScreen(){
 }
 
 function Content(){
-  const location = useLocation();
+  const location = useLocationPath();
   return <div>
     <h1>Home Screen</h1>
 
@@ -35,7 +35,7 @@ function Content(){
     <ul>
       <li><a href={getVendorsScreenPath()} onClick={(e)=>{
         e.preventDefault();
-        location.pushState(getVendorsScreenPath())
+        location.pushStateLocationPath(getVendorsScreenPath())
       }}>Vendors</a></li>
     </ul>
   </div>
