@@ -4,6 +4,7 @@ import {windowTitle} from "App";
 import {listVendors, VendorSummary} from "Component/ExampleApi";
 import {getHomeScreenPath} from "./HomeScreen";
 import {getVendorScreenPath} from "./VendorScreen";
+import {LoadingIcon} from "Component/LoadingIcon";
 
 const screenPath = "/vendors";
 
@@ -48,7 +49,7 @@ function VendorList(){
   }, []);
   
   if( !vendors ){
-    return <h3>loading vendors...</h3>
+    return <h3>loading vendors&nbsp;<LoadingIcon/></h3>
   }
   
   return <>
