@@ -1,9 +1,9 @@
 .loading-icon {
   display: inline-block;
-  animation: rotation 2s infinite linear;
+  animation: icon_rotation 2s infinite linear;
 }
 
-@keyframes rotation {
+@keyframes icon_rotation {
   from {
     transform: rotate(0deg);
   }

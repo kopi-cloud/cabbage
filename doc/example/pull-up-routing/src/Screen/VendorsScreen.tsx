@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation} from "Component/UseLocation";
 import {windowTitle} from "App";
 import {listVendors, VendorSummary} from "Component/ExampleApi";
 import {getHomeScreenPath} from "./HomeScreen";
 import {getVendorScreenPath} from "./VendorScreen";
-import {LoadingIcon} from "Component/LoadingIcon";
+import {LoadingIcon} from "Component/Icon";
+import {useLocationPath} from "Location/UseLocationPath";
+import {useIsMounted} from "Component/Util";
 
 const screenPath = "/vendors";
 
@@ -17,8 +18,8 @@ function isVendorsScreenPath(location: string): boolean{
 }
 
 export function VendorsScreen(){
-  const {currentLocation} = useLocation();
-  if( !isVendorsScreenPath(currentLocation) ){
+  const {currentPath} = useLocationPath();
+  if( !isVendorsScreenPath(currentPath) ){
     return null;
   }
   window.document.title = windowTitle + " / Vendors"
@@ -26,7 +27,7 @@ export function VendorsScreen(){
 }
 
 function Content(){
-  const location = useLocation();
+  const location = useLocationPath();
   return <>
     <h1>Vendor list screen</h1>
     <a href={getHomeScreenPath()} onClick={(e)=>{
@@ -38,15 +39,19 @@ function Content(){
 }
 
 function VendorList(){
-  const location = useLocation();
+  const location = useLocationPath();
+  const isMounted = useIsMounted();
   const [vendors, setVendors] = 
     useState(undefined as undefined|VendorSummary[]);
   
   useEffect(()=>{
     (async ()=>{
-      setVendors(await listVendors());
-    })();
-  }, []);
+      let result = await listVendors();
+      if( isMounted.current ){
+        setVendors(result);
+      }
+    })(); 
+  }, [isMounted]);
   
   if( !vendors ){
     return <h3>loading vendors&nbsp;<LoadingIcon/></h3>
