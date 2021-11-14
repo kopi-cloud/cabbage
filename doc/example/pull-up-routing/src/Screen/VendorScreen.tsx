@@ -2,7 +2,7 @@ import {windowTitle} from "App";
 import React from "react";
 import {getHomeScreenPath} from "./HomeScreen";
 import {getVendorsScreenPath} from "./VendorsScreen";
-import {useLocationPath} from "Location/UseLocationPath";
+import {useLocationPathname} from "Location/UseLocationPathname";
 
 export {};
 
@@ -27,12 +27,12 @@ function parseVendorId(location: string): string | undefined{
 
 
 export function VendorScreen(){
-  const {currentPath} = useLocationPath();
-  if( !isVendorsScreenPath(currentPath) ){
+  const {pathname} = useLocationPathname();
+  if( !isVendorsScreenPath(pathname) ){
     return null;
   }
   
-  const vendorId = parseVendorId(currentPath);
+  const vendorId = parseVendorId(pathname);
   if( !vendorId ){
     return <h3>Unable to parse vendorId from location</h3>
   }
@@ -42,7 +42,7 @@ export function VendorScreen(){
 }
 
 function Content({vendorId}: {vendorId: string}){
-  const location = useLocationPath();
+  const location = useLocationPathname();
   
   return <>
     <h1>Vendor Detail screen</h1>

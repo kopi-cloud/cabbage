@@ -9,9 +9,20 @@ export interface VendorDetail extends VendorSummary {
   description: string,
 }
 
-export async function listVendors(): Promise<VendorSummary[]>{
+export async function listVendors(
+  matchingName: string = "",
+  sortAscending: boolean = true,
+): Promise<VendorSummary[]>{
   await delay(simulatedApiDelay);
-  return [...database]; 
+  let result =  [...database];
+  
+  result = result.filter(i => {
+    return i.name.toLowerCase().includes(matchingName.toLowerCase())
+  }).sort((left, right) => left.name.localeCompare(right.name));
+  if( !sortAscending ){
+    result = result.reverse();
+  }
+  return result;
 }
 
 export async function getVendorDetail(vendorId: string)

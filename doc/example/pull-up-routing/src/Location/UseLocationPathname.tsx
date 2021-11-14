@@ -20,41 +20,41 @@ import {
 
 export interface LocationPathState {
   /** tracks window.location.pathname */
-  currentPath: string,
+  pathname: string,
   replaceState: (path: string) => void,
   pushState: (path: string) => void,
 }
 
 const LocationPathContext = React.createContext({} as LocationPathState);
-export const useLocationPath = () => useContext(LocationPathContext);
+export const useLocationPathname = () => useContext(LocationPathContext);
 
 export function LocationContextProvider({children}: {
   children: React.ReactNode
 }){
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [pathname, setPathname] = useState(window.location.pathname);
   const replaceState = useCallback(path => {
     if( !originalFunctions ){
       console.warn("replaceState callback invoked before listener installed");
       return;
     }
     originalFunctions.replaceState(null, "", path);
-    setCurrentPath(path);
-  }, [setCurrentPath]);
+    setPathname(path);
+  }, [setPathname]);
   const pushState = useCallback(path => {
     if( !originalFunctions ){
-      console.warn("replaceState callback invoked before listener installed");
+      console.warn("pushState callback invoked before listener installed");
       return;
     }
     originalFunctions.pushState(null, "", path);
-    setCurrentPath(path);
-  }, [setCurrentPath]);
+    setPathname(path);
+  }, [setPathname]);
   
-  const state = useRef({currentPath, replaceState, pushState});
+  const state = useRef({pathname, replaceState, pushState});
 
   /* intercepts forward/back browser actions ("popstate" event), or other 
   non-project javascript calls to window.history.pushState()/replaceState() */
   const onHistoryStateChange = React.useCallback(() => {
-    setCurrentPath(window.location.pathname);
+    setPathname(window.location.pathname);
   }, []);
   useEffect(() => {
     addListener(onHistoryStateChange);
@@ -65,8 +65,8 @@ export function LocationContextProvider({children}: {
   `value` object and users of `useLocationPath()` will not be re-rendered.
   If path has changed, updating the `value` object is what triggers anything
   in our App that cares about the path (screens, menus, etc.) to re-render. */
-  if( currentPath !== state.current.currentPath ){
-    state.current = {currentPath, replaceState, pushState};
+  if( pathname !== state.current.pathname ){
+    state.current = {pathname, replaceState, pushState};
   }
 
   return <LocationPathContext.Provider value={state.current}>
