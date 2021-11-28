@@ -1,8 +1,9 @@
 import React from 'react';
 import {CommitInfo} from "Component/CommitInfo";
-import {windowTitle} from "App";
+import {appTitle} from "App";
 import {getVendorsScreenPath} from "./VendorsScreen";
-import {useLocationPathname} from "Location/UseLocationPathname";
+import {useLocationPathname} from "Component/Location/UseLocationPathname";
+import {Link} from "Component/Location/Link";
 
 const screenPath = "/";
 
@@ -19,24 +20,30 @@ export function HomeScreen(){
   if( !isHomeScreenPath(pathname) ){
     return null;
   }
-  window.document.title = windowTitle + " / Home"
+  window.document.title = appTitle + " / Home"
   return <Content/>;
 }
 
 function Content(){
-  const location = useLocationPathname();
   return <div>
     <h1>Home Screen</h1>
 
-    <div>pull-up-routing example project</div>
+    <div>{appTitle} example project</div>
     <CommitInfo/>
 
     <h2>Navigations links</h2>
     <ul>
-      <li><a href={getVendorsScreenPath()} onClick={(e)=>{
-        e.preventDefault();
-        location.pushState(getVendorsScreenPath())
-      }}>Vendors</a></li>
+      <li><Link href={getVendorsScreenPath()}>Vendors</Link></li>
+    </ul>
+    
+    <h4>Shortcut links</h4>
+    <ul>
+      <li><Link href={
+        getVendorsScreenPath({filterText: "blue", sortAscending: true })
+      }>"Blue" Vendors</Link></li>
+      <li><Link href={
+        getVendorsScreenPath({filterText: "purple", sortAscending: true })
+      }>"Purple" Vendors</Link></li>
     </ul>
   </div>
 }

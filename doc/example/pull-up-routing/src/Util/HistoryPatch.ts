@@ -1,7 +1,12 @@
 
 /**
- popstate is fired by the browser when user does something that causes the 
- location to change (forward, back button, etc).
+ Facilitates patching window.history state functions in so that many listers 
+ can be added and removed (`removeListener()`)over time.
+ Not sure why I did `changeListeners` array - why not just participate
+ in the delegation chain, as with `uninstallBrowserHistoryStateHandler()`?
+ 
+ Note: `popstate` is fired by the browser when user does something that 
+ causes the location to change (forward, back button, etc).
  It *does not* get fired when the standard pushState()/replaceState()
  functions are invoked.
 
@@ -77,7 +82,7 @@ export function uninstallBrowserHistoryStateHandler(){
  */
 export function installBrowserHistoryStateHandler(): void{
   if( originalFunctions ){
-    console.log("installBrowserHistoryStateHandler() called twice");
+    console.warn("installBrowserHistoryStateHandler() called twice");
     return;
   }
 
@@ -116,7 +121,6 @@ function patchHistoryPushState(onPushState: WindowHistoryFn): WindowHistoryFn{
   window.history.pushState = function(
     data: any, title: string, url?: (string | null)
   ): void{
-    console.debug("patchpush");
     original.apply(this, [data, title, url]);
     onPushState(data, title, url);
   };
@@ -132,7 +136,6 @@ function patchHistoryReplaceState(
   window.history.replaceState = function(
     data: any, title: string, url?: (string | null)
   ): void{
-    console.debug("patchreplace");
     original.apply(this, [data, title, url]);
     onReplaceState(data, title, url);
   };

@@ -16,19 +16,20 @@ import {
   addListener,
   originalFunctions,
   removeListener
-} from "Location/HistoryPatch";
+} from "Util/HistoryPatch";
+import {parsePathname} from "Util/Location";
 
-export interface LocationPathState {
+export interface LocationPathnameState {
   /** tracks window.location.pathname */
   pathname: string,
   replaceState: (path: string) => void,
   pushState: (path: string) => void,
 }
 
-const LocationPathContext = React.createContext({} as LocationPathState);
-export const useLocationPathname = () => useContext(LocationPathContext);
+const LocationPathnameContext = React.createContext({} as LocationPathnameState);
+export const useLocationPathname = () => useContext(LocationPathnameContext);
 
-export function LocationContextProvider({children}: {
+export function LocationPathnameProvider({children}: {
   children: React.ReactNode
 }){
   const [pathname, setPathname] = useState(window.location.pathname);
@@ -38,7 +39,7 @@ export function LocationContextProvider({children}: {
       return;
     }
     originalFunctions.replaceState(null, "", path);
-    setPathname(path);
+    setPathname(parsePathname(path));
   }, [setPathname]);
   const pushState = useCallback(path => {
     if( !originalFunctions ){
@@ -46,7 +47,7 @@ export function LocationContextProvider({children}: {
       return;
     }
     originalFunctions.pushState(null, "", path);
-    setPathname(path);
+    setPathname(parsePathname(path));
   }, [setPathname]);
   
   const state = useRef({pathname, replaceState, pushState});
@@ -69,7 +70,7 @@ export function LocationContextProvider({children}: {
     state.current = {pathname, replaceState, pushState};
   }
 
-  return <LocationPathContext.Provider value={state.current}>
+  return <LocationPathnameContext.Provider value={state.current}>
     {children}
-  </LocationPathContext.Provider>;
+  </LocationPathnameContext.Provider>;
 }

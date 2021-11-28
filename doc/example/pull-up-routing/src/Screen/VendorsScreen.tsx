@@ -1,24 +1,31 @@
 import React, {SyntheticEvent, useEffect, useState} from 'react';
-import {windowTitle} from "App";
-import {listVendors, VendorSummary} from "Component/ExampleApi";
+import {appTitle} from "App";
+import {listVendors, VendorSummary} from "Util/ExampleApi";
 import {getHomeScreenPath} from "./HomeScreen";
 import {getVendorScreenPath} from "./VendorScreen";
 import {LoadingIcon} from "Component/Icon";
-import {useLocationPathname} from "Location/UseLocationPathname";
-import {parseBoolean, useIsMounted} from "Component/Util";
+import {useLocationPathname} from "Component/Location/UseLocationPathname";
 import {
-  LocationSearchContextProvider,
+  LocationSearchProvider, LocationSearchState, 
   useLocationSearch
-} from "Location/UseLocationSearch";
+} from "Component/Location/UseLocationSearch";
+import {parseBoolean} from "Util/Location";
+import {useIsMounted} from "Component/HookUtil";
+import {formatPath, isPathname} from "Util/Location";
+import {Link} from "Component/Location/Link";
 
 const screenPath = "/vendors";
 
-export function getVendorsScreenPath(){
-  return screenPath;
+export function getVendorsScreenPath(params?: ListCriteria){
+  if( !params ){
+    return screenPath;
+  }
+  
+  return formatPath(screenPath, formatSearchState(params));
 }
 
 function isVendorsScreenPath(location: string): boolean{
-  return location === screenPath;
+  return isPathname(screenPath, location);
 }
 
 export function VendorsScreen(){
@@ -27,67 +34,53 @@ export function VendorsScreen(){
   if( !isVendorsScreenPath(pathname) ){
     return null;
   }
-  window.document.title = windowTitle + " / Vendors"
-  return <Content/>;
-}
-
-function Content(){
-  const location = useLocationPathname();
   return <>
     <h1>Vendor list screen</h1>
-    <a href={getHomeScreenPath()} onClick={ e => {
-      e.preventDefault();
-      location.pushState(getHomeScreenPath())
-    }}>Home</a>
-    <LocationSearchContextProvider>
+    <Link href={getHomeScreenPath()}>Home</Link>
+    <LocationSearchProvider>
       <VendorList/>
-    </LocationSearchContextProvider>
+    </LocationSearchProvider>
   </>
 }
 
 function VendorList(){
-  const location = useLocationPathname();
-  const search = useLocationSearch();
-  const [options, setOptions] = useState({
-    filterText: search.search.get("name") ?? "", 
-    sortAscending: parseBoolean(search.search.get("ascending") || "true", true) });
+  const searchContext = useLocationSearch<VendorListSearchState>();
+  const [criteria, setCriteria] = useState(parseSearchState(searchContext));
+  
   const isMounted = useIsMounted();
   const [vendors, setVendors] = 
     useState(undefined as undefined|VendorSummary[]);
   const [isListing, setIsListing] = useState(false);
-  
+
+  // must be under LocationSearchProvider if title uses search params
+  window.document.title = formatWindowTitle(searchContext.search)
+
   useEffect(()=>{
     (async ()=>{
       setIsListing(true);
-      let result = await listVendors(options.filterText, options.sortAscending);
+      let result = await listVendors(
+        criteria.filterText, criteria.sortAscending );
       if( isMounted.current ){
         setVendors(result);
         setIsListing(false);
       }
     })(); 
-  }, [isMounted, setVendors, options]);
+  }, [isMounted, setVendors, criteria]);
   
   return <>
     <h2>Vendors</h2>
     <CriteriaForm
-      disabled={isListing} criteria={options} onChange={(newOptions)=>{
-        search.replaceState(new URLSearchParams({
-          name: newOptions.filterText,
-          ascending: newOptions.sortAscending.toString() }));
-        setOptions(newOptions);
+      disabled={isListing} criteria={criteria} onChange={(newOptions)=>{
+        setCriteria(newOptions);
+        searchContext.replaceState(formatSearchState(newOptions));
     }} />
 
     <ul>
       { !vendors && <li>loading...</li> }
       { vendors?.map((it)=>{
-        return <a key={it.id} href={getVendorScreenPath(it.id)} 
-          onClick={e=>{
-            e.preventDefault();
-            location.pushState(getVendorScreenPath(it.id))
-          }}
-        > 
+        return <Link key={it.id} href={getVendorScreenPath(it.id)}> 
           <li>{it.name}</li>
-        </a>
+        </Link>
       })}
     </ul>
   </>
@@ -120,8 +113,43 @@ function CriteriaForm({disabled = false, criteria, onChange}:{
   </form>
 }
 
+/* Yes, you could use TS typing to create a new interface where the types are
+all strings. Resist that temptation.  The similarities between the criteria
+and the state are coincidental, not intrinsic; borne of this example's 
+simplicity.    
+*/
 interface ListCriteria {
   filterText: string,
   sortAscending: boolean,
 }
+
+export type VendorListSearchState = {
+  name: string,
+  ascending: string,
+}
+
+function formatWindowTitle(search: VendorListSearchState){
+  let newTitle = appTitle + " / Vendors";
+  if( search.name ){
+    newTitle += ` (${search.name})`
+  }
+  return newTitle  
+}
+
+function formatSearchState(newOptions: ListCriteria): VendorListSearchState{
+  return {
+    name: newOptions.filterText,
+    ascending: newOptions.sortAscending.toString()
+  };
+}
+
+function parseSearchState(
+  searchContext: LocationSearchState<VendorListSearchState>
+): ListCriteria{
+  return {
+    filterText: searchContext.search.name ?? "",
+    sortAscending: parseBoolean(searchContext.search, "ascending") ?? true
+  };
+}
+
 

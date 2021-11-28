@@ -1,3 +1,7 @@
+/**
+ First version of location.search context, no consideration for param types.
+ */
+
 import React, {
   useCallback,
   useContext,
@@ -9,7 +13,7 @@ import {
   addListener,
   originalFunctions,
   removeListener
-} from "Location/HistoryPatch";
+} from "Util/HistoryPatch";
 
 export interface LocationSearchState {
   /** tracks window.location.search */
@@ -18,9 +22,15 @@ export interface LocationSearchState {
   pushState: (params: URLSearchParams) => void,
 }
 
-// TODO:STO figure out a better way to do this
 const LocationSearchContext = React.createContext(undefined as any as LocationSearchState);
-export const useLocationSearch = () => useContext(LocationSearchContext);
+export function useLocationSearchUntyped(){
+  let context = useContext(LocationSearchContext);
+  if( !context ){
+    throw new Error('useLocationSearch must be used' +
+      ' underneath a LocationSearchContextProvider element');
+  }
+  return context;
+}
 
 function makePath(search: URLSearchParams): string{
   return window.location.pathname + "?" + search.toString();

@@ -1,4 +1,13 @@
+/**
+ Simple example stand-in for a real backend API.
+ */
 export const simulatedApiDelay = 1000;
+
+const database: VendorDetail[] = [
+  {id: "vid-1", name: "Blue cabbages Incorporated", description: "sweet"},
+  {id: "vid-2", name: "The purple cabbage Company", description: "savoury"},
+  {id: "vid-3", name: "Cabbages 'r' Us", description: "savoury"},
+]
 
 export interface VendorSummary {
   id: string,
@@ -43,9 +52,3 @@ function delay(ms: number, msg?: string):Promise<never> {
     setTimeout(resolve, ms)
   });
 }
-
-const database: VendorDetail[] = [
-  {id: "vid-1", name: "Blue cabbages Incorporated", description: "sweet"},
-  {id: "vid-2", name: "The purple cabbage Company", description: "savoury"},
-  {id: "vid-3", name: "Cabbages 'r' Us", description: "savoury"},
-]

@@ -9,12 +9,3 @@ export function useIsMounted(){
 
   return isMounted;
 }
-
-export function parseBoolean(val: string|null, defaultValue=false):boolean {
-  try {
-    return !!JSON.parse(String(val).toLowerCase());
-  }
-  catch( e ){
-    return defaultValue;
-  }
-}
