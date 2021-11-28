@@ -1,5 +1,5 @@
 {
-  "name": "pull-up-routing",
+  "name": "self-routing",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
