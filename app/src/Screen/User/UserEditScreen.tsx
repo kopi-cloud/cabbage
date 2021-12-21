@@ -1,13 +1,13 @@
 import {NavTransition} from "Navigation/NavigationProvider";
 import {SmallScreenContainer} from "Component/Screen";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import React, {useCallback} from "react";
 import {TextSpan} from "Component/TextSpan";
 import {CurrentUser} from "Component/CurrentUser";
 import {IntroContainer, useAuthnUser} from "Api/AuthenticatedUserProvider";
 import {HelpPopover} from "Component/HelpPopover";
 import {SavingTextField} from "Component/SavingTextField";
-import Divider from "@material-ui/core/Divider";
+import Divider from "@mui/material/Divider";
 import {
   queryAbout,
   queryContactDetails,

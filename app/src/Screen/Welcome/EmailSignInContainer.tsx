@@ -1,10 +1,10 @@
 import React, {ChangeEvent, SyntheticEvent, useState} from "react";
 import {PrimaryButton, SecondaryButton} from "Component/CabbageButton";
 import {EmailSignupContainer} from "Screen/Welcome/EmailSignupContainer";
-import {TextField} from "@material-ui/core";
+import {TextField} from "@mui/material";
 import {ButtonContainer} from "Component/ButtonContainer";
-import Typography from "@material-ui/core/Typography";
-import {MailOutline} from "@material-ui/icons";
+import Typography from "@mui/material/Typography";
+import {MailOutline} from "@mui/icons-material";
 import {ErrorInfo} from "Error/ErrorUtil";
 import {stopClick} from "Util/EventUtil";
 import {PasswordField} from "Component/PasswordField";

@@ -2,7 +2,7 @@ import React, {SyntheticEvent} from "react";
 import {ErrorInfo} from "Error/ErrorUtil";
 import {useSupabase} from "Api/SupabaseProvider";
 import {SmallScreenContainer} from "Component/Screen";
-import {Typography} from "@material-ui/core";
+import {Typography} from "@mui/material";
 import {Link} from "Navigation/Link";
 import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {ButtonContainer} from "Component/ButtonContainer";

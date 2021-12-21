@@ -1,8 +1,8 @@
 import * as React from "react";
 import {ReactNode} from "react";
-import {IconButton, Popover} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import {Help} from "@material-ui/icons";
+import {IconButton, Popover} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import {Help} from "@mui/icons-material";
 
 export function HelpPopover(props: { content: ReactNode }){
   const [open, setOpen] = React.useState(false);
@@ -10,10 +10,13 @@ export function HelpPopover(props: { content: ReactNode }){
     undefined | HTMLElement);
 
   return <>
-    <IconButton color="inherit" onClick={(e) => {
-      setOpen(true);
-      setAnchor(e.currentTarget);
-    }}>
+    <IconButton
+      color="inherit"
+      onClick={(e) => {
+        setOpen(true);
+        setAnchor(e.currentTarget);
+      }}
+      size="large">
       <Help/>
     </IconButton>
     <Popover
@@ -41,5 +44,5 @@ export function HelpPopover(props: { content: ReactNode }){
         {props.content}
       </Typography>
     </Popover>
-  </>
+  </>;
 }

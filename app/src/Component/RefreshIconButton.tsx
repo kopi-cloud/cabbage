@@ -1,8 +1,8 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import makeStyles from '@mui/styles/makeStyles';
 import React, {EventHandler, SyntheticEvent} from "react";
 import {stopClick} from "Util/EventUtil";
-import {IconButton} from "@material-ui/core";
-import {Refresh} from "@material-ui/icons";
+import {IconButton} from "@mui/material";
+import {Refresh} from "@mui/icons-material";
 
 const useRefreshStyle = makeStyles({
   '@keyframes spin': {
@@ -30,8 +30,9 @@ export function RefreshIconButton(props:{
   if( props.disabled === undefined || props.disabled == null ){
     isDisabled = props.refreshing;
   }
-  return <IconButton href="#" disabled={isDisabled}
-    onClick={handleOnClick}>
-    <Refresh className={props.refreshing ? style.refreshSpin : undefined}/>
-  </IconButton>
+  return (
+    <IconButton href="#" disabled={isDisabled} onClick={handleOnClick} size="large">
+      <Refresh className={props.refreshing ? style.refreshSpin : undefined}/>
+    </IconButton>
+  );
 }

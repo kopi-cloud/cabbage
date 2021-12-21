@@ -1,10 +1,10 @@
 import {ErrorInfo} from "Error/ErrorUtil";
-import {ButtonProps} from "@material-ui/core";
+import {ButtonProps} from "@mui/material";
 import React from "react";
-import Button from "@material-ui/core/Button";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import Button from "@mui/material/Button";
+import LinearProgress from "@mui/material/LinearProgress";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
-import {CSSProperties} from "@material-ui/core/styles/withStyles";
+// import { CSSProperties } from '@mui/material/styles';
 
 
 export const primaryButtonProps: ButtonProps = {
@@ -17,7 +17,7 @@ export const secondaryButtonProps: ButtonProps = {
   style: {textTransform: "none"},
 };
 
-export const primaryLinearStyle: CSSProperties = {
+export const primaryLinearStyle: any = {
   /* this "overlays" the progress bar without taking up vertical space,
   so that the content doesn't "jump" when toggling the progress state  */
   position: "absolute",

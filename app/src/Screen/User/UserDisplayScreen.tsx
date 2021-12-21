@@ -1,9 +1,9 @@
 import {NavTransition, useNavigation} from "Navigation/NavigationProvider";
 import {SmallScreenContainer} from "Component/Screen";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import React, {SyntheticEvent, useCallback, useEffect, useState} from "react";
 import {TextSpan} from "Component/TextSpan";
-import Divider from "@material-ui/core/Divider";
+import Divider from "@mui/material/Divider";
 import {useSupabase} from "Api/SupabaseProvider";
 import {public_user_info} from "Api/CabbageSchema";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";

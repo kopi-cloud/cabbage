@@ -5,7 +5,7 @@ import {SmallScreenContainer} from "Component/Screen";
 import {EmailSignInContainer} from "Screen/Welcome/EmailSignInContainer";
 import {stopClick} from "Util/EventUtil";
 import {useNavigation} from "Navigation/NavigationProvider";
-import Divider from "@material-ui/core/Divider";
+import Divider from "@mui/material/Divider";
 import {CurrentUserSignOutContainer} from "./CurrentUserSignOutContainer";
 import {SsoSignInContainer} from "Screen/Welcome/SsoSignInContainer";
 

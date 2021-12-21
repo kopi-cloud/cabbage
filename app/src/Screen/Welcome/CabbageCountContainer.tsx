@@ -3,7 +3,7 @@ import React from "react";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {SmallScreenContainer} from "Component/Screen";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
-import {Typography} from "@material-ui/core";
+import {Typography} from "@mui/material";
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
 import {useIsMounted} from "Util/ReactUtil";
 

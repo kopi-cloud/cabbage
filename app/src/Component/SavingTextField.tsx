@@ -8,15 +8,15 @@ import React, {
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {useIsMounted} from "Util/ReactUtil";
 import {delay, stopClick} from "Util/EventUtil";
-import TextField from "@material-ui/core/TextField/TextField";
+import TextField from "@mui/material/TextField/TextField";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import {
   CircularProgress,
   IconButton,
   InputAdornment,
   TextFieldProps
-} from "@material-ui/core";
-import {Save, Undo} from "@material-ui/icons";
+} from "@mui/material";
+import {Save, Undo} from "@mui/icons-material";
 import { HelpPopover } from "./HelpPopover";
 import { TextSpan } from "./TextSpan";
 

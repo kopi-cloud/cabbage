@@ -1,6 +1,6 @@
 import React, {SyntheticEvent, useContext, useState} from "react";
 import {useLocation} from "Navigation/UseLocation";
-import Fade from "@material-ui/core/Fade";
+import Fade from "@mui/material/Fade";
 
 // value comes from eyeballing the drawer css in my browser, maybe there's
 // a better place in the MUI API to get it from (theme defaults or something?)

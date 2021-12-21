@@ -1,8 +1,8 @@
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import React, {SyntheticEvent} from "react";
 import {PrimaryButton} from "Component/CabbageButton";
 import { Google } from "Component/Icon";
-import {GitHub} from "@material-ui/icons";
+import {GitHub} from "@mui/icons-material";
 import {ErrorInfo} from "Error/ErrorUtil";
 import {SignInAction} from "Screen/Welcome/SigninContainer";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";

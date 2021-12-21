@@ -1,10 +1,10 @@
 import {useNavigation} from "Navigation/NavigationProvider";
 import React, {ChangeEvent, SyntheticEvent, useState} from "react";
-import {TextField} from "@material-ui/core";
+import {TextField} from "@mui/material";
 import {useSupabase} from "Api/SupabaseProvider";
 import {PrimaryButton, SecondaryButton} from "Component/CabbageButton";
 import {stopClick} from "Util/EventUtil";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import {ButtonContainer} from "Component/ButtonContainer";
 import {ErrorInfo, isError} from "Error/ErrorUtil";
 import {getUserEditScreenLink} from "Screen/User/UserEditScreen";

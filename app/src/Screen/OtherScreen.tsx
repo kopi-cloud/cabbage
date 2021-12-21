@@ -1,7 +1,7 @@
 import {useSupabase} from "Api/SupabaseProvider";
 import {NavTransition} from "Navigation/NavigationProvider";
 import {SmallScreenContainer} from "Component/Screen";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import { Config } from "Config";
 

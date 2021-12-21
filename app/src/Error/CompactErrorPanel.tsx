@@ -1,7 +1,7 @@
 import * as React from "react"
 import {CSSProperties, useEffect} from "react"
 
-import {Link, Paper} from "@material-ui/core";
+import {Link, Paper} from "@mui/material";
 import {TextSpan} from "Component/TextSpan";
 import {isErrorInfo,} from "Error/ErrorUtil";
 import {useOpenErrorDialog} from "Error/ErrorDialog";

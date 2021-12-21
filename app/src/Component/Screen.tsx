@@ -1,10 +1,10 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import makeStyles from '@mui/styles/makeStyles';
 import * as React from "react";
 import {
   Paper,
   Theme, useMediaQuery
-} from "@material-ui/core";
-import {DialogTitleProps} from "@material-ui/core/DialogTitle";
+} from "@mui/material";
+import {DialogTitleProps} from "@mui/material/DialogTitle";
 
 const maxScreenWidth = 1024;
 

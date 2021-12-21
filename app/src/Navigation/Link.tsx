@@ -1,8 +1,8 @@
 import React from "react";
-import {ButtonProps, Link as MuiLink, LinkProps} from "@material-ui/core";
+import {ButtonProps, Link as MuiLink, LinkProps} from "@mui/material";
 import {useNavigation} from "Navigation/NavigationProvider";
 import {stopClick} from "Util/EventUtil";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 
 /** Just for convenience so caller doesn't need to inject nav,
  * duplicate href and weird typing of mui Link.

@@ -1,8 +1,8 @@
 import * as React from "react";
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import List from '@material-ui/core/List';
-import {ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home";
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import List from '@mui/material/List';
+import {ListItem, ListItemIcon, ListItemText} from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
 import {useNavigation} from "Navigation/NavigationProvider";
 import {getUserEditScreenLink, isUserEditScreenPath} from "Screen/User/UserEditScreen";
 import {useLocation} from "Navigation/UseLocation";

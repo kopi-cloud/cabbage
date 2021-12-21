@@ -7,7 +7,7 @@ import {queryFlywaySchemaHistory} from "Api/CabbageApi";
 import {flyway_schema_history} from "Api/CabbageSchema";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {useIsMounted} from "Util/ReactUtil";
-import TableContainer from "@material-ui/core/TableContainer/TableContainer";
+import TableContainer from "@mui/material/TableContainer/TableContainer";
 import {
   LinearProgress,
   Table,
@@ -16,13 +16,13 @@ import {
   TableHead,
   TableRow,
   withStyles
-} from "@material-ui/core";
+} from "@mui/material";
 import {TextSpan} from "Component/TextSpan";
 import {formatShortIsoDateTime, parseServerDate} from "Util/DateUtil";
 import {ContainerCard} from "Component/ContainerCard";
 import {stopClick} from "Util/EventUtil";
 import {RefreshIconButton} from "Component/RefreshIconButton";
-import {Check, Warning} from "@material-ui/icons";
+import {Check, Warning} from "@mui/icons-material";
 
 const log = console;
 
@@ -55,20 +55,23 @@ function Content(){
 
 const AllCols = 10;
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-}))(TableCell);
+const StyledTableCell = TableCell;
+const StyledTableRow = TableRow;
 
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-}))(TableRow);
+// const StyledTableCell = withStyles((theme) => ({
+//   head: {
+//     backgroundColor: theme.palette.common.black,
+//     color: theme.palette.common.white,
+//   },
+// }))(TableCell);
+//
+// const StyledTableRow = withStyles((theme) => ({
+//   root: {
+//     '&:nth-of-type(odd)': {
+//       backgroundColor: theme.palette.action.hover,
+//     },
+//   },
+// }))(TableRow);
 
 function SchemaHistoryTable(){
   const {db} = useSupabase();

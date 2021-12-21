@@ -4,8 +4,8 @@ import {
   InputAdornment,
   TextField,
   TextFieldProps
-} from "@material-ui/core";
-import {Visibility, VisibilityOff} from "@material-ui/icons";
+} from "@mui/material";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 export function PasswordField(props: TextFieldProps ){
   const [showPassword, setShowPasword] = useState(false);
@@ -18,23 +18,25 @@ export function PasswordField(props: TextFieldProps ){
     e.preventDefault();
   }
 
-  return <TextField {...props}
-    label={props.label ?? "Password"}
-    margin="normal"
-    variant="outlined"
-    autoComplete="on"
-    fullWidth={true}
-    inputProps={{autoCapitalize: "none"}}
-    type={showPassword ? "text" : "password"}
-    InputProps={{
-      endAdornment: <InputAdornment position="end">
-        <IconButton
-          onClick={onClickShowPassword}
-          onMouseDown={handleMouseDownPassword}
-        >
-          {showPassword ? <Visibility/> : <VisibilityOff/>}
-        </IconButton>
-      </InputAdornment>
-    }}
-  />
+  return (
+    <TextField {...props}
+      label={props.label ?? "Password"}
+      margin="normal"
+      variant="outlined"
+      autoComplete="on"
+      fullWidth={true}
+      inputProps={{autoCapitalize: "none"}}
+      type={showPassword ? "text" : "password"}
+      InputProps={{
+        endAdornment: <InputAdornment position="end">
+          <IconButton
+            onClick={onClickShowPassword}
+            onMouseDown={handleMouseDownPassword}
+            size="large">
+            {showPassword ? <Visibility/> : <VisibilityOff/>}
+          </IconButton>
+        </InputAdornment>
+      }}
+    />
+  );
 }

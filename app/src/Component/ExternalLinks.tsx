@@ -1,5 +1,5 @@
 import * as React from "react";
-import {OpenInNew} from "@material-ui/icons";
+import {OpenInNew} from "@mui/icons-material";
 
 export const cabbageGithubUrl = "https://github.com/kopi-cloud/cabbage";
 export const supabaseUrl = "https://supabase.io";

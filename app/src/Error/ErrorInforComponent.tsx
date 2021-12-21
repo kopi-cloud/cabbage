@@ -1,5 +1,5 @@
 import {TextSpan} from "Component/TextSpan";
-import {List, ListItemText} from "@material-ui/core";
+import {List, ListItemText} from "@mui/material";
 import {safeStringify} from "Util/ObjectUtil";
 import * as React from "react";
 import {ErrorInfo, } from "Error/ErrorUtil";
@@ -100,11 +100,13 @@ function ErrorStack(props: {error: Error}){
     return  <pre>couldn't stringify error</pre>;
   }
 
-  return <pre>{
-    stackString.replace(new RegExp(/\\n/, 'g'), "\n").
-      // weird format from TV4
-      replace(new RegExp(/@https/, 'g'), "\n@https")
-  }</pre>
+  return (
+    <pre>{
+      stackString.replace(new RegExp(/\\n/, 'g'), "\n").
+        // weird format from TV4
+        replace(new RegExp(/@https/, 'g'), "\n@https")
+    }</pre>
+  );
 }
 
 function getErrorStack(error: Error): string | undefined {

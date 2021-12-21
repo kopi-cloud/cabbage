@@ -7,7 +7,7 @@ import {SignInContainer} from "Screen/Welcome/SigninContainer";
 import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {CabbageCountContainer} from "Screen/Welcome/CabbageCountContainer";
 import {SmallScreenContainer} from "Component/Screen";
-import {Typography} from "@material-ui/core";
+import {Typography} from "@mui/material";
 import {
   cabbageGithubUrl,
   netlifyUrl,

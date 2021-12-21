@@ -7,12 +7,12 @@ import {
   Menu,
   MenuItem,
   Toolbar
-} from "@material-ui/core";
+} from "@mui/material";
 import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {Cabbage} from "Component/Icon";
 import {useAuthnUser} from "Api/AuthenticatedUserProvider";
-import {AccountCircle, Menu as MenuIcon} from "@material-ui/icons";
-import Typography from "@material-ui/core/Typography";
+import {AccountCircle, Menu as MenuIcon} from "@mui/icons-material";
+import Typography from "@mui/material/Typography";
 import {AppDrawer} from "Navigation/AppDrawer";
 import {useSupabase} from "Api/SupabaseProvider";
 import {getUserListScreenLink} from "Screen/User/UserListScreen";
@@ -24,43 +24,49 @@ export function AppNavBar(){
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  return <AppBar position="static">
-    <Toolbar variant={"dense"}>
-      <IconButton color="inherit" href={getUserEditScreenLink()}
-        onClick={event=>nav.navigateTo(getUserEditScreenLink(), event)}
-      >
-        <Cabbage/>
-      </IconButton>
-      <MenuShortcutBar>
-        <MenuShortcutNavItem href={getUserListScreenLink()}>
-          Users
-        </MenuShortcutNavItem>
-      </MenuShortcutBar>
-
-      {/*flexgrow pushes the icons over to the right */}
-      <Typography variant="h6" color="inherit" style={{flexGrow: 1}} />
-      <div>
-        <AccountMenu/>
-        <IconButton color="inherit" onClick={()=>setDrawerOpen(true)}>
-          <MenuIcon/>
+  return (
+    <AppBar position="static">
+      <Toolbar variant={"dense"}>
+        <IconButton
+          color="inherit"
+          href={getUserEditScreenLink()}
+          onClick={event=>nav.navigateTo(getUserEditScreenLink(), event)}
+          size="large">
+          <Cabbage/>
         </IconButton>
-        <AppDrawer anchor={"right"} open={drawerOpen}
-          toggleDrawer={setDrawerOpen} />
-      </div>
+        <MenuShortcutBar>
+          <MenuShortcutNavItem href={getUserListScreenLink()}>
+            Users
+          </MenuShortcutNavItem>
+        </MenuShortcutBar>
 
-    </Toolbar>
-  </AppBar>
+        {/*flexgrow pushes the icons over to the right */}
+        <Typography variant="h6" color="inherit" style={{flexGrow: 1}} />
+        <div>
+          <AccountMenu/>
+          <IconButton color="inherit" onClick={()=>setDrawerOpen(true)} size="large">
+            <MenuIcon/>
+          </IconButton>
+          <AppDrawer anchor={"right"} open={drawerOpen}
+            toggleDrawer={setDrawerOpen} />
+        </div>
+
+      </Toolbar>
+    </AppBar>
+  );
 }
 
 function MenuShortcutBar(props:{children: React.ReactNode}){
-  return <Hidden smDown>
-    <span style={{
-      // Avoid shortcuts wrapping which causes AppBar to grow in height
-      display: "flex", flexWrap: "nowrap", overflow: "hidden"
-    }}>
-      {props.children}
-    </span>
-  </Hidden>
+  return (
+    <Hidden mdDown>
+      <span style={{
+        // Avoid shortcuts wrapping which causes AppBar to grow in height
+        display: "flex", flexWrap: "nowrap", overflow: "hidden"
+      }}>
+        {props.children}
+      </span>
+    </Hidden>
+  );
 }
 
 function MenuShortcutNavItem(props: {
@@ -68,12 +74,15 @@ function MenuShortcutNavItem(props: {
   href: string,
 }){
   const nav = useNavigation();
-  return <IconButton color="inherit"
-    href={props.href}
-    onClick={event=>nav.navigateTo(props.href, event)}
-  >
-    {props.children}
-  </IconButton>
+  return (
+    <IconButton
+      color="inherit"
+      href={props.href}
+      onClick={event=>nav.navigateTo(props.href, event)}
+      size="large">
+      {props.children}
+    </IconButton>
+  );
 }
 
 
@@ -90,10 +99,12 @@ function AccountMenu(){
   }
 
   return <>
-    <IconButton ref={menuAnchorRef}
+    <IconButton
+      ref={menuAnchorRef}
       onClick={()=> setIsMenuOpen(true)}
-      style={{paddingRight: 20}} color="inherit"
-    >
+      style={{paddingRight: 20}}
+      color="inherit"
+      size="large">
       <AccountCircle/>
     </IconButton>
 
@@ -119,6 +130,6 @@ function AccountMenu(){
         <Typography>Sign out</Typography>
       </MenuItem>
     </Menu>
-  </>
+  </>;
 }
 

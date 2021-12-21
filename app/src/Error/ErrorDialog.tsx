@@ -1,11 +1,11 @@
 import * as React from "react";
-import {Dialog} from "@material-ui/core";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
+import {Dialog} from "@mui/material";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 import {ErrorInfo} from "Error/ErrorUtil";
-import Divider from "@material-ui/core/Divider";
-import Typography from "@material-ui/core/Typography";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
 import {ErrorInfoComponent} from "Error/ErrorInforComponent";
 import {PrimaryButton} from "Component/CabbageButton";
 

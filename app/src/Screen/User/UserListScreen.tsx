@@ -7,7 +7,7 @@ import {queryListPublicUserInfo} from "Api/CabbageApi";
 import {list_public_user_info, public_user_info} from "Api/CabbageSchema";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {useIsMounted} from "Util/ReactUtil";
-import TableContainer from "@material-ui/core/TableContainer/TableContainer";
+import TableContainer from "@mui/material/TableContainer/TableContainer";
 import {
   LinearProgress, 
   Table,
@@ -16,7 +16,7 @@ import {
   TableHead,
   TableRow,
   withStyles
-} from "@material-ui/core";
+} from "@mui/material";
 import {TextSpan} from "Component/TextSpan";
 import {ContainerCard} from "Component/ContainerCard";
 import {stopClick} from "Util/EventUtil";
@@ -56,20 +56,22 @@ function Content(){
 
 const AllCols = 10;
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-}))(TableCell);
-
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-}))(TableRow);
+const StyledTableCell = TableCell;
+const StyledTableRow = TableRow;
+// const StyledTableCell = withStyles((theme) => ({
+//   head: {
+//     backgroundColor: theme.palette.common.black,
+//     color: theme.palette.common.white,
+//   },
+// }))(TableCell);
+//
+// const StyledTableRow = withStyles((theme) => ({
+//   root: {
+//     '&:nth-of-type(odd)': {
+//       backgroundColor: theme.palette.action.hover,
+//     },
+//   },
+// }))(TableRow);
 
 function UserListTable(){
   const {db} = useSupabase();

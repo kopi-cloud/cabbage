@@ -1,7 +1,7 @@
 import React from "react";
 import {SmallScreenContainer} from "Component/Screen";
-import Typography from "@material-ui/core/Typography";
-import {LinearProgress} from "@material-ui/core";
+import Typography from "@mui/material/Typography";
+import {LinearProgress} from "@mui/material";
 
 export function SmallScreenSpinner({message}: {
   message: string | React.ReactNode
