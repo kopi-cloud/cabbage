@@ -36,7 +36,9 @@ export function DynamicContent(){
     <Divider style={{margin: "1em"}}/>
 
     {[...Array(isLong ? 100 : 5)].map((content, index) => {
-      return <Typography key={`content-${index}`}paragraph>content-{index}</Typography>
+      return <Typography key={`content-${index}`} paragraph>
+        Content-{index}
+      </Typography>
     })}
   </>
 }
