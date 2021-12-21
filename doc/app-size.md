@@ -59,3 +59,16 @@ into it.  I'm pretty happy with 20KB for supabase - need to keep an eye on it
 as I implement more parts, specifically authn/authz and realtime stuff.
 There might be a bunch of code being dropped by tree-shaking since I'm not
 doing much yet.      
+
+## Before changing to mui v5
+
+As of commit `7d251286`, `build` reports:
+```
+  147.26 KB  build\static\js\2.f844de94.chunk.js
+  16.29 KB   build\static\js\main.948c02b5.chunk.js
+  775 B      build\static\js\runtime-main.6fdde2b1.js
+  280 B      build\static\css\main.6873463e.chunk.css
+```
+
+FireFox reported `168.34 KB transferred` when loading the netlify app,
+version `efd162cf`.
