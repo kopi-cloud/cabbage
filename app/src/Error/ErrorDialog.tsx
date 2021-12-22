@@ -69,7 +69,7 @@ export function useOpenErrorDialog(): (value: Action) => void{
 /** This component is intended to be used (via context) from everywhere in
  * the app to show details of "handled" errors: i.e. server errors,
  * unexpected / bad data etc.
- * Generally speaking, some UI feedback that a "handled" error occurred should
+ * Generally speaking, UI feedback that a "handled" error occurred should
  * be shown "inline" in the page, via something like the CompactErrorPanel.
  * If the user indicates they want more details, we then show the error as a
  * dialog "on top" of the screen so that the rest of the app component hierarchy
