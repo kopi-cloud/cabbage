@@ -2,7 +2,7 @@
  * <p>
  * The config values used by the app are decided when this file is run (i.e.
  * when the app is loaded into the browser), based on the value of
- * environmentName, which is provide at build time via the
+ * environmentName, which is compiled in at build time via the
  * REACT_APP_CABBAGE_ENV environment variable.
  * <p>
  * Config values are embedded into the raw client javascript artifact - it is
@@ -11,25 +11,46 @@
  * <p>
  * Config is not suitable for secrets like API keys or other sensitive data.
  * <p>
- * EnvironmentConfig is things we expect to change between environments,
- * whereas sharedConfig is stuff we usually expect to be the same across
- * environments or gets interpolated from env variables.
+ * EnvironmentConfig is things we expect to change between environments.
+ * <p>
+ * Note, often there'll be lots of config that ends up using the same values
+ * across most environments. Avoid the temptation to re-invent the concept of  
+ * "shared" environment configuration.  
+ * Each config (`prd` / `tst` etc.) should be reviewable as a stand-alone unit
+ * (in a non-IDE context).
+ * Don't force reviewers to guess what the `prd` or `tst`config looks like by 
+ * mentally reproducing your "shared config merging logic".  Preventing 
+ * accidental/unexpected usage of bad config (e.g. a test or prod environment 
+ * accidentally using a wrong DB or other system dependency) is more important
+ * than your personal obsession with the DRY principle.
  */
 
 const log = console;
 
+/** Defines what the known environments are. */
 type EnvironmentName = "prd" | "tst" | "ci" | "dev";
 
 export interface EnvironmentConfig {
-  isProd: boolean,
+  /** identifies the environment */
   environmentName: EnvironmentName,
+
+  /** is this a "production" environment (usually there's only one)? 
+   * If you feel the need to have switchable business logic based off of
+   * your environment, this is what it should be predicated on 
+   * (i.e not "if config.envName === "prd").
+   */
+  isProd: boolean,
+  
+  /** Supabase project (must be synced with supabaseAnonKey) */
   supabaseUrl: string,
+  
+  /** Used to submit logs to Sentry instead of the Cabbage endpoint */
   sentryDsn?: string,
 }
 
 function initConfig(){
   const newConfig = {
-    ...sharedConfig,
+    ...buildConfig,
     ...chooseEnvironmentConfig(process.env.REACT_APP_CABBAGE_ENV),
   };
 
@@ -40,7 +61,7 @@ function initConfig(){
   return newConfig;
 }
 
-const sharedConfig = {
+const buildConfig = {
   buildDate: process.env.REACT_APP_BUILD_DATE_MS ||
     new Date().getTime().toString(),
   supabaseAnonKey: process.env.REACT_APP_SUPABASE_ANON_KEY,
@@ -92,5 +113,5 @@ const prdConfig: EnvironmentConfig = {
 };
 
 
-export const Config: EnvironmentConfig & typeof sharedConfig = initConfig();
+export const Config: EnvironmentConfig & typeof buildConfig = initConfig();
 
