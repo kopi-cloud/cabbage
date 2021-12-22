@@ -12,10 +12,10 @@ declare module '@mui/styles/defaultTheme' {
   }
 }
 
+// https://www.color-name.com/
 export const Color = {
-  navbarCharcoal: "#343a40",
+  onyx: "#343a40",
   darkCharcoal: "#333333",
-  // stolen from https://www.eggradients.com/color-names
   jet: "#343434",
 }
 
@@ -28,18 +28,18 @@ function lightDarkColor(
   return theme.palette.mode === 'light' ? lightColor : darkColor
 }
 
-export const modeTheme = createTheme({
+export const mode = createTheme({
   palette: {
     mode: 'light',
   },
-})
+});
 
-export const theme = createTheme(modeTheme, {
+export const theme = createTheme(mode, {
   components: {
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: lightDarkColor(modeTheme, Color.navbarCharcoal),
+          backgroundColor: lightDarkColor(mode, Color.onyx),
         }
       }
     }
