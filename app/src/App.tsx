@@ -17,27 +17,25 @@ import {UserDisplayScreen} from "Screen/User/UserDisplayScreen";
 import {CabbageTheme} from "Component/CabbageTheme";
 
 export function App(){
-  return (
-    <CabbageTheme>
-      <CssBaseline/>
-      <ReactErrorBoundary>
-        <ErrorDialogProvider>
-          <NavigationProvider>
-            <SupabaseProvider>
-              <AuthenticatedUserProvider>
-                <AppNavBar/>
-                <UserEditScreen/>
-                <UserListScreen/>
-                <UserDisplayScreen/>
-                <OtherScreen/>
-                <ScratchScreen/>
-                <ErrorHandlingScreen/>
-                <DatabaseSchemaScreen/>
-              </AuthenticatedUserProvider>
-            </SupabaseProvider>
-          </NavigationProvider>
-        </ErrorDialogProvider>
-      </ReactErrorBoundary>
-    </CabbageTheme>
-  );
+  return <CabbageTheme>
+    <CssBaseline/>
+    <ReactErrorBoundary>
+      <ErrorDialogProvider>
+        <NavigationProvider>
+          <SupabaseProvider>
+            <AuthenticatedUserProvider>
+              <AppNavBar/>
+              <UserEditScreen/>
+              <UserListScreen/>
+              <UserDisplayScreen/>
+              <OtherScreen/>
+              <ScratchScreen/>
+              <ErrorHandlingScreen/>
+              <DatabaseSchemaScreen/>
+            </AuthenticatedUserProvider>
+          </SupabaseProvider>
+        </NavigationProvider>
+      </ErrorDialogProvider>
+    </ReactErrorBoundary>
+  </CabbageTheme>;
 }
