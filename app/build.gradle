@@ -55,7 +55,7 @@ task buildApp(type: NpmTask){
     'run', 'build',
   ]
 
-  // TODO:STO add supabase env config
+  // TODIDNT:STO add supabase env config
   environment = [
     REACT_APP_CABBAGE_ENV: project.ext.envName,
     // browser date parsing is super broken, using millis is just easier
