@@ -72,3 +72,31 @@ As of commit `7d251286`, `build` reports:
 
 FireFox reported `168.34 KB transferred` when loading the netlify app,
 version `efd162cf`.
+
+
+## After changing to mui v5
+
+So this is changing the package.json and running the safe codemod.
+Still left with lots of code that uses the legacy `makesStyles()` stuff
+from the `@mui/styles` package.
+
+As of commit `5e1e4909`, `build` reports:
+
+```
+  167.65 KB (+11.7 KB)  build\static\js\2.4bda13d9.chunk.js       
+  16.22 KB (+41 B)      build\static\js\main.b729ccb0.chunk.js    
+  776 B                 build\static\js\runtime-main.863ad24c.js  
+  280 B                 build\static\css\main.6873463e.chunk.css  
+```
+
+## After removing legacy styling
+
+Went through all components and pulled out imports of `@mui/styles/makeStyles`,
+then removed usage of `StyledEngineProvider` and said import from CabbageTheme.
+
+```
+  155.92 KB (-11.73 KB)  build\static\js\2.d18c238b.chunk.js      
+  16.16 KB (-62 B)       build\static\js\main.5751ba25.chunk.js   
+  776 B                  build\static\js\runtime-main.863ad24c.js 
+  280 B                  build\static\css\main.6873463e.chunk.css 
+```
