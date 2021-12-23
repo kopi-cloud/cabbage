@@ -88,7 +88,7 @@ export function NavTransition(props: {
     /* Each NavTransition is intended to occupy the same position on screen;
     without this, the "from" and "to" screen will display next to each other
     instead of in the same place.  It may be necessary to set "relative"
-    somewhere in your element hierarchy if using this code outside of rabbit.*/
+    somewhere in your element hierarchy if using this code outside of Cabbage.*/
     style={{position: fadePosition, width: "100%"}}
   >
     <div>
