@@ -16,8 +16,8 @@ const muiAppDrawerTimeout = 225;
  * it looks right because I wrote it and want to watch it happen.
  * <p/>
  * Should probably be appDrawerTimeout or less. Good design, especially as it
- * relates to animations should be subliminal / barely noticable. My
- * personal desire that everyone should notice the cool screentransitions is
+ * relates to animations, should be subliminal / barely noticable. My
+ * personal desire that everyone should notice the cool screen transitions is
  * the antithesis of good design.
  */
 export const navTime = muiAppDrawerTimeout * 2;
