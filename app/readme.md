@@ -2,9 +2,7 @@ This project is the client "app" for Cabbage.
 
 It's a [create-react-app](https://create-react-app.dev/) project, statically
 typed using [Typescript](https://www.typescriptlang.org/), using 
-[Material UI](https://material-ui.com/) as the component library.
-Note that, at the moment, Cabbage uses an alpha version of Material-UI 
-version 5. 
+[MUI](https://mui.com/) as the component library.
 
 From a build perspective, the project is implemented as both a
 [Gradle sub-project](https://docs.gradle.org/current/userguide/multi_project_builds.html)
@@ -16,7 +14,7 @@ step, but if the versions get out of sync - the Gradle tasks will use download
 and use whatever version is specified in build.gradle.   
 
   * create-react-app project
-  * material-ui as the component library
+  * MUI as the component library
   * deployed to netlify, see [netlify.toml](/netlify.toml)
 
 
