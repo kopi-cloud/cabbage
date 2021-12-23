@@ -8,10 +8,6 @@
     "@mui/icons-material": "5.2.5",
     "@emotion/styled": "11.6.0",
     "@emotion/react": "11.7.1",
-    "@types/jest": "26.0.20",
-    "@types/node": "14.14.31",
-    "@types/react": "17.0.37",
-    "@types/react-dom": "17.0.11",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-scripts": "4.0.3",
@@ -20,6 +16,10 @@
     "@sentry/browser": "5.30.0"
   },
   "devDependencies": {
+    "@types/jest": "26.0.20",
+    "@types/node": "14.14.31",
+    "@types/react": "17.0.37",
+    "@types/react-dom": "17.0.11",
     "openapi-typescript": "2.4.2",
     "axios": "0.21.1"
   },
