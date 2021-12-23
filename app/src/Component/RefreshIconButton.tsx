@@ -1,18 +1,13 @@
-import makeStyles from '@mui/styles/makeStyles';
+// import makeStyles from '@mui/styles/makeStyles';
 import React, {EventHandler, SyntheticEvent} from "react";
 import {stopClick} from "Util/EventUtil";
-import {IconButton} from "@mui/material";
+import {IconButton, keyframes} from "@mui/material";
 import {Refresh} from "@mui/icons-material";
 
-const useRefreshStyle = makeStyles({
-  '@keyframes spin': {
-    from: { transform: 'scale(1) rotate(0deg);' },
-    to: { transform: 'scale(1) rotate(360deg);' },
-  },
-  refreshSpin: {
-    animation: '$spin 2s infinite linear',
-    opacity: 0.6,
-  }
+const spin = keyframes({
+  // these used to have `scale(1)` too, but not sure why
+  from: {transform: 'rotate(0deg);'},
+  to: {transform: 'rotate(360deg);'},
 });
 
 export function RefreshIconButton(props:{
@@ -20,7 +15,6 @@ export function RefreshIconButton(props:{
   refreshing?: boolean,
   onClick?: EventHandler<SyntheticEvent>,
 }){
-  const style = useRefreshStyle();
   const handleOnClick = (event: SyntheticEvent)=>{
     stopClick(event);
     props.onClick?.(event);
@@ -30,9 +24,12 @@ export function RefreshIconButton(props:{
   if( props.disabled === undefined || props.disabled == null ){
     isDisabled = props.refreshing;
   }
-  return (
-    <IconButton href="#" disabled={isDisabled} onClick={handleOnClick} size="large">
-      <Refresh className={props.refreshing ? style.refreshSpin : undefined}/>
-    </IconButton>
-  );
+  
+  return <IconButton href="#" size="large" 
+    disabled={isDisabled} onClick={handleOnClick} 
+  >
+    <Refresh sx={{
+      animation: props.refreshing ? `${spin} 2s infinite linear` : undefined
+    }}/>
+  </IconButton>;
 }

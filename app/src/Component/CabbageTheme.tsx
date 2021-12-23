@@ -6,11 +6,13 @@ import {ReactNode} from "react";
 Cabbage doesn't have any yet (thus the eslint exemption) - but I'm keeping it
 because I think I'll want it eventually. 
  */
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {
-  }
-}
+// commented out when removing the makeStyles() import from refreshIconButton -
+// was it the last makesStyles() call?
+// declare module '@mui/styles/defaultTheme' {
+//   // eslint-disable-next-line @typescript-eslint/no-empty-interface
+//   interface DefaultTheme extends Theme {
+//   }
+// }
 
 // https://www.color-name.com/
 // ordered here by color value
