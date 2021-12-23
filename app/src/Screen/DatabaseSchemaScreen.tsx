@@ -14,8 +14,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
-  withStyles
+  TableRow
 } from "@mui/material";
 import {TextSpan} from "Component/TextSpan";
 import {formatShortIsoDateTime, parseServerDate} from "Util/DateUtil";
@@ -23,6 +22,7 @@ import {ContainerCard} from "Component/ContainerCard";
 import {stopClick} from "Util/EventUtil";
 import {RefreshIconButton} from "Component/RefreshIconButton";
 import {Check, Warning} from "@mui/icons-material";
+import {AlternatingTableRow} from "Component/Styled";
 
 const log = console;
 
@@ -54,24 +54,6 @@ function Content(){
 }
 
 const AllCols = 10;
-
-const StyledTableCell = TableCell;
-const StyledTableRow = TableRow;
-
-// const StyledTableCell = withStyles((theme) => ({
-//   head: {
-//     backgroundColor: theme.palette.common.black,
-//     color: theme.palette.common.white,
-//   },
-// }))(TableCell);
-//
-// const StyledTableRow = withStyles((theme) => ({
-//   root: {
-//     '&:nth-of-type(odd)': {
-//       backgroundColor: theme.palette.action.hover,
-//     },
-//   },
-// }))(TableRow);
 
 function SchemaHistoryTable(){
   const {db} = useSupabase();
@@ -129,20 +111,20 @@ function SchemaHistoryTable(){
       </TableCell></TableRow>
       </> }
       { history?.map((row) => (
-        <StyledTableRow key={row.installed_rank} >
-          <StyledTableCell component="th" scope="row" align="right">
+        <AlternatingTableRow key={row.installed_rank} >
+          <TableCell component="th" scope="row" align="right">
             {row.version}
-          </StyledTableCell>
-          <StyledTableCell>{row.description}</StyledTableCell>
-          <StyledTableCell>{
+          </TableCell>
+          <TableCell>{row.description}</TableCell>
+          <TableCell>{
             formatShortIsoDateTime(parseServerDate(row.installed_on))
-          }</StyledTableCell>
-          <StyledTableCell align="center">
+          }</TableCell>
+          <TableCell align="center">
             { row.success ?
               <Check htmlColor={"green"}/> : <Warning htmlColor={"red"}/>
             }
-          </StyledTableCell>
-        </StyledTableRow>
+          </TableCell>
+        </AlternatingTableRow>
       ))}
       </TableBody>
     </Table></TableContainer>

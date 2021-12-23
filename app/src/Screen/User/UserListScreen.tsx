@@ -1,4 +1,4 @@
-import {NavTransition, useNavigation} from "Navigation/NavigationProvider";
+import {NavTransition} from "Navigation/NavigationProvider";
 import {LargeScreenContainer} from "Component/Screen";
 import React, {SyntheticEvent, useCallback, useEffect, useState} from "react";
 import {useSupabase} from "Api/SupabaseProvider";
@@ -9,13 +9,12 @@ import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
 import {useIsMounted} from "Util/ReactUtil";
 import TableContainer from "@mui/material/TableContainer/TableContainer";
 import {
-  LinearProgress, 
+  LinearProgress,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
-  withStyles
+  TableRow
 } from "@mui/material";
 import {TextSpan} from "Component/TextSpan";
 import {ContainerCard} from "Component/ContainerCard";
@@ -24,6 +23,8 @@ import {RefreshIconButton} from "Component/RefreshIconButton";
 import {getUserDisplayScreenLink} from "Screen/User/UserDisplayScreen";
 import {formatShortIsoDateTime, parseServerDate} from "Util/DateUtil";
 import {Link} from "Navigation/Link";
+import {styled} from "@mui/system";
+import {AlternatingTableRow} from "Component/Styled";
 
 const log = console;
 
@@ -55,23 +56,6 @@ function Content(){
 }
 
 const AllCols = 10;
-
-const StyledTableCell = TableCell;
-const StyledTableRow = TableRow;
-// const StyledTableCell = withStyles((theme) => ({
-//   head: {
-//     backgroundColor: theme.palette.common.black,
-//     color: theme.palette.common.white,
-//   },
-// }))(TableCell);
-//
-// const StyledTableRow = withStyles((theme) => ({
-//   root: {
-//     '&:nth-of-type(odd)': {
-//       backgroundColor: theme.palette.action.hover,
-//     },
-//   },
-// }))(TableRow);
 
 function UserListTable(){
   const {db} = useSupabase();
@@ -127,14 +111,14 @@ function UserListTable(){
       </TableCell></TableRow>
       </> }
       { users?.map((row) => (
-        <StyledTableRow key={row.uuid} >
-          <StyledTableCell>
+        <AlternatingTableRow key={row.uuid}>
+          <TableCell>
             <UserNameLink user={row}/>
-          </StyledTableCell>
-          <StyledTableCell>
+          </TableCell>
+          <TableCell>
             <UserCreatedText user={row}/>
-          </StyledTableCell>
-        </StyledTableRow>
+          </TableCell>
+        </AlternatingTableRow>
       ))}
       </TableBody>
     </Table></TableContainer>
