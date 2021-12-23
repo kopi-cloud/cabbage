@@ -81,7 +81,6 @@ Still left with lots of code that uses the legacy `makesStyles()` stuff
 from the `@mui/styles` package.
 
 As of commit `5e1e4909`, `build` reports:
-
 ```
   167.65 KB (+11.7 KB)  build\static\js\2.4bda13d9.chunk.js       
   16.22 KB (+41 B)      build\static\js\main.b729ccb0.chunk.js    
@@ -94,6 +93,7 @@ As of commit `5e1e4909`, `build` reports:
 Went through all components and pulled out imports of `@mui/styles/makeStyles`,
 then removed usage of `StyledEngineProvider` and said import from CabbageTheme.
 
+As of commit `2ba42678`, `build` reports:
 ```
   155.92 KB (-11.73 KB)  build\static\js\2.d18c238b.chunk.js      
   16.16 KB (-62 B)       build\static\js\main.5751ba25.chunk.js   
