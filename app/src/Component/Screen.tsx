@@ -6,8 +6,8 @@ import {
 import {DialogTitleProps} from "@mui/material/DialogTitle";
 import {styled, Theme} from '@mui/system';
 
-const largeContainerWidth = 1024;
-const smallContainerWidth = 600;
+export const largeContainerWidth = 1024;
+export const smallContainerWidth = 600;
 
 function mainLayoutBreakpoints(theme: Theme, width: number){
   return {
