@@ -9,7 +9,7 @@ import {CabbageCountContainer} from "Screen/Welcome/CabbageCountContainer";
 import {SmallScreenContainer} from "Component/Screen";
 import {Typography} from "@mui/material";
 import {
-  cabbageGithubUrl,
+  cabbageGithubUrl, muiUrl,
   netlifyUrl,
   NewWindowLink,
   supabaseUrl
@@ -58,10 +58,11 @@ export function AuthenticatedUserProvider({children}: {children: ReactNode}){
 
 export function IntroContainer(){
   return <SmallScreenContainer center>
-    <Typography paragraph>Cabbage is a <del>simple</del> demo app
-      for <NewWindowLink href={supabaseUrl}>Supabase</NewWindowLink>.
+    <Typography paragraph>Cabbage is a demo app I built
+      for <NewWindowLink href={supabaseUrl}>Supabase</NewWindowLink> and{' '}
+      <NewWindowLink href={muiUrl}>MUI</NewWindowLink>.
     </Typography>
-    <Typography paragraph>The Cabbage app is published
+    <Typography>The Cabbage app is published
       via <NewWindowLink href={netlifyUrl}>Netlify</NewWindowLink>.
     </Typography>
     <Typography>You can find the source code for Cabbage over

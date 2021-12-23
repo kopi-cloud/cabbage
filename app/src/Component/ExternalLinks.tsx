@@ -3,6 +3,7 @@ import {OpenInNew} from "@mui/icons-material";
 
 export const cabbageGithubUrl = "https://github.com/kopi-cloud/cabbage";
 export const supabaseUrl = "https://supabase.io";
+export const muiUrl = "https://mui.com";
 export const netlifyUrl = "https://netlify.com";
 
 export function NewWindowLink(props: {
