@@ -5,22 +5,13 @@ import * as React from "react";
 import {useMediaQuery} from "@mui/material";
 import {largeContainerWidth} from "Component/Screen";
 
-/* There was some weirdness where the styling of the card header was different
-on dev from TST.  This was caused by the order of the "material-ur-root" style
-and the jss style generated for useContainerCardStyle being present
-in different orders.
-When googling for it, I came across a comment on GitHub from the m-ui maintainer
-asking if the user was sharing useStyles between components.  That gave my the
-idea to factor out this component and it fixed my issue.
-Maybe you're not supposed to share usestyles?
- */
 export function ContainerCard({ title, action, children}:{
   title: React.ReactNode,
   action?: React.ReactNode,
   children: React.ReactNode,
 }){
   return <Card>
-    <CardHeader
+    <CardHeader title={title} titleTypographyProps={{variant: "h6"}}
       sx={{
         // reduce the spacing around the header, there was too much whitespace
         padding: "0 1em",
@@ -28,8 +19,12 @@ export function ContainerCard({ title, action, children}:{
         // if card has no actions header gets short, minHeight keeps it
         // consistent (AboutScreen has one panel with actions and one without)
         minHeight: "3rem",
-      }}  
-      title={title} titleTypographyProps={{variant: "h6"}}
+        // apparently, this is the only way to do it in MUI v5 :/
+        '& .MuiCardHeader-action': { 
+          // has default margin-top of -4px, which makes the icon sit too high 
+          marginTop: 0,
+        }
+      }}
       action={action}
     />
     <CardContent
