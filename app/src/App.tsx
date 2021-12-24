@@ -8,8 +8,8 @@ import {ErrorDialogProvider} from "Error/ErrorDialog";
 import {NavigationProvider} from "Design/NavigationProvider";
 import {SupabaseProvider} from "Api/SupabaseProvider";
 import {AuthenticatedUserProvider} from "Api/AuthenticatedUserProvider";
-
 import {AppNavBar} from "Design/AppNavBar";
+
 import {UserEditScreen} from "Screen/User/UserEditScreen";
 import {OtherScreen} from "Screen/OtherScreen";
 import {ScratchScreen} from "Screen/ScratchScreen";
