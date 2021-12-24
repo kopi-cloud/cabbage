@@ -10,7 +10,6 @@ export function ContainerCard({ title, action, children}:{
   action?: React.ReactNode,
   children: React.ReactNode,
 }){
-  
   return <Card>
     <CardHeader title={title} titleTypographyProps={{variant: "h6"}}
       sx={{
