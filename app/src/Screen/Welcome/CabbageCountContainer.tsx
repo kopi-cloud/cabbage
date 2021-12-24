@@ -1,7 +1,7 @@
 import {useSupabase} from "Api/SupabaseProvider";
 import React from "react";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
-import {SmallScreenContainer} from "Design/Screen";
+import {SmallContentMain} from "Design/LayoutMain";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import {Typography} from "@mui/material";
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
@@ -35,12 +35,12 @@ export function CabbageCountContainer(){
   }, [getCount]);
 
   if( isErrorInfo(cabbageCount) ){
-    return <SmallScreenContainer center>
+    return <SmallContentMain center>
       <CompactErrorPanel error={cabbageCount}/>
-    </SmallScreenContainer>
+    </SmallContentMain>
   }
 
-  return <SmallScreenContainer center>
+  return <SmallContentMain center>
     <Typography paragraph>
       <span>Anonymous cabbages served:</span>
       &emsp;
@@ -52,7 +52,7 @@ export function CabbageCountContainer(){
       </span>
     </Typography>
     <CompactErrorPanel error={incrementError}/>
-  </SmallScreenContainer>
+  </SmallContentMain>
 }
 
 async function getWelcomeCount(db: SupabaseClient)

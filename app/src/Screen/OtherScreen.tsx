@@ -1,6 +1,6 @@
 import {useSupabase} from "Api/SupabaseProvider";
 import {NavTransition} from "Design/NavigationProvider";
-import {SmallScreenContainer} from "Design/Screen";
+import {SmallContentMain} from "Design/LayoutMain";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { Config } from "Config";
@@ -30,7 +30,7 @@ export function OtherScreen(){
 function Content(){
   const {session, user} = useSupabase();
 
-  return <SmallScreenContainer>
+  return <SmallContentMain>
     <Typography paragraph variant={"h5"} style={{textAlign: "center"}}>
       Other stuff
     </Typography>
@@ -47,7 +47,7 @@ function Content(){
     { [...Array(100)].map((value, index) => {
       return <Typography key={index} paragraph>content</Typography>
     })}
-  </SmallScreenContainer>
+  </SmallContentMain>
 }
 
 

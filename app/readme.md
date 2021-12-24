@@ -13,18 +13,6 @@ The [main.yml](/.github/workflows/main.yml) file does have a node install
 step, but if the versions get out of sync - the Gradle tasks will use download
 and use whatever version is specified in build.gradle.   
 
-  * create-react-app project
-  * MUI as the component library
-  * deployed to netlify, see [netlify.toml](/netlify.toml)
-
-
-### Architecture
-
-[App.tsx](src/App.tsx) is the place to start to see how the app works.
-It's what I call a 
-[Funnel architecture](http://kopi.cloud/blog/2021/funnel-architecture/).
-
-
 ### Running locally
 
 Run the npm `start` script to start a local dev server, you will need to provide
@@ -47,3 +35,10 @@ as a command line arg:
 ```
  https://<db id>>.supabase.co/rest/v1/?apikey=<xxx.yyy.zzz> 
 ```
+
+### Architecture
+
+[App.tsx](src/App.tsx) is the place to start to see how the app works.
+It's what I call a
+[Funnel architecture](http://kopi.cloud/blog/2021/funnel-architecture/).
+

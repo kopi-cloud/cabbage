@@ -3,7 +3,6 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import * as React from "react";
 import {cardHeaderClasses, useMediaQuery} from "@mui/material";
-import {largeContainerWidth} from "Design/Screen";
 
 export function ContainerCard({ title, action, children}:{
   title: React.ReactNode,
@@ -56,21 +55,3 @@ export function CardMargin({children}: {  children:React.ReactNode }){
   </div>
 }
 
-export function FlexCardScreenContainer(props: {
-  children:React.ReactNode,
-}) {
-  return <main style={{
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: "1em",
-  }}>
-    <div style={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'flex-start',
-      maxWidth: largeContainerWidth,
-    }}>
-      {props.children}
-    </div>
-  </main>
-}

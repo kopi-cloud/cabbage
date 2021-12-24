@@ -1,5 +1,5 @@
 import {NavTransition} from "Design/NavigationProvider";
-import {LargeScreenContainer} from "Design/Screen";
+import {LargeContentMain} from "Design/LayoutMain";
 import React, {SyntheticEvent, useCallback, useEffect, useState} from "react";
 import {useSupabase} from "Api/SupabaseProvider";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
@@ -42,9 +42,9 @@ export function UserListScreen(){
   return <NavTransition isPath={isUserListScreenPath}
     title={"Cabbage - users"}
   >
-    <LargeScreenContainer>
+    <LargeContentMain>
       <Content/>
-    </LargeScreenContainer>
+    </LargeContentMain>
   </NavTransition>
 }
 

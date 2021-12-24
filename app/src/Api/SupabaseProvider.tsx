@@ -11,7 +11,7 @@ import {SmallScreenSpinner} from "Component/SmallScreenSpinner";
 import {Config} from "Config";
 import {createClient} from "@supabase/supabase-js";
 import {TextSpan} from "Component/TextSpan";
-import {SmallScreenContainer} from "Design/Screen";
+import {SmallContentMain} from "Design/LayoutMain";
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
 import {
   AuthChangeEvent,
@@ -163,9 +163,9 @@ export function SupabaseProvider({children}: {children: ReactNode}){
   if( !isAnonKeyValid ){
     /* Usually seen when you forget to add env variables like
      REACT_APP_CABBAGE_ENV, etc. */
-    return <SmallScreenContainer><TextSpan>
+    return <SmallContentMain><TextSpan>
       There's a problem with the build - the Supabase anon key is not valid.
-    </TextSpan></SmallScreenContainer>
+    </TextSpan></SmallContentMain>
   }
 
   if( !apiState ){

@@ -4,13 +4,13 @@ import React, {useState} from "react";
 import {
   CardMargin,
   ContainerCard,
-  FlexCardScreenContainer
 } from "Design/ContainerCard";
 import {SecondaryButton} from "Component/CabbageButton";
 import {stopClick} from "Util/EventUtil";
 import {useSupabase} from "Api/SupabaseProvider";
 import {ErrorInfo} from "Error/ErrorUtil";
 import {store_event} from "Api/CabbageApi";
+import {FlexContentMain} from "Design/LayoutMain";
 
 const log = console;
 
@@ -34,12 +34,12 @@ export function ErrorHandlingScreen(){
 }
 
 function Content(){
-  return <FlexCardScreenContainer>
+  return <FlexContentMain>
     <CardMargin><UnhandledOnClickErrorCard/></CardMargin>
     <CardMargin><ReactRenderErrorCard/></CardMargin>
     <CardMargin><HandledApiErrorCard/></CardMargin>
     <CardMargin><StoreSbEventCard/></CardMargin>
-  </FlexCardScreenContainer>
+  </FlexContentMain>
 }
 
 function UnhandledOnClickErrorCard(){

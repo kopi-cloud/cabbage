@@ -9,7 +9,8 @@ import {TextField} from "@mui/material";
 import {useAuthnUser} from "Api/AuthenticatedUserProvider";
 import {private_user_info, public_user_info, Tables} from "Api/CabbageSchema";
 import {CurrentUser} from "Component/CurrentUser";
-import {CardMargin, ContainerCard, FlexCardScreenContainer} from "Design/ContainerCard";
+import {CardMargin, ContainerCard} from "Design/ContainerCard";
+import {FlexContentMain} from "Design/LayoutMain";
 
 const log = console;
 
@@ -31,9 +32,9 @@ export function ScratchScreen(){
 }
 
 function Content(){
-  return <FlexCardScreenContainer>
+  return <FlexContentMain>
     <CardMargin><HackDisplayNameContainer stompValue={'xxx'}/></CardMargin>
-  </FlexCardScreenContainer>
+  </FlexContentMain>
 }
 
 export function HackDisplayNameContainer({stompValue}:{

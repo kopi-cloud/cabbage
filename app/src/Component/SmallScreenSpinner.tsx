@@ -1,17 +1,17 @@
 import React from "react";
-import {SmallScreenContainer} from "Design/Screen";
 import Typography from "@mui/material/Typography";
 import {LinearProgress} from "@mui/material";
+import {SmallContentMain} from "Design/LayoutMain";
 
 export function SmallScreenSpinner({message}: {
   message: string | React.ReactNode
 }){
-  return <SmallScreenContainer center>
+  return <SmallContentMain center>
     <Typography paragraph>
       {message}
     </Typography>
     <CompactLinearProgress isLoading style={{width: "100%"}}/>
-  </SmallScreenContainer>
+  </SmallContentMain>
 }
 
 export function CompactLinearProgress(props: {

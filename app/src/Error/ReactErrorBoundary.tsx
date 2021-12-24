@@ -1,9 +1,9 @@
 import {TextSpan} from "Component/TextSpan";
 import {Divider} from "@mui/material";
-import {LargeScreenContainer} from "Design/Screen";
 import * as React from "react";
 import {ErrorInfoComponent} from "Error/ErrorInforComponent";
 import {captureException} from "Util/SendEventUtil";
+import {LargeContentMain} from "Design/LayoutMain";
 
 /** This component deals with unexpected errors (usually programming errors)
  * during component rendering.
@@ -39,7 +39,7 @@ export class ReactErrorBoundary extends React.Component {
       return this.props.children;
     }
 
-    return <LargeScreenContainer>
+    return <LargeContentMain>
       <ErrorInfoComponent error={{
         message: "unhandled rendering error",
         problem: this.state.hasError,
@@ -80,7 +80,7 @@ export class ReactErrorBoundary extends React.Component {
           </a></li>
         </ul>
       </TextSpan>
-    </LargeScreenContainer>
+    </LargeContentMain>
   }
 }
 

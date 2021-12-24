@@ -1,5 +1,5 @@
 import {NavTransition} from "Design/NavigationProvider";
-import {LargeScreenContainer} from "Design/Screen";
+import {LargeContentMain} from "Design/LayoutMain";
 import React, {SyntheticEvent, useCallback, useEffect, useState} from "react";
 import {useSupabase} from "Api/SupabaseProvider";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
@@ -41,9 +41,9 @@ export function DatabaseSchemaScreen(){
   return <NavTransition isPath={isDbSchemaScreenPath}
     title={"Cabbage - database schema"}
   >
-    <LargeScreenContainer>
+    <LargeContentMain>
       <Content/>
-    </LargeScreenContainer>
+    </LargeContentMain>
   </NavTransition>
 }
 

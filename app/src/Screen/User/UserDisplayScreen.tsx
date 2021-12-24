@@ -1,5 +1,5 @@
 import {NavTransition, useNavigation} from "Design/NavigationProvider";
-import {SmallScreenContainer} from "Design/Screen";
+import {SmallContentMain} from "Design/LayoutMain";
 import Typography from "@mui/material/Typography";
 import React, {SyntheticEvent, useCallback, useEffect, useState} from "react";
 import {TextSpan} from "Component/TextSpan";
@@ -31,9 +31,9 @@ export function getMappingIdFromPath(path: string): string | undefined{
 
 export function UserDisplayScreen(){
   return <NavTransition isPath={isUserDisplayScreenPath} title={"Cabbage - user display"}>
-    <SmallScreenContainer>
+    <SmallContentMain>
       <UserDisplayContainer/>
-    </SmallScreenContainer>
+    </SmallContentMain>
   </NavTransition>
 }
 

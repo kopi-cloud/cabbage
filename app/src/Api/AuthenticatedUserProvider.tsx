@@ -6,7 +6,6 @@ import {useSupabase} from "Api/SupabaseProvider";
 import {SignInContainer} from "Screen/Welcome/SigninContainer";
 import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {CabbageCountContainer} from "Screen/Welcome/CabbageCountContainer";
-import {SmallScreenContainer} from "Design/Screen";
 import {Typography} from "@mui/material";
 import {
   cabbageGithubUrl, muiUrl,
@@ -15,6 +14,7 @@ import {
   supabaseUrl
 } from "Component/ExternalLinks";
 import {Config} from "Config";
+import {SmallContentMain} from "Design/LayoutMain";
 
 const log = console;
 
@@ -57,7 +57,7 @@ export function AuthenticatedUserProvider({children}: {children: ReactNode}){
 }
 
 export function IntroContainer(){
-  return <SmallScreenContainer center>
+  return <SmallContentMain center>
     <Typography paragraph>Cabbage is a demo app I built
       for <NewWindowLink href={supabaseUrl}>Supabase</NewWindowLink> and{' '}
       <NewWindowLink href={muiUrl}>MUI</NewWindowLink>.
@@ -71,6 +71,6 @@ export function IntroContainer(){
       This app was published from the `{Config.environmentName}` branch
       ({Config.gitCommit.substr(0, 8).trim()}).
     </Typography>
-  </SmallScreenContainer>
+  </SmallContentMain>
 }
 

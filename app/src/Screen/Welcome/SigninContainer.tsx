@@ -1,7 +1,7 @@
 import {redirectAfterSignIn, useSupabase} from "Api/SupabaseProvider";
 import React, {SyntheticEvent, useState} from "react";
 import {ErrorInfo} from "Error/ErrorUtil";
-import {SmallScreenContainer} from "Design/Screen";
+import {SmallContentMain} from "Design/LayoutMain";
 import {EmailSignInContainer} from "Screen/Welcome/EmailSignInContainer";
 import {stopClick} from "Util/EventUtil";
 import {useNavigation} from "Design/NavigationProvider";
@@ -103,15 +103,15 @@ export function SignInContainer({signInRedirect}:{signInRedirect?: string}){
       point showing something different for one or two renders */
     }
     else {
-      return <SmallScreenContainer center>
+      return <SmallContentMain center>
         <CurrentUserSignOutContainer disabled={disabled}
           isSigningOut={currentAction === "signing out"}
           onSignOut={onSignOut} lastSignOutError={lastSignOutError} />
-      </SmallScreenContainer>
+      </SmallContentMain>
     }
   }
 
-  return <SmallScreenContainer center>
+  return <SmallContentMain center>
     <SsoSignInContainer disabled={disabled} onSsoSignIn={onSsoSignIn}
       currentAction={currentAction} lastSsoError={lastSsoError} />
     <Divider variant={"middle"}
@@ -120,7 +120,7 @@ export function SignInContainer({signInRedirect}:{signInRedirect?: string}){
     <EmailSignInContainer disabled={disabled}
       isSigningIn={currentAction === "email sign in"}
       onSignIn={onEmailSignIn} lastEmailError={lastEmailError} />
-  </SmallScreenContainer>
+  </SmallContentMain>
 }
 
 

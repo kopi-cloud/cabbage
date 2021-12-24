@@ -1,5 +1,5 @@
 import {NavTransition} from "Design/NavigationProvider";
-import {SmallScreenContainer} from "Design/Screen";
+import {SmallContentMain} from "Design/LayoutMain";
 import Typography from "@mui/material/Typography";
 import React, {useCallback} from "react";
 import {TextSpan} from "Component/TextSpan";
@@ -32,9 +32,9 @@ export function isUserEditScreenPath(path: String): boolean{
 
 export function UserEditScreen(){
   return <NavTransition isPath={isUserEditScreenPath} title={"Cabbage - user home"}>
-    <SmallScreenContainer>
+    <SmallContentMain>
       <UserContainer/>
-    </SmallScreenContainer>
+    </SmallContentMain>
     <IntroContainer/>
   </NavTransition>
 }

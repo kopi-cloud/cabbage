@@ -1,7 +1,7 @@
 import React, {SyntheticEvent} from "react";
 import {ErrorInfo} from "Error/ErrorUtil";
 import {useSupabase} from "Api/SupabaseProvider";
-import {SmallScreenContainer} from "Design/Screen";
+import {SmallContentMain} from "Design/LayoutMain";
 import {Typography} from "@mui/material";
 import {Link} from "Component/Link";
 import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
@@ -22,11 +22,11 @@ export function CurrentUserSignOutContainer({
   const {user} = useSupabase();
 
   if( !user ){
-    return <SmallScreenContainer center>
+    return <SmallContentMain center>
       <Typography paragraph>
         You are not currently signed in.
       </Typography>
-    </SmallScreenContainer>
+    </SmallContentMain>
   }
 
   return <>

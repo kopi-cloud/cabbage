@@ -6,8 +6,62 @@ import {
 import {DialogTitleProps} from "@mui/material/DialogTitle";
 import {styled, Theme} from '@mui/system';
 
+
 export const largeContainerWidth = 1024;
 export const smallContainerWidth = 600;
+
+/** Standard main section expected to contain normal "singular" content.
+ * i.e. a single form, single table, etc. 
+ * The main mechanism of it is to use breakpoints to limit the max width of 
+ * the container on large screens because "normal" content tends to be look 
+ * awkward if you stretch it out really far across massive ultra-wide screens.
+ * */
+export function LargeContentMain(props: {
+  children: React.ReactNode,
+}){
+  return <LargeScreenStyledMain>
+    {props.children}
+  </LargeScreenStyledMain>
+}
+
+/** Used on screens that have very little content so they look awkward when
+ * hosted in the large content container.
+ * Works the same as the large content container, just has a smaller max width.
+ */
+export function SmallContentMain(props: {
+  children: React.ReactNode,
+  center?: boolean,
+}){
+  return <SmallScreenStyledMain>
+    <SmallScreenStyledPaper style={props.center ? {textAlign: "center"} : {}}>
+      {props.children}
+    </SmallScreenStyledPaper>
+  </SmallScreenStyledMain>
+}
+
+/** Used when screen is split up into multiple, granular sections that can 
+ * easily be laid out left to right, making use of a wide-screen format.
+ * Could probably allow the flex container to larger if desired.
+ * The main mechanism of it is a wrapping flex container.
+ */
+export function FlexContentMain(props: {
+  children:React.ReactNode,
+}) {
+  return <main style={{
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: "1em",
+  }}>
+    <div style={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'flex-start',
+      maxWidth: largeContainerWidth,
+    }}>
+      {props.children}
+    </div>
+  </main>
+}
 
 function mainLayoutBreakpoints(theme: Theme, width: number){
   return {
@@ -25,14 +79,6 @@ const LargeScreenStyledMain = styled('main')(({theme}) => ({
   ...mainLayoutBreakpoints(theme, largeContainerWidth)
 }));
 
-export function LargeScreenContainer(props: {
-  children: React.ReactNode,
-}){
-  return <LargeScreenStyledMain>
-    {props.children}
-  </LargeScreenStyledMain>
-}
-
 function paperBreakpoints(theme: Theme, width: number){
   return {
     [theme.breakpoints.up(width)]: {
@@ -44,11 +90,11 @@ function paperBreakpoints(theme: Theme, width: number){
 }
 
 const SmallScreenStyledMain = styled('main')(({theme}) => ({
-    width: 'auto',
-    marginTop: theme.spacing(1),
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    ...mainLayoutBreakpoints(theme, smallContainerWidth),
+  width: 'auto',
+  marginTop: theme.spacing(1),
+  marginLeft: theme.spacing(2),
+  marginRight: theme.spacing(2),
+  ...mainLayoutBreakpoints(theme, smallContainerWidth),
 }));
 
 const SmallScreenStyledPaper = styled(Paper)(({theme}) => ({
@@ -57,17 +103,6 @@ const SmallScreenStyledPaper = styled(Paper)(({theme}) => ({
   padding: theme.spacing(2),
   ...paperBreakpoints(theme, smallContainerWidth),
 }));
-
-export function SmallScreenContainer(props: {
-  children: React.ReactNode,
-  center?: boolean,
-}){
-  return <SmallScreenStyledMain>
-    <SmallScreenStyledPaper style={props.center ? {textAlign: "center"} : {}}>
-      {props.children}
-    </SmallScreenStyledPaper>
-  </SmallScreenStyledMain>
-}
 
 export function useFullScreenDialog(): boolean{
   // 960 is the "md" breakpoint, the old withMobileDialog defaulted to "sm",
@@ -91,3 +126,4 @@ export const dialogTitleWithCloseButtonProps = {
     alignItems: 'center',
   },
 } as DialogTitleProps;
+
