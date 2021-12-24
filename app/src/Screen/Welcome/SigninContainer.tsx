@@ -1,10 +1,10 @@
 import {redirectAfterSignIn, useSupabase} from "Api/SupabaseProvider";
 import React, {SyntheticEvent, useState} from "react";
 import {ErrorInfo} from "Error/ErrorUtil";
-import {SmallScreenContainer} from "Component/Screen";
+import {SmallScreenContainer} from "Design/Screen";
 import {EmailSignInContainer} from "Screen/Welcome/EmailSignInContainer";
 import {stopClick} from "Util/EventUtil";
-import {useNavigation} from "Navigation/NavigationProvider";
+import {useNavigation} from "Design/NavigationProvider";
 import Divider from "@mui/material/Divider";
 import {CurrentUserSignOutContainer} from "./CurrentUserSignOutContainer";
 import {SsoSignInContainer} from "Screen/Welcome/SsoSignInContainer";

@@ -1,5 +1,5 @@
-import {NavTransition} from "Navigation/NavigationProvider";
-import {LargeScreenContainer} from "Component/Screen";
+import {NavTransition} from "Design/NavigationProvider";
+import {LargeScreenContainer} from "Design/Screen";
 import React, {SyntheticEvent, useCallback, useEffect, useState} from "react";
 import {useSupabase} from "Api/SupabaseProvider";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import {TextSpan} from "Component/TextSpan";
 import {formatShortIsoDateTime, parseServerDate} from "Util/DateUtil";
-import {ContainerCard} from "Component/ContainerCard";
+import {ContainerCard} from "Design/ContainerCard";
 import {stopClick} from "Util/EventUtil";
 import {RefreshIconButton} from "Component/RefreshIconButton";
 import {Check, Warning} from "@mui/icons-material";

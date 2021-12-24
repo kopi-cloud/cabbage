@@ -1,7 +1,7 @@
 import {useSupabase} from "Api/SupabaseProvider";
 import React from "react";
 import {ErrorInfo, isErrorInfo} from "Error/ErrorUtil";
-import {SmallScreenContainer} from "Component/Screen";
+import {SmallScreenContainer} from "Design/Screen";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
 import {Typography} from "@mui/material";
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";

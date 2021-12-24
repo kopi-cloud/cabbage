@@ -1,5 +1,5 @@
-import {NavTransition} from "Navigation/NavigationProvider";
-import {LargeScreenContainer} from "Component/Screen";
+import {NavTransition} from "Design/NavigationProvider";
+import {LargeScreenContainer} from "Design/Screen";
 import React, {SyntheticEvent, useCallback, useEffect, useState} from "react";
 import {useSupabase} from "Api/SupabaseProvider";
 import {CompactErrorPanel} from "Error/CompactErrorPanel";
@@ -17,12 +17,12 @@ import {
   TableRow
 } from "@mui/material";
 import {TextSpan} from "Component/TextSpan";
-import {ContainerCard} from "Component/ContainerCard";
+import {ContainerCard} from "Design/ContainerCard";
 import {stopClick} from "Util/EventUtil";
 import {RefreshIconButton} from "Component/RefreshIconButton";
 import {getUserDisplayScreenLink} from "Screen/User/UserDisplayScreen";
 import {formatShortIsoDateTime, parseServerDate} from "Util/DateUtil";
-import {Link} from "Navigation/Link";
+import {Link} from "Component/Link";
 import {AlternatingTableRow} from "Component/Util";
 
 const log = console;

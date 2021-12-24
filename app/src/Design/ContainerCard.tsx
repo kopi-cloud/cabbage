@@ -3,7 +3,7 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import * as React from "react";
 import {cardHeaderClasses, useMediaQuery} from "@mui/material";
-import {largeContainerWidth} from "Component/Screen";
+import {largeContainerWidth} from "Design/Screen";
 
 export function ContainerCard({ title, action, children}:{
   title: React.ReactNode,

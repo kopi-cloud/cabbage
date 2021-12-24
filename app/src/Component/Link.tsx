@@ -1,6 +1,6 @@
 import React from "react";
 import {ButtonProps, Link as MuiLink, LinkProps} from "@mui/material";
-import {useNavigation} from "Navigation/NavigationProvider";
+import {useNavigation} from "Design/NavigationProvider";
 import {stopClick} from "Util/EventUtil";
 import Button from "@mui/material/Button";
 

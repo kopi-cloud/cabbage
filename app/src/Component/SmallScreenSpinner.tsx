@@ -1,5 +1,5 @@
 import React from "react";
-import {SmallScreenContainer} from "Component/Screen";
+import {SmallScreenContainer} from "Design/Screen";
 import Typography from "@mui/material/Typography";
 import {LinearProgress} from "@mui/material";
 

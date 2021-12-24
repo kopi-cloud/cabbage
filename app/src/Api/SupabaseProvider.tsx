@@ -11,7 +11,7 @@ import {SmallScreenSpinner} from "Component/SmallScreenSpinner";
 import {Config} from "Config";
 import {createClient} from "@supabase/supabase-js";
 import {TextSpan} from "Component/TextSpan";
-import {SmallScreenContainer} from "Component/Screen";
+import {SmallScreenContainer} from "Design/Screen";
 import SupabaseClient from "@supabase/supabase-js/dist/main/SupabaseClient";
 import {
   AuthChangeEvent,

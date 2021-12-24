@@ -1,9 +1,9 @@
 import React, {SyntheticEvent} from "react";
 import {ErrorInfo} from "Error/ErrorUtil";
 import {useSupabase} from "Api/SupabaseProvider";
-import {SmallScreenContainer} from "Component/Screen";
+import {SmallScreenContainer} from "Design/Screen";
 import {Typography} from "@mui/material";
-import {Link} from "Navigation/Link";
+import {Link} from "Component/Link";
 import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {ButtonContainer} from "Component/ButtonContainer";
 import {PrimaryButton} from "Component/CabbageButton";

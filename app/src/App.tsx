@@ -2,14 +2,14 @@ import React from 'react';
 import './App.css';
 
 import {CssBaseline} from "@mui/material";
-import {CabbageTheme} from "Component/CabbageTheme";
+import {CabbageTheme} from "Design/CabbageTheme";
 import {ReactErrorBoundary} from "Error/ReactErrorBoundary";
 import {ErrorDialogProvider} from "Error/ErrorDialog";
-import {NavigationProvider} from "Navigation/NavigationProvider";
+import {NavigationProvider} from "Design/NavigationProvider";
 import {SupabaseProvider} from "Api/SupabaseProvider";
 import {AuthenticatedUserProvider} from "Api/AuthenticatedUserProvider";
 
-import {AppNavBar} from "Navigation/AppNavBar";
+import {AppNavBar} from "Design/AppNavBar";
 import {UserEditScreen} from "Screen/User/UserEditScreen";
 import {OtherScreen} from "Screen/OtherScreen";
 import {ScratchScreen} from "Screen/ScratchScreen";

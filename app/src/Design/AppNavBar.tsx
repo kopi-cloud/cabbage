@@ -1,4 +1,4 @@
-import {useNavigation} from "Navigation/NavigationProvider";
+import {useNavigation} from "Design/NavigationProvider";
 import React, {useState} from "react";
 import {
   AppBar,
@@ -13,7 +13,7 @@ import {Cabbage} from "Component/Icon";
 import {useAuthnUser} from "Api/AuthenticatedUserProvider";
 import {AccountCircle, Menu as MenuIcon} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
-import {AppDrawer} from "Navigation/AppDrawer";
+import {AppDrawer} from "Design/AppDrawer";
 import {useSupabase} from "Api/SupabaseProvider";
 import {getUserListScreenLink} from "Screen/User/UserListScreen";
 

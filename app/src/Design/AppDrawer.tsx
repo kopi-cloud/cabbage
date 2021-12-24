@@ -3,7 +3,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import List from '@mui/material/List';
 import {ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
-import {useNavigation} from "Navigation/NavigationProvider";
+import {useNavigation} from "Design/NavigationProvider";
 import {getUserEditScreenLink, isUserEditScreenPath} from "Screen/User/UserEditScreen";
 import {useLocation} from "Navigation/UseLocation";
 import {getOtherScreenLink, isOtherScreenPath} from "Screen/OtherScreen";

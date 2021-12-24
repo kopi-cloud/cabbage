@@ -1,4 +1,4 @@
-import {NavTransition} from "Navigation/NavigationProvider";
+import {NavTransition} from "Design/NavigationProvider";
 import React, {ChangeEvent, SyntheticEvent, useCallback, useState} from "react";
 import {SecondaryButton} from "Component/CabbageButton";
 import {stopClick} from "Util/EventUtil";
@@ -9,7 +9,7 @@ import {TextField} from "@mui/material";
 import {useAuthnUser} from "Api/AuthenticatedUserProvider";
 import {private_user_info, public_user_info, Tables} from "Api/CabbageSchema";
 import {CurrentUser} from "Component/CurrentUser";
-import {CardMargin, ContainerCard, FlexCardScreenContainer} from "Component/ContainerCard";
+import {CardMargin, ContainerCard, FlexCardScreenContainer} from "Design/ContainerCard";
 
 const log = console;
 

@@ -1,6 +1,6 @@
 import {TextSpan} from "Component/TextSpan";
 import {Divider} from "@mui/material";
-import {LargeScreenContainer} from "Component/Screen";
+import {LargeScreenContainer} from "Design/Screen";
 import * as React from "react";
 import {ErrorInfoComponent} from "Error/ErrorInforComponent";
 import {captureException} from "Util/SendEventUtil";

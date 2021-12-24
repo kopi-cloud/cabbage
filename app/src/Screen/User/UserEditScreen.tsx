@@ -1,5 +1,5 @@
-import {NavTransition} from "Navigation/NavigationProvider";
-import {SmallScreenContainer} from "Component/Screen";
+import {NavTransition} from "Design/NavigationProvider";
+import {SmallScreenContainer} from "Design/Screen";
 import Typography from "@mui/material/Typography";
 import React, {useCallback} from "react";
 import {TextSpan} from "Component/TextSpan";

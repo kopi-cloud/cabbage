@@ -6,7 +6,7 @@ import {useSupabase} from "Api/SupabaseProvider";
 import {SignInContainer} from "Screen/Welcome/SigninContainer";
 import {getUserEditScreenLink} from "Screen/User/UserEditScreen";
 import {CabbageCountContainer} from "Screen/Welcome/CabbageCountContainer";
-import {SmallScreenContainer} from "Component/Screen";
+import {SmallScreenContainer} from "Design/Screen";
 import {Typography} from "@mui/material";
 import {
   cabbageGithubUrl, muiUrl,

@@ -1,4 +1,4 @@
-import {useNavigation} from "Navigation/NavigationProvider";
+import {useNavigation} from "Design/NavigationProvider";
 import React, {ChangeEvent, SyntheticEvent, useState} from "react";
 import {TextField} from "@mui/material";
 import {useSupabase} from "Api/SupabaseProvider";

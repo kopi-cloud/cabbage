@@ -1,11 +1,11 @@
-import {NavTransition} from "Navigation/NavigationProvider";
+import {NavTransition} from "Design/NavigationProvider";
 import {TextSpan} from "Component/TextSpan";
 import React, {useState} from "react";
 import {
   CardMargin,
   ContainerCard,
   FlexCardScreenContainer
-} from "Component/ContainerCard";
+} from "Design/ContainerCard";
 import {SecondaryButton} from "Component/CabbageButton";
 import {stopClick} from "Util/EventUtil";
 import {useSupabase} from "Api/SupabaseProvider";
