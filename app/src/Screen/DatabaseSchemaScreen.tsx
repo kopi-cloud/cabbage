@@ -22,7 +22,7 @@ import {ContainerCard} from "Component/ContainerCard";
 import {stopClick} from "Util/EventUtil";
 import {RefreshIconButton} from "Component/RefreshIconButton";
 import {Check, Warning} from "@mui/icons-material";
-import {AlternatingTableRow} from "Component/Styled";
+import {AlternatingTableRow} from "Component/Util";
 
 const log = console;
 

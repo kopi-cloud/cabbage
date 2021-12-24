@@ -4,6 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import * as React from "react";
 import {useMediaQuery} from "@mui/material";
 import {largeContainerWidth} from "Component/Screen";
+import {CardSlot, select} from "Util/MuiSlot";
 
 export function ContainerCard({ title, action, children}:{
   title: React.ReactNode,
@@ -19,9 +20,8 @@ export function ContainerCard({ title, action, children}:{
         // if card has no actions header gets short, minHeight keeps it
         // consistent (AboutScreen has one panel with actions and one without)
         minHeight: "3rem",
-        // apparently, this is the only way to do it in MUI v5 :/
-        '& .MuiCardHeader-action': { 
-          // has default margin-top of -4px, which makes the icon sit too high 
+        [select(CardSlot.header.action)]: { 
+          // default margin-top of -4px makes the icon sit too high 
           marginTop: 0,
         }
       }}

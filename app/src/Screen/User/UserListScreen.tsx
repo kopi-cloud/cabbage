@@ -23,8 +23,7 @@ import {RefreshIconButton} from "Component/RefreshIconButton";
 import {getUserDisplayScreenLink} from "Screen/User/UserDisplayScreen";
 import {formatShortIsoDateTime, parseServerDate} from "Util/DateUtil";
 import {Link} from "Navigation/Link";
-import {styled} from "@mui/system";
-import {AlternatingTableRow} from "Component/Styled";
+import {AlternatingTableRow} from "Component/Util";
 
 const log = console;
 
