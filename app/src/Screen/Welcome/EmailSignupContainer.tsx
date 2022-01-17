@@ -32,8 +32,8 @@ export function EmailSignupContainer({onCancel}:{
     log.debug("signing up user", {email, password});
 
     // IMPROVE: was returning a "422" at one point, handle that
-    const { data, user, error } = await db.auth.signUp({email, password});
-    log.debug("sb signup result", {data, user, error});
+    const { user, session, error } = await db.auth.signUp({email, password});
+    log.debug("sb signup result", {user, session, error});
 
     if( error ){
       setIsSigningUp(false);
