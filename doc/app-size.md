@@ -100,3 +100,15 @@ As of commit `2ba42678`, `build` reports:
   776 B                  build\static\js\runtime-main.863ad24c.js 
   280 B                  build\static\css\main.6873463e.chunk.css 
 ```
+
+## After updating Supbase 1.3 -> 1.29
+
+Big Supabase upgrade.
+
+As of commit `9bec3d8a`, `build` reports:
+```
+  159.04 KB (+101 B)  build\static\js\2.a9185fef.chunk.js
+  16.18 KB (-4 B)     build\static\js\main.3fe7f822.chunk.js      
+  776 B               build\static\js\runtime-main.863ad24c.js    
+  280 B               build\static\css\main.6873463e.chunk.css    
+```
