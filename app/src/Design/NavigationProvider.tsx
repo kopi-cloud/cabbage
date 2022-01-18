@@ -1,6 +1,8 @@
 import React, {SyntheticEvent, useContext, useState} from "react";
-import {useLocation} from "Navigation/UseLocation";
 import Fade from "@mui/material/Fade";
+import {
+  useLocationPathname
+} from "Util/Hook/UseLocationPathname";
 
 // value comes from eyeballing the drawer css in my browser, maybe there's
 // a better place in the MUI API to get it from (theme defaults or something?)
@@ -23,7 +25,7 @@ const muiAppDrawerTimeout = 225;
 export const navTime = muiAppDrawerTimeout * 2;
 
 export interface NavigationState {
-  currentLocation: string,
+  pathname: string,
   navigatingTo: string | undefined,
   navigateTo: (to: string, event?: SyntheticEvent) => void,
 }
@@ -32,7 +34,7 @@ const NavigationContext = React.createContext({} as NavigationState );
 export const useNavigation = ()=> useContext(NavigationContext);
 
 export function NavigationProvider(props: {children: React.ReactNode}){
-  const location = useLocation();
+  const location = useLocationPathname();
   const [navigatingTo, setNavigatingTo] = useState(
     undefined as string | undefined );
 
@@ -46,7 +48,7 @@ export function NavigationProvider(props: {children: React.ReactNode}){
   }, [location]);
 
   return <NavigationContext.Provider value={{
-    currentLocation: location.currentLocation,
+    pathname: location.pathname,
     navigatingTo,
     navigateTo:navTo,
   }}>
@@ -61,7 +63,7 @@ export function NavTransition(props: {
 }){
   const nav = useNavigation();
   const {title, isPath} = props;
-  const isOn = isPath(nav.currentLocation);
+  const isOn = isPath(nav.pathname);
   /* it's important to know which "direction" the navigation is going; so that
   we can transition "out of" or "away from" the "old" screen, while
   simultaneously transitioning "in" or "to" the "new" screen. */

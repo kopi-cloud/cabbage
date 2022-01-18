@@ -4,16 +4,25 @@ import List from '@mui/material/List';
 import {ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import {useNavigation} from "Design/NavigationProvider";
-import {getUserEditScreenLink, isUserEditScreenPath} from "Screen/User/UserEditScreen";
-import {useLocation} from "Navigation/UseLocation";
+import {
+  getUserEditScreenLink,
+  isUserEditScreenPath
+} from "Screen/User/UserEditScreen";
 import {getOtherScreenLink, isOtherScreenPath} from "Screen/OtherScreen";
 import {getScratchScreenLink, isScratchScreenPath} from "Screen/ScratchScreen";
-import {getErrorHandlingScreenLink, isErrorHandlingScreenPath} from "Screen/ErrorHandling";
-import {getDbSchemaScreenLink, isDbSchemaScreenPath} from "Screen/DatabaseSchemaScreen";
+import {
+  getErrorHandlingScreenLink,
+  isErrorHandlingScreenPath
+} from "Screen/ErrorHandling";
+import {
+  getDbSchemaScreenLink,
+  isDbSchemaScreenPath
+} from "Screen/DatabaseSchemaScreen";
 import {
   getUserListScreenLink,
   isUserListScreenPath
 } from "Screen/User/UserListScreen";
+import {useLocationPathname} from "Util/Hook/UseLocationPathname";
 
 
 export function AppDrawer(props: {
@@ -21,31 +30,31 @@ export function AppDrawer(props: {
   open: boolean,
   toggleDrawer: (open:boolean)=>void,
 }){
-  const {currentLocation} = useLocation();
+  const {pathname} = useLocationPathname();
 
   const sideList = (
     // hardcoded width reminds folks that mobile is a thing
     <div style={{width: 250}}>
       <List>
         <ListNavButton href={getUserEditScreenLink()}
-          isCurrent={isUserEditScreenPath(currentLocation)}
+          isCurrent={isUserEditScreenPath(pathname)}
            description={"User home"}
           icon={<HomeIcon/>}
         />
         <ListNavButton href={getUserListScreenLink()}
-          isCurrent={isUserListScreenPath(currentLocation)}
+          isCurrent={isUserListScreenPath(pathname)}
           description="Users" />
         <ListNavButton href={getErrorHandlingScreenLink()}
-          isCurrent={isErrorHandlingScreenPath(currentLocation)}
+          isCurrent={isErrorHandlingScreenPath(pathname)}
           description="Error handling examples" />
         <ListNavButton href={getDbSchemaScreenLink()}
-          isCurrent={isDbSchemaScreenPath(currentLocation)}
+          isCurrent={isDbSchemaScreenPath(pathname)}
           description="Database schema" />
         <ListNavButton href={getOtherScreenLink()}
-          isCurrent={isOtherScreenPath(currentLocation)}
+          isCurrent={isOtherScreenPath(pathname)}
           description="Other stuff" />
         <ListNavButton href={getScratchScreenLink()}
-          isCurrent={isScratchScreenPath(currentLocation)}
+          isCurrent={isScratchScreenPath(pathname)}
           description="Scratch" />
       </List>
     </div>

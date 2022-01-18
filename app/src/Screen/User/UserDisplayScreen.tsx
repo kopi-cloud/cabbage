@@ -25,7 +25,7 @@ export function isUserDisplayScreenPath(path: String): boolean{
   return normalizedPath.startsWith(screenUrl);
 }
 
-export function getMappingIdFromPath(path: string): string | undefined{
+export function getUserIdFromPath(path: string): string | undefined{
   return path.match(`${screenUrl}(.*)`)?.[1];
 }
 
@@ -40,7 +40,7 @@ export function UserDisplayScreen(){
 function UserDisplayContainer(){
   const nav = useNavigation();
 
-  const uuid = getMappingIdFromPath(nav.currentLocation);
+  const uuid = getUserIdFromPath(nav.pathname);
   if( !uuid ){
     return <TextSpan>Unable to parse UUID from browser location bar</TextSpan>;
   }
