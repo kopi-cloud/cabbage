@@ -6,12 +6,21 @@ import {
   TextFieldProps
 } from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+import { analytics } from "segment";
+
 
 export function PasswordField(props: TextFieldProps ){
   const [showPassword, setShowPasword] = useState(false);
 
   function onClickShowPassword(){
     setShowPasword(value => !value);
+    analytics.track({
+      event: "Show Password Clicked",
+      properties: {
+        showPassword: !showPassword
+      },
+      type: "track"
+    })
   }
 
   function handleMouseDownPassword(e: SyntheticEvent){

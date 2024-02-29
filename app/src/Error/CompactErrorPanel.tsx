@@ -7,6 +7,7 @@ import {isErrorInfo,} from "Error/ErrorUtil";
 import {useOpenErrorDialog} from "Error/ErrorDialog";
 import {isNonEmptyArrayOfString} from "Util/TypeUtil";
 import {captureException} from "Util/SendEventUtil";
+import { analytics } from "segment";
 
 const log = console;
 
@@ -98,6 +99,14 @@ function ErrorLink({problem, message, children}: {
   const handleError = useOpenErrorDialog();
   return <Link onClick={() =>{
     handleError({type: "handleError", error: {problem, message}})
+    analytics.track({
+      event: "Error Link Clicked",
+      properties: {
+        problem,
+        message,
+      },
+      type: "track"
+    })
   }}>
     {children}
   </Link>

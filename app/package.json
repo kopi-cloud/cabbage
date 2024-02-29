@@ -3,25 +3,26 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "source-map-explorer": "2.5.2",
-    "@mui/material": "5.2.8",
-    "@mui/icons-material": "5.2.5",
-    "@emotion/styled": "11.6.0",
     "@emotion/react": "11.7.1",
+    "@emotion/styled": "11.6.0",
+    "@mui/icons-material": "5.2.5",
+    "@mui/material": "5.2.8",
+    "@segment/analytics-next": "^1.64.0",
+    "@sentry/browser": "5.30.0",
+    "@supabase/supabase-js": "1.29.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-scripts": "4.0.3",
-    "typescript": "4.5.4",
-    "@supabase/supabase-js": "1.29.1",
-    "@sentry/browser": "5.30.0"
+    "source-map-explorer": "2.5.2",
+    "typescript": "4.5.4"
   },
   "devDependencies": {
     "@types/jest": "26.0.20",
     "@types/node": "14.14.31",
     "@types/react": "17.0.37",
     "@types/react-dom": "17.0.11",
-    "openapi-typescript": "2.4.2",
-    "axios": "0.21.1"
+    "axios": "0.21.1",
+    "openapi-typescript": "2.4.2"
   },
   "scripts": {
     "start": "react-scripts start",

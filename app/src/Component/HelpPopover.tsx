@@ -3,6 +3,7 @@ import {ReactNode} from "react";
 import {IconButton, Popover} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {Help} from "@mui/icons-material";
+import { analytics } from "segment";
 
 export function HelpPopover(props: { content: ReactNode }){
   const [open, setOpen] = React.useState(false);
@@ -15,6 +16,13 @@ export function HelpPopover(props: { content: ReactNode }){
       onClick={(e) => {
         setOpen(true);
         setAnchor(e.currentTarget);
+        analytics.track({
+          event: "Help Clicked",
+          properties: {
+            text: props.content
+          },
+          type: "track"
+        })
       }}
       size="large">
       <Help/>
