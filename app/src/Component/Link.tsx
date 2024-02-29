@@ -19,14 +19,6 @@ export function Link({href, children, ...props}:{
     onClick={(e:React.SyntheticEvent)=>{
       stopClick(e);
       nav.navigateTo(href, e);
-      analytics.track({
-        event: "Link Clicked",
-        properties: {
-          href,
-          text: children
-        },
-        type: "track"
-      })
     }}
   >
     {children}
